@@ -1,0 +1,3781 @@
+mode extreme: activated
+Processing ERA5 for year 1994 and month 01
+Processing ERA5 for year 1994 and month 02
+Processing ERA5 for year 1994 and month 03
+Processing ERA5 for year 1994 and month 04
+Processing ERA5 for year 1994 and month 05
+Processing ERA5 for year 1994 and month 06
+Processing ERA5 for year 1994 and month 07
+Processing ERA5 for year 1994 and month 08
+Processing ERA5 for year 1994 and month 09
+Processing ERA5 for year 1994 and month 10
+Processing ERA5 for year 1994 and month 11
+Processing ERA5 for year 1994 and month 12
+#executed by process	21 in 790.46s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1994 --sim ERA5 --ext
+mode extreme: activated
+Processing ERA5 for year 1999 and month 01
+Processing ERA5 for year 1999 and month 02
+Processing ERA5 for year 1999 and month 03
+Processing ERA5 for year 1999 and month 04
+Processing ERA5 for year 1999 and month 05
+Processing ERA5 for year 1999 and month 06
+Processing ERA5 for year 1999 and month 07
+Processing ERA5 for year 1999 and month 08
+Processing ERA5 for year 1999 and month 09
+Processing ERA5 for year 1999 and month 10
+Processing ERA5 for year 1999 and month 11
+Processing ERA5 for year 1999 and month 12
+#executed by process	19 in 803.134s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1999 --sim ERA5 --ext
+mode extreme: activated
+Processing ERA5 for year 2004 and month 01
+Processing ERA5 for year 2004 and month 02
+Processing ERA5 for year 2004 and month 03
+Processing ERA5 for year 2004 and month 04
+Processing ERA5 for year 2004 and month 05
+Processing ERA5 for year 2004 and month 06
+Processing ERA5 for year 2004 and month 07
+Processing ERA5 for year 2004 and month 08
+Processing ERA5 for year 2004 and month 09
+Processing ERA5 for year 2004 and month 10
+Processing ERA5 for year 2004 and month 11
+Processing ERA5 for year 2004 and month 12
+#executed by process	39 in 850.879s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2004 --sim ERA5 --ext
+mode extreme: activated
+Processing ERA5 for year 1982 and month 01
+Processing ERA5 for year 1982 and month 02
+Processing ERA5 for year 1982 and month 03
+Processing ERA5 for year 1982 and month 04
+Processing ERA5 for year 1982 and month 05
+Processing ERA5 for year 1982 and month 06
+Processing ERA5 for year 1982 and month 07
+Processing ERA5 for year 1982 and month 08
+Processing ERA5 for year 1982 and month 09
+Processing ERA5 for year 1982 and month 10
+Processing ERA5 for year 1982 and month 11
+Processing ERA5 for year 1982 and month 12
+#executed by process	18 in 937.81s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1982 --sim ERA5 --ext
+mode extreme: activated
+Processing ERA5 for year 2003 and month 01
+Processing ERA5 for year 2003 and month 02
+Processing ERA5 for year 2003 and month 03
+Processing ERA5 for year 2003 and month 04
+Processing ERA5 for year 2003 and month 05
+Processing ERA5 for year 2003 and month 06
+Processing ERA5 for year 2003 and month 07
+Processing ERA5 for year 2003 and month 08
+Processing ERA5 for year 2003 and month 09
+Processing ERA5 for year 2003 and month 10
+Processing ERA5 for year 2003 and month 11
+Processing ERA5 for year 2003 and month 12
+#executed by process	15 in 980.7s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2003 --sim ERA5 --ext
+mode extreme: activated
+Processing ERA5 for year 1980 and month 01
+Processing ERA5 for year 1980 and month 02
+Processing ERA5 for year 1980 and month 03
+Processing ERA5 for year 1980 and month 04
+Processing ERA5 for year 1980 and month 05
+Processing ERA5 for year 1980 and month 06
+Processing ERA5 for year 1980 and month 07
+Processing ERA5 for year 1980 and month 08
+Processing ERA5 for year 1980 and month 09
+Processing ERA5 for year 1980 and month 10
+Processing ERA5 for year 1980 and month 11
+Processing ERA5 for year 1980 and month 12
+mode extreme: activated
+Processing ERA5 for year 2009 and month 01
+Processing ERA5 for year 2009 and month 02
+Processing ERA5 for year 2009 and month 03
+Processing ERA5 for year 2009 and month 04
+Processing ERA5 for year 2009 and month 05
+Processing ERA5 for year 2009 and month 06
+Processing ERA5 for year 2009 and month 07
+Processing ERA5 for year 2009 and month 08
+Processing ERA5 for year 2009 and month 09
+Processing ERA5 for year 2009 and month 10
+Processing ERA5 for year 2009 and month 11
+Processing ERA5 for year 2009 and month 12
+#executed by process	16 in 985.539s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1980 --sim ERA5 --ext
+#executed by process	36 in 985.976s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2009 --sim ERA5 --ext
+mode extreme: activated
+Processing ERA5 for year 1992 and month 01
+Processing ERA5 for year 1992 and month 02
+Processing ERA5 for year 1992 and month 03
+Processing ERA5 for year 1992 and month 04
+Processing ERA5 for year 1992 and month 05
+Processing ERA5 for year 1992 and month 06
+Processing ERA5 for year 1992 and month 07
+Processing ERA5 for year 1992 and month 08
+Processing ERA5 for year 1992 and month 09
+Processing ERA5 for year 1992 and month 10
+Processing ERA5 for year 1992 and month 11
+Processing ERA5 for year 1992 and month 12
+#executed by process	17 in 995.948s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1992 --sim ERA5 --ext
+mode extreme: activated
+Processing ERA5 for year 2006 and month 01
+Processing ERA5 for year 2006 and month 02
+Processing ERA5 for year 2006 and month 03
+Processing ERA5 for year 2006 and month 04
+Processing ERA5 for year 2006 and month 05
+Processing ERA5 for year 2006 and month 06
+Processing ERA5 for year 2006 and month 07
+Processing ERA5 for year 2006 and month 08
+Processing ERA5 for year 2006 and month 09
+Processing ERA5 for year 2006 and month 10
+Processing ERA5 for year 2006 and month 11
+Processing ERA5 for year 2006 and month 12
+#executed by process	20 in 996.89s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2006 --sim ERA5 --ext
+mode extreme: activated
+Processing ERA5 for year 1989 and month 01
+Processing ERA5 for year 1989 and month 02
+Processing ERA5 for year 1989 and month 03
+Processing ERA5 for year 1989 and month 04
+Processing ERA5 for year 1989 and month 05
+Processing ERA5 for year 1989 and month 06
+Processing ERA5 for year 1989 and month 07
+Processing ERA5 for year 1989 and month 08
+Processing ERA5 for year 1989 and month 09
+Processing ERA5 for year 1989 and month 10
+Processing ERA5 for year 1989 and month 11
+Processing ERA5 for year 1989 and month 12
+#executed by process	12 in 1002.91s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1989 --sim ERA5 --ext
+mode extreme: activated
+Processing ERA5 for year 1996 and month 01
+Processing ERA5 for year 1996 and month 02
+Processing ERA5 for year 1996 and month 03
+Processing ERA5 for year 1996 and month 04
+Processing ERA5 for year 1996 and month 05
+Processing ERA5 for year 1996 and month 06
+Processing ERA5 for year 1996 and month 07
+Processing ERA5 for year 1996 and month 08
+Processing ERA5 for year 1996 and month 09
+Processing ERA5 for year 1996 and month 10
+Processing ERA5 for year 1996 and month 11
+Processing ERA5 for year 1996 and month 12
+#executed by process	13 in 1005.5s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1996 --sim ERA5 --ext
+mode extreme: activated
+Processing ERA5 for year 2016 and month 01
+Processing ERA5 for year 2016 and month 02
+Processing ERA5 for year 2016 and month 03
+Processing ERA5 for year 2016 and month 04
+Processing ERA5 for year 2016 and month 05
+Processing ERA5 for year 2016 and month 06
+Processing ERA5 for year 2016 and month 07
+Processing ERA5 for year 2016 and month 08
+Processing ERA5 for year 2016 and month 09
+Processing ERA5 for year 2016 and month 10
+Processing ERA5 for year 2016 and month 11
+Processing ERA5 for year 2016 and month 12
+#executed by process	35 in 1007s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2016 --sim ERA5 --ext
+mode extreme: activated
+Processing ERA5 for year 1983 and month 01
+Processing ERA5 for year 1983 and month 02
+Processing ERA5 for year 1983 and month 03
+Processing ERA5 for year 1983 and month 04
+Processing ERA5 for year 1983 and month 05
+Processing ERA5 for year 1983 and month 06
+Processing ERA5 for year 1983 and month 07
+Processing ERA5 for year 1983 and month 08
+Processing ERA5 for year 1983 and month 09
+Processing ERA5 for year 1983 and month 10
+Processing ERA5 for year 1983 and month 11
+Processing ERA5 for year 1983 and month 12
+#executed by process	2 in 1015.25s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1983 --sim ERA5 --ext
+mode extreme: activated
+Processing ERA5 for year 2008 and month 01
+Processing ERA5 for year 2008 and month 02
+Processing ERA5 for year 2008 and month 03
+Processing ERA5 for year 2008 and month 04
+Processing ERA5 for year 2008 and month 05
+Processing ERA5 for year 2008 and month 06
+Processing ERA5 for year 2008 and month 07
+Processing ERA5 for year 2008 and month 08
+Processing ERA5 for year 2008 and month 09
+Processing ERA5 for year 2008 and month 10
+Processing ERA5 for year 2008 and month 11
+Processing ERA5 for year 2008 and month 12
+mode extreme: activated
+Processing ERA5 for year 1991 and month 01
+Processing ERA5 for year 1991 and month 02
+Processing ERA5 for year 1991 and month 03
+Processing ERA5 for year 1991 and month 04
+Processing ERA5 for year 1991 and month 05
+Processing ERA5 for year 1991 and month 06
+Processing ERA5 for year 1991 and month 07
+Processing ERA5 for year 1991 and month 08
+Processing ERA5 for year 1991 and month 09
+Processing ERA5 for year 1991 and month 10
+Processing ERA5 for year 1991 and month 11
+Processing ERA5 for year 1991 and month 12
+#executed by process	31 in 1022.56s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2008 --sim ERA5 --ext
+#executed by process	1 in 1022.66s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1991 --sim ERA5 --ext
+mode extreme: activated
+Processing ERA5 for year 1981 and month 01
+Processing ERA5 for year 1981 and month 02
+Processing ERA5 for year 1981 and month 03
+Processing ERA5 for year 1981 and month 04
+Processing ERA5 for year 1981 and month 05
+Processing ERA5 for year 1981 and month 06
+Processing ERA5 for year 1981 and month 07
+Processing ERA5 for year 1981 and month 08
+Processing ERA5 for year 1981 and month 09
+Processing ERA5 for year 1981 and month 10
+Processing ERA5 for year 1981 and month 11
+Processing ERA5 for year 1981 and month 12
+#executed by process	38 in 1023.98s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1981 --sim ERA5 --ext
+mode extreme: activated
+Processing ERA5 for year 2015 and month 01
+Processing ERA5 for year 2015 and month 02
+Processing ERA5 for year 2015 and month 03
+Processing ERA5 for year 2015 and month 04
+Processing ERA5 for year 2015 and month 05
+Processing ERA5 for year 2015 and month 06
+Processing ERA5 for year 2015 and month 07
+Processing ERA5 for year 2015 and month 08
+Processing ERA5 for year 2015 and month 09
+Processing ERA5 for year 2015 and month 10
+Processing ERA5 for year 2015 and month 11
+Processing ERA5 for year 2015 and month 12
+#executed by process	29 in 1034.42s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2015 --sim ERA5 --ext
+mode extreme: activated
+Processing ERA5 for year 1986 and month 01
+Processing ERA5 for year 1986 and month 02
+Processing ERA5 for year 1986 and month 03
+Processing ERA5 for year 1986 and month 04
+Processing ERA5 for year 1986 and month 05
+Processing ERA5 for year 1986 and month 06
+Processing ERA5 for year 1986 and month 07
+Processing ERA5 for year 1986 and month 08
+Processing ERA5 for year 1986 and month 09
+Processing ERA5 for year 1986 and month 10
+Processing ERA5 for year 1986 and month 11
+Processing ERA5 for year 1986 and month 12
+#executed by process	14 in 1042.26s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1986 --sim ERA5 --ext
+mode extreme: activated
+Processing ERA5 for year 1997 and month 01
+Processing ERA5 for year 1997 and month 02
+Processing ERA5 for year 1997 and month 03
+Processing ERA5 for year 1997 and month 04
+Processing ERA5 for year 1997 and month 05
+Processing ERA5 for year 1997 and month 06
+Processing ERA5 for year 1997 and month 07
+Processing ERA5 for year 1997 and month 08
+Processing ERA5 for year 1997 and month 09
+Processing ERA5 for year 1997 and month 10
+Processing ERA5 for year 1997 and month 11
+Processing ERA5 for year 1997 and month 12
+#executed by process	3 in 1046.08s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1997 --sim ERA5 --ext
+mode extreme: activated
+Processing ERA5 for year 2005 and month 01
+Processing ERA5 for year 2005 and month 02
+Processing ERA5 for year 2005 and month 03
+Processing ERA5 for year 2005 and month 04
+Processing ERA5 for year 2005 and month 05
+Processing ERA5 for year 2005 and month 06
+Processing ERA5 for year 2005 and month 07
+Processing ERA5 for year 2005 and month 08
+Processing ERA5 for year 2005 and month 09
+Processing ERA5 for year 2005 and month 10
+Processing ERA5 for year 2005 and month 11
+Processing ERA5 for year 2005 and month 12
+#executed by process	37 in 1053.22s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2005 --sim ERA5 --ext
+mode extreme: activated
+Processing ERA5 for year 2014 and month 01
+Processing ERA5 for year 2014 and month 02
+Processing ERA5 for year 2014 and month 03
+Processing ERA5 for year 2014 and month 04
+Processing ERA5 for year 2014 and month 05
+Processing ERA5 for year 2014 and month 06
+Processing ERA5 for year 2014 and month 07
+Processing ERA5 for year 2014 and month 08
+Processing ERA5 for year 2014 and month 09
+Processing ERA5 for year 2014 and month 10
+Processing ERA5 for year 2014 and month 11
+Processing ERA5 for year 2014 and month 12
+#executed by process	27 in 1062.23s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2014 --sim ERA5 --ext
+mode extreme: activated
+Processing ERA5 for year 1998 and month 01
+Processing ERA5 for year 1998 and month 02
+Processing ERA5 for year 1998 and month 03
+Processing ERA5 for year 1998 and month 04
+Processing ERA5 for year 1998 and month 05
+Processing ERA5 for year 1998 and month 06
+Processing ERA5 for year 1998 and month 07
+Processing ERA5 for year 1998 and month 08
+Processing ERA5 for year 1998 and month 09
+Processing ERA5 for year 1998 and month 10
+Processing ERA5 for year 1998 and month 11
+Processing ERA5 for year 1998 and month 12
+#executed by process	11 in 1064.85s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1998 --sim ERA5 --ext
+mode extreme: activated
+Processing ERA5 for year 1979 and month 01
+Processing ERA5 for year 1979 and month 02
+Processing ERA5 for year 1979 and month 03
+Processing ERA5 for year 1979 and month 04
+Processing ERA5 for year 1979 and month 05
+Processing ERA5 for year 1979 and month 06
+Processing ERA5 for year 1979 and month 07
+Processing ERA5 for year 1979 and month 08
+Processing ERA5 for year 1979 and month 09
+Processing ERA5 for year 1979 and month 10
+Processing ERA5 for year 1979 and month 11
+Processing ERA5 for year 1979 and month 12
+mode extreme: activated
+Processing ERA5 for year 1993 and month 01
+Processing ERA5 for year 1993 and month 02
+Processing ERA5 for year 1993 and month 03
+Processing ERA5 for year 1993 and month 04
+Processing ERA5 for year 1993 and month 05
+Processing ERA5 for year 1993 and month 06
+Processing ERA5 for year 1993 and month 07
+Processing ERA5 for year 1993 and month 08
+Processing ERA5 for year 1993 and month 09
+Processing ERA5 for year 1993 and month 10
+Processing ERA5 for year 1993 and month 11
+Processing ERA5 for year 1993 and month 12
+#executed by process	5 in 1073.45s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1993 --sim ERA5 --ext
+#executed by process	6 in 1073.6s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1979 --sim ERA5 --ext
+mode extreme: activated
+Processing ERA5 for year 1988 and month 01
+Processing ERA5 for year 1988 and month 02
+Processing ERA5 for year 1988 and month 03
+Processing ERA5 for year 1988 and month 04
+Processing ERA5 for year 1988 and month 05
+Processing ERA5 for year 1988 and month 06
+Processing ERA5 for year 1988 and month 07
+Processing ERA5 for year 1988 and month 08
+Processing ERA5 for year 1988 and month 09
+Processing ERA5 for year 1988 and month 10
+Processing ERA5 for year 1988 and month 11
+Processing ERA5 for year 1988 and month 12
+#executed by process	4 in 1081.82s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1988 --sim ERA5 --ext
+mode extreme: activated
+Processing ERA5 for year 2002 and month 01
+Processing ERA5 for year 2002 and month 02
+Processing ERA5 for year 2002 and month 03
+Processing ERA5 for year 2002 and month 04
+Processing ERA5 for year 2002 and month 05
+Processing ERA5 for year 2002 and month 06
+Processing ERA5 for year 2002 and month 07
+Processing ERA5 for year 2002 and month 08
+Processing ERA5 for year 2002 and month 09
+Processing ERA5 for year 2002 and month 10
+Processing ERA5 for year 2002 and month 11
+Processing ERA5 for year 2002 and month 12
+mode extreme: activated
+Processing ERA5 for year 1985 and month 01
+Processing ERA5 for year 1985 and month 02
+Processing ERA5 for year 1985 and month 03
+Processing ERA5 for year 1985 and month 04
+Processing ERA5 for year 1985 and month 05
+Processing ERA5 for year 1985 and month 06
+Processing ERA5 for year 1985 and month 07
+Processing ERA5 for year 1985 and month 08
+Processing ERA5 for year 1985 and month 09
+Processing ERA5 for year 1985 and month 10
+Processing ERA5 for year 1985 and month 11
+Processing ERA5 for year 1985 and month 12
+#executed by process	7 in 1086.42s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2002 --sim ERA5 --ext
+#executed by process	8 in 1087.43s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1985 --sim ERA5 --ext
+mode extreme: activated
+Processing ERA5 for year 1984 and month 01
+Processing ERA5 for year 1984 and month 02
+Processing ERA5 for year 1984 and month 03
+Processing ERA5 for year 1984 and month 04
+Processing ERA5 for year 1984 and month 05
+Processing ERA5 for year 1984 and month 06
+Processing ERA5 for year 1984 and month 07
+Processing ERA5 for year 1984 and month 08
+Processing ERA5 for year 1984 and month 09
+Processing ERA5 for year 1984 and month 10
+Processing ERA5 for year 1984 and month 11
+Processing ERA5 for year 1984 and month 12
+#executed by process	10 in 1097.09s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1984 --sim ERA5 --ext
+mode extreme: activated
+Processing ERA5 for year 2013 and month 01
+Processing ERA5 for year 2013 and month 02
+Processing ERA5 for year 2013 and month 03
+Processing ERA5 for year 2013 and month 04
+Processing ERA5 for year 2013 and month 05
+Processing ERA5 for year 2013 and month 06
+Processing ERA5 for year 2013 and month 07
+Processing ERA5 for year 2013 and month 08
+Processing ERA5 for year 2013 and month 09
+Processing ERA5 for year 2013 and month 10
+Processing ERA5 for year 2013 and month 11
+Processing ERA5 for year 2013 and month 12
+#executed by process	33 in 1102.46s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2013 --sim ERA5 --ext
+mode extreme: activated
+Processing ERA5 for year 1990 and month 01
+Processing ERA5 for year 1990 and month 02
+Processing ERA5 for year 1990 and month 03
+Processing ERA5 for year 1990 and month 04
+Processing ERA5 for year 1990 and month 05
+Processing ERA5 for year 1990 and month 06
+Processing ERA5 for year 1990 and month 07
+Processing ERA5 for year 1990 and month 08
+Processing ERA5 for year 1990 and month 09
+Processing ERA5 for year 1990 and month 10
+Processing ERA5 for year 1990 and month 11
+Processing ERA5 for year 1990 and month 12
+#executed by process	9 in 1107.21s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1990 --sim ERA5 --ext
+mode extreme: activated
+Processing ERA5 for year 2001 and month 01
+Processing ERA5 for year 2001 and month 02
+Processing ERA5 for year 2001 and month 03
+Processing ERA5 for year 2001 and month 04
+Processing ERA5 for year 2001 and month 05
+Processing ERA5 for year 2001 and month 06
+Processing ERA5 for year 2001 and month 07
+Processing ERA5 for year 2001 and month 08
+Processing ERA5 for year 2001 and month 09
+Processing ERA5 for year 2001 and month 10
+Processing ERA5 for year 2001 and month 11
+Processing ERA5 for year 2001 and month 12
+mode extreme: activated
+Processing ERA5 for year 1987 and month 01
+Processing ERA5 for year 1987 and month 02
+Processing ERA5 for year 1987 and month 03
+Processing ERA5 for year 1987 and month 04
+Processing ERA5 for year 1987 and month 05
+Processing ERA5 for year 1987 and month 06
+Processing ERA5 for year 1987 and month 07
+Processing ERA5 for year 1987 and month 08
+Processing ERA5 for year 1987 and month 09
+Processing ERA5 for year 1987 and month 10
+Processing ERA5 for year 1987 and month 11
+Processing ERA5 for year 1987 and month 12
+#executed by process	26 in 1142.57s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2001 --sim ERA5 --ext
+#executed by process	22 in 1142.61s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1987 --sim ERA5 --ext
+mode extreme: activated
+Processing ERA5 for year 2000 and month 01
+Processing ERA5 for year 2000 and month 02
+Processing ERA5 for year 2000 and month 03
+Processing ERA5 for year 2000 and month 04
+Processing ERA5 for year 2000 and month 05
+Processing ERA5 for year 2000 and month 06
+Processing ERA5 for year 2000 and month 07
+Processing ERA5 for year 2000 and month 08
+Processing ERA5 for year 2000 and month 09
+Processing ERA5 for year 2000 and month 10
+Processing ERA5 for year 2000 and month 11
+Processing ERA5 for year 2000 and month 12
+#executed by process	30 in 1176.94s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2000 --sim ERA5 --ext
+mode extreme: activated
+Processing ERA5 for year 2011 and month 01
+Processing ERA5 for year 2011 and month 02
+Processing ERA5 for year 2011 and month 03
+Processing ERA5 for year 2011 and month 04
+Processing ERA5 for year 2011 and month 05
+Processing ERA5 for year 2011 and month 06
+Processing ERA5 for year 2011 and month 07
+Processing ERA5 for year 2011 and month 08
+Processing ERA5 for year 2011 and month 09
+Processing ERA5 for year 2011 and month 10
+Processing ERA5 for year 2011 and month 11
+Processing ERA5 for year 2011 and month 12
+#executed by process	32 in 1186.98s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2011 --sim ERA5 --ext
+mode extreme: activated
+Processing ERA5 for year 2010 and month 01
+Processing ERA5 for year 2010 and month 02
+Processing ERA5 for year 2010 and month 03
+Processing ERA5 for year 2010 and month 04
+Processing ERA5 for year 2010 and month 05
+Processing ERA5 for year 2010 and month 06
+Processing ERA5 for year 2010 and month 07
+Processing ERA5 for year 2010 and month 08
+Processing ERA5 for year 2010 and month 09
+Processing ERA5 for year 2010 and month 10
+Processing ERA5 for year 2010 and month 11
+Processing ERA5 for year 2010 and month 12
+#executed by process	34 in 1189.86s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2010 --sim ERA5 --ext
+mode extreme: activated
+Processing ERA5 for year 2012 and month 01
+Processing ERA5 for year 2012 and month 02
+Processing ERA5 for year 2012 and month 03
+Processing ERA5 for year 2012 and month 04
+Processing ERA5 for year 2012 and month 05
+Processing ERA5 for year 2012 and month 06
+Processing ERA5 for year 2012 and month 07
+Processing ERA5 for year 2012 and month 08
+Processing ERA5 for year 2012 and month 09
+Processing ERA5 for year 2012 and month 10
+Processing ERA5 for year 2012 and month 11
+Processing ERA5 for year 2012 and month 12
+#executed by process	28 in 1200.62s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2012 --sim ERA5 --ext
+mode extreme: activated
+Processing ERA5 for year 1995 and month 01
+Processing ERA5 for year 1995 and month 02
+Processing ERA5 for year 1995 and month 03
+Processing ERA5 for year 1995 and month 04
+Processing ERA5 for year 1995 and month 05
+Processing ERA5 for year 1995 and month 06
+Processing ERA5 for year 1995 and month 07
+Processing ERA5 for year 1995 and month 08
+Processing ERA5 for year 1995 and month 09
+Processing ERA5 for year 1995 and month 10
+Processing ERA5 for year 1995 and month 11
+Processing ERA5 for year 1995 and month 12
+#executed by process	24 in 1203.97s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1995 --sim ERA5 --ext
+mode extreme: activated
+Processing ERA5 for year 2007 and month 01
+Processing ERA5 for year 2007 and month 02
+Processing ERA5 for year 2007 and month 03
+Processing ERA5 for year 2007 and month 04
+Processing ERA5 for year 2007 and month 05
+Processing ERA5 for year 2007 and month 06
+Processing ERA5 for year 2007 and month 07
+Processing ERA5 for year 2007 and month 08
+Processing ERA5 for year 2007 and month 09
+Processing ERA5 for year 2007 and month 10
+Processing ERA5 for year 2007 and month 11
+Processing ERA5 for year 2007 and month 12
+#executed by process	25 in 1256.25s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2007 --sim ERA5 --ext
+mode extreme: activated
+Processing ERA5 for year 2017 and month 01
+Processing ERA5 for year 2017 and month 02
+Processing ERA5 for year 2017 and month 03
+Processing ERA5 for year 2017 and month 04
+Processing ERA5 for year 2017 and month 05
+Processing ERA5 for year 2017 and month 06
+Processing ERA5 for year 2017 and month 07
+Processing ERA5 for year 2017 and month 08
+Processing ERA5 for year 2017 and month 09
+Processing ERA5 for year 2017 and month 10
+Processing ERA5 for year 2017 and month 11
+Processing ERA5 for year 2017 and month 12
+#executed by process	23 in 1297.42s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2017 --sim ERA5 --ext
+mode extreme: activated
+Processing ERA5 for year 2019 and month 01
+Processing ERA5 for year 2019 and month 02
+Processing ERA5 for year 2019 and month 03
+Processing ERA5 for year 2019 and month 04
+Processing ERA5 for year 2019 and month 05
+Processing ERA5 for year 2019 and month 06
+Processing ERA5 for year 2019 and month 07
+Processing ERA5 for year 2019 and month 08
+Processing ERA5 for year 2019 and month 09
+Processing ERA5 for year 2019 and month 10
+Processing ERA5 for year 2019 and month 11
+Processing ERA5 for year 2019 and month 12
+#executed by process	19 in 756.717s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2019 --sim ERA5 --ext
+mode extreme: activated
+Processing ERA5 for year 2023 and month 01
+Processing ERA5 for year 2023 and month 02
+Processing ERA5 for year 2023 and month 03
+Processing ERA5 for year 2023 and month 04
+Processing ERA5 for year 2023 and month 05
+Processing ERA5 for year 2023 and month 06
+Processing ERA5 for year 2023 and month 07
+Processing ERA5 for year 2023 and month 08
+Processing ERA5 for year 2023 and month 09
+Processing ERA5 for year 2023 and month 10
+Processing ERA5 for year 2023 and month 11
+Processing ERA5 for year 2023 and month 12
+#executed by process	16 in 617.525s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2023 --sim ERA5 --ext
+mode extreme: activated
+Processing ERA5 for year 2018 and month 01
+Processing ERA5 for year 2018 and month 02
+Processing ERA5 for year 2018 and month 03
+Processing ERA5 for year 2018 and month 04
+Processing ERA5 for year 2018 and month 05
+Processing ERA5 for year 2018 and month 06
+Processing ERA5 for year 2018 and month 07
+Processing ERA5 for year 2018 and month 08
+Processing ERA5 for year 2018 and month 09
+Processing ERA5 for year 2018 and month 10
+Processing ERA5 for year 2018 and month 11
+Processing ERA5 for year 2018 and month 12
+#executed by process	21 in 825.973s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2018 --sim ERA5 --ext
+mode extreme: activated
+Processing ERA5 for year 2020 and month 01
+Processing ERA5 for year 2020 and month 02
+Processing ERA5 for year 2020 and month 03
+Processing ERA5 for year 2020 and month 04
+Processing ERA5 for year 2020 and month 05
+Processing ERA5 for year 2020 and month 06
+Processing ERA5 for year 2020 and month 07
+Processing ERA5 for year 2020 and month 08
+Processing ERA5 for year 2020 and month 09
+Processing ERA5 for year 2020 and month 10
+Processing ERA5 for year 2020 and month 11
+Processing ERA5 for year 2020 and month 12
+#executed by process	39 in 810.92s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2020 --sim ERA5 --ext
+mode extreme: activated
+Processing ERA5 for year 2021 and month 01
+Processing ERA5 for year 2021 and month 02
+Processing ERA5 for year 2021 and month 03
+Processing ERA5 for year 2021 and month 04
+Processing ERA5 for year 2021 and month 05
+Processing ERA5 for year 2021 and month 06
+Processing ERA5 for year 2021 and month 07
+Processing ERA5 for year 2021 and month 08
+Processing ERA5 for year 2021 and month 09
+Processing ERA5 for year 2021 and month 10
+Processing ERA5 for year 2021 and month 11
+Processing ERA5 for year 2021 and month 12
+#executed by process	18 in 1069.46s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2021 --sim ERA5 --ext
+mode extreme: activated
+Processing ERA5 for year 2022 and month 01
+Processing ERA5 for year 2022 and month 02
+Processing ERA5 for year 2022 and month 03
+Processing ERA5 for year 2022 and month 04
+Processing ERA5 for year 2022 and month 05
+Processing ERA5 for year 2022 and month 06
+Processing ERA5 for year 2022 and month 07
+Processing ERA5 for year 2022 and month 08
+Processing ERA5 for year 2022 and month 09
+Processing ERA5 for year 2022 and month 10
+Processing ERA5 for year 2022 and month 11
+Processing ERA5 for year 2022 and month 12
+#executed by process	15 in 1051.78s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2022 --sim ERA5 --ext
+mode extreme: activated
+Processing UBB for year 1979 and month 01
+Processing UBB for year 1979 and month 02
+Processing UBB for year 1979 and month 03
+Processing UBB for year 1979 and month 04
+Processing UBB for year 1979 and month 05
+Processing UBB for year 1979 and month 06
+Processing UBB for year 1979 and month 07
+Processing UBB for year 1979 and month 08
+Processing UBB for year 1979 and month 09
+Processing UBB for year 1979 and month 10
+Processing UBB for year 1979 and month 11
+Processing UBB for year 1979 and month 12
+#executed by process	36 in 1627.18s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1979 --sim UBB --ext
+mode extreme: activated
+Processing UBB for year 1981 and month 01
+Processing UBB for year 1981 and month 02
+Processing UBB for year 1981 and month 03
+Processing UBB for year 1981 and month 04
+Processing UBB for year 1981 and month 05
+Processing UBB for year 1981 and month 06
+Processing UBB for year 1981 and month 07
+Processing UBB for year 1981 and month 08
+Processing UBB for year 1981 and month 09
+Processing UBB for year 1981 and month 10
+Processing UBB for year 1981 and month 11
+Processing UBB for year 1981 and month 12
+#executed by process	20 in 4120.2s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1981 --sim UBB --ext
+mode extreme: activated
+Processing UBB for year 2014 and month 01
+Processing UBB for year 2014 and month 02
+Processing UBB for year 2014 and month 03
+Processing UBB for year 2014 and month 04
+Processing UBB for year 2014 and month 05
+Processing UBB for year 2014 and month 06
+Processing UBB for year 2014 and month 07
+Processing UBB for year 2014 and month 08
+Processing UBB for year 2014 and month 09
+Processing UBB for year 2014 and month 10
+Processing UBB for year 2014 and month 11
+Processing UBB for year 2014 and month 12
+#executed by process	21 in 3796.05s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2014 --sim UBB --ext
+mode extreme: activated
+Processing UBB for year 2012 and month 01
+Processing UBB for year 2012 and month 02
+Processing UBB for year 2012 and month 03
+Processing UBB for year 2012 and month 04
+Processing UBB for year 2012 and month 05
+Processing UBB for year 2012 and month 06
+Processing UBB for year 2012 and month 07
+Processing UBB for year 2012 and month 08
+Processing UBB for year 2012 and month 09
+Processing UBB for year 2012 and month 10
+Processing UBB for year 2012 and month 11
+Processing UBB for year 2012 and month 12
+#executed by process	19 in 4204.64s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2012 --sim UBB --ext
+mode extreme: activated
+Processing UBB for year 2015 and month 01
+Processing UBB for year 2015 and month 02
+Processing UBB for year 2015 and month 03
+Processing UBB for year 2015 and month 04
+Processing UBB for year 2015 and month 05
+Processing UBB for year 2015 and month 06
+Processing UBB for year 2015 and month 07
+Processing UBB for year 2015 and month 08
+Processing UBB for year 2015 and month 09
+Processing UBB for year 2015 and month 10
+Processing UBB for year 2015 and month 11
+Processing UBB for year 2015 and month 12
+#executed by process	39 in 4143.84s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2015 --sim UBB --ext
+mode extreme: activated
+Processing UBB for year 1984 and month 01
+Processing UBB for year 1984 and month 02
+Processing UBB for year 1984 and month 03
+Processing UBB for year 1984 and month 04
+Processing UBB for year 1984 and month 05
+Processing UBB for year 1984 and month 06
+Processing UBB for year 1984 and month 07
+Processing UBB for year 1984 and month 08
+Processing UBB for year 1984 and month 09
+Processing UBB for year 1984 and month 10
+Processing UBB for year 1984 and month 11
+Processing UBB for year 1984 and month 12
+#executed by process	35 in 4864.45s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1984 --sim UBB --ext
+mode extreme: activated
+Processing UBB for year 1988 and month 01
+Processing UBB for year 1988 and month 02
+Processing UBB for year 1988 and month 03
+Processing UBB for year 1988 and month 04
+Processing UBB for year 1988 and month 05
+Processing UBB for year 1988 and month 06
+Processing UBB for year 1988 and month 07
+Processing UBB for year 1988 and month 08
+Processing UBB for year 1988 and month 09
+Processing UBB for year 1988 and month 10
+Processing UBB for year 1988 and month 11
+Processing UBB for year 1988 and month 12
+#executed by process	38 in 4853.49s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1988 --sim UBB --ext
+mode extreme: activated
+Processing UBB for year 1992 and month 01
+Processing UBB for year 1992 and month 02
+Processing UBB for year 1992 and month 03
+Processing UBB for year 1992 and month 04
+Processing UBB for year 1992 and month 05
+Processing UBB for year 1992 and month 06
+Processing UBB for year 1992 and month 07
+Processing UBB for year 1992 and month 08
+Processing UBB for year 1992 and month 09
+Processing UBB for year 1992 and month 10
+Processing UBB for year 1992 and month 11
+Processing UBB for year 1992 and month 12
+#executed by process	37 in 4894.52s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1992 --sim UBB --ext
+mode extreme: activated
+Processing UBB for year 1989 and month 01
+Processing UBB for year 1989 and month 02
+Processing UBB for year 1989 and month 03
+Processing UBB for year 1989 and month 04
+Processing UBB for year 1989 and month 05
+Processing UBB for year 1989 and month 06
+Processing UBB for year 1989 and month 07
+Processing UBB for year 1989 and month 08
+Processing UBB for year 1989 and month 09
+Processing UBB for year 1989 and month 10
+Processing UBB for year 1989 and month 11
+Processing UBB for year 1989 and month 12
+#executed by process	29 in 4948.51s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1989 --sim UBB --ext
+mode extreme: activated
+Processing UBB for year 1980 and month 01
+Processing UBB for year 1980 and month 02
+Processing UBB for year 1980 and month 03
+Processing UBB for year 1980 and month 04
+Processing UBB for year 1980 and month 05
+Processing UBB for year 1980 and month 06
+Processing UBB for year 1980 and month 07
+Processing UBB for year 1980 and month 08
+Processing UBB for year 1980 and month 09
+Processing UBB for year 1980 and month 10
+Processing UBB for year 1980 and month 11
+Processing UBB for year 1980 and month 12
+#executed by process	17 in 5059.53s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1980 --sim UBB --ext
+mode extreme: activated
+Processing UBB for year 1993 and month 01
+Processing UBB for year 1993 and month 02
+Processing UBB for year 1993 and month 03
+Processing UBB for year 1993 and month 04
+Processing UBB for year 1993 and month 05
+Processing UBB for year 1993 and month 06
+Processing UBB for year 1993 and month 07
+Processing UBB for year 1993 and month 08
+Processing UBB for year 1993 and month 09
+Processing UBB for year 1993 and month 10
+Processing UBB for year 1993 and month 11
+Processing UBB for year 1993 and month 12
+#executed by process	27 in 4998.07s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1993 --sim UBB --ext
+mode extreme: activated
+Processing UBB for year 1986 and month 01
+Processing UBB for year 1986 and month 02
+Processing UBB for year 1986 and month 03
+Processing UBB for year 1986 and month 04
+Processing UBB for year 1986 and month 05
+Processing UBB for year 1986 and month 06
+Processing UBB for year 1986 and month 07
+Processing UBB for year 1986 and month 08
+Processing UBB for year 1986 and month 09
+Processing UBB for year 1986 and month 10
+Processing UBB for year 1986 and month 11
+Processing UBB for year 1986 and month 12
+#executed by process	31 in 5092.72s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1986 --sim UBB --ext
+mode extreme: activated
+Processing UBB for year 2013 and month 01
+Processing UBB for year 2013 and month 02
+Processing UBB for year 2013 and month 03
+Processing UBB for year 2013 and month 04
+Processing UBB for year 2013 and month 05
+Processing UBB for year 2013 and month 06
+Processing UBB for year 2013 and month 07
+Processing UBB for year 2013 and month 08
+Processing UBB for year 2013 and month 09
+Processing UBB for year 2013 and month 10
+Processing UBB for year 2013 and month 11
+Processing UBB for year 2013 and month 12
+#executed by process	16 in 4592.62s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2013 --sim UBB --ext
+mode extreme: activated
+Processing UBB for year 1982 and month 01
+Processing UBB for year 1982 and month 02
+Processing UBB for year 1982 and month 03
+Processing UBB for year 1982 and month 04
+Processing UBB for year 1982 and month 05
+Processing UBB for year 1982 and month 06
+Processing UBB for year 1982 and month 07
+Processing UBB for year 1982 and month 08
+Processing UBB for year 1982 and month 09
+Processing UBB for year 1982 and month 10
+Processing UBB for year 1982 and month 11
+Processing UBB for year 1982 and month 12
+#executed by process	12 in 5201.74s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1982 --sim UBB --ext
+mode extreme: activated
+Processing UBB for year 1983 and month 01
+Processing UBB for year 1983 and month 02
+Processing UBB for year 1983 and month 03
+Processing UBB for year 1983 and month 04
+Processing UBB for year 1983 and month 05
+Processing UBB for year 1983 and month 06
+Processing UBB for year 1983 and month 07
+Processing UBB for year 1983 and month 08
+Processing UBB for year 1983 and month 09
+Processing UBB for year 1983 and month 10
+Processing UBB for year 1983 and month 11
+Processing UBB for year 1983 and month 12
+#executed by process	13 in 5244.18s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1983 --sim UBB --ext
+mode extreme: activated
+Processing UBB for year 1987 and month 01
+Processing UBB for year 1987 and month 02
+Processing UBB for year 1987 and month 03
+Processing UBB for year 1987 and month 04
+Processing UBB for year 1987 and month 05
+Processing UBB for year 1987 and month 06
+Processing UBB for year 1987 and month 07
+Processing UBB for year 1987 and month 08
+Processing UBB for year 1987 and month 09
+Processing UBB for year 1987 and month 10
+Processing UBB for year 1987 and month 11
+Processing UBB for year 1987 and month 12
+#executed by process	1 in 5287.73s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1987 --sim UBB --ext
+mode extreme: activated
+Processing UBB for year 1991 and month 01
+Processing UBB for year 1991 and month 02
+Processing UBB for year 1991 and month 03
+Processing UBB for year 1991 and month 04
+Processing UBB for year 1991 and month 05
+Processing UBB for year 1991 and month 06
+Processing UBB for year 1991 and month 07
+Processing UBB for year 1991 and month 08
+Processing UBB for year 1991 and month 09
+Processing UBB for year 1991 and month 10
+Processing UBB for year 1991 and month 11
+Processing UBB for year 1991 and month 12
+#executed by process	3 in 5611.04s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1991 --sim UBB --ext
+mode extreme: activated
+Processing UBB for year 1990 and month 01
+Processing UBB for year 1990 and month 02
+Processing UBB for year 1990 and month 03
+Processing UBB for year 1990 and month 04
+Processing UBB for year 1990 and month 05
+Processing UBB for year 1990 and month 06
+Processing UBB for year 1990 and month 07
+Processing UBB for year 1990 and month 08
+Processing UBB for year 1990 and month 09
+Processing UBB for year 1990 and month 10
+Processing UBB for year 1990 and month 11
+Processing UBB for year 1990 and month 12
+#executed by process	14 in 5617.66s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1990 --sim UBB --ext
+mode extreme: activated
+Processing UBB for year 1985 and month 01
+Processing UBB for year 1985 and month 02
+Processing UBB for year 1985 and month 03
+Processing UBB for year 1985 and month 04
+Processing UBB for year 1985 and month 05
+Processing UBB for year 1985 and month 06
+Processing UBB for year 1985 and month 07
+Processing UBB for year 1985 and month 08
+Processing UBB for year 1985 and month 09
+Processing UBB for year 1985 and month 10
+Processing UBB for year 1985 and month 11
+Processing UBB for year 1985 and month 12
+#executed by process	2 in 5652.51s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1985 --sim UBB --ext
+mode extreme: activated
+Processing UBB for year 2010 and month 01
+Processing UBB for year 2010 and month 02
+Processing UBB for year 2010 and month 03
+Processing UBB for year 2010 and month 04
+Processing UBB for year 2010 and month 05
+Processing UBB for year 2010 and month 06
+Processing UBB for year 2010 and month 07
+Processing UBB for year 2010 and month 08
+Processing UBB for year 2010 and month 09
+Processing UBB for year 2010 and month 10
+Processing UBB for year 2010 and month 11
+Processing UBB for year 2010 and month 12
+#executed by process	25 in 5591.19s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2010 --sim UBB --ext
+mode extreme: activated
+Processing UBB for year 2016 and month 01
+Processing UBB for year 2016 and month 02
+Processing UBB for year 2016 and month 03
+Processing UBB for year 2016 and month 04
+Processing UBB for year 2016 and month 05
+Processing UBB for year 2016 and month 06
+Processing UBB for year 2016 and month 07
+Processing UBB for year 2016 and month 08
+Processing UBB for year 2016 and month 09
+Processing UBB for year 2016 and month 10
+Processing UBB for year 2016 and month 11
+Processing UBB for year 2016 and month 12
+#executed by process	18 in 4924.86s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2016 --sim UBB --ext
+mode extreme: activated
+Processing UBB for year 1996 and month 01
+Processing UBB for year 1996 and month 02
+Processing UBB for year 1996 and month 03
+Processing UBB for year 1996 and month 04
+Processing UBB for year 1996 and month 05
+Processing UBB for year 1996 and month 06
+Processing UBB for year 1996 and month 07
+Processing UBB for year 1996 and month 08
+Processing UBB for year 1996 and month 09
+Processing UBB for year 1996 and month 10
+Processing UBB for year 1996 and month 11
+Processing UBB for year 1996 and month 12
+#executed by process	6 in 6009.52s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1996 --sim UBB --ext
+mode extreme: activated
+Processing UBB for year 2017 and month 01
+Processing UBB for year 2017 and month 02
+Processing UBB for year 2017 and month 03
+Processing UBB for year 2017 and month 04
+Processing UBB for year 2017 and month 05
+Processing UBB for year 2017 and month 06
+Processing UBB for year 2017 and month 07
+Processing UBB for year 2017 and month 08
+Processing UBB for year 2017 and month 09
+Processing UBB for year 2017 and month 10
+Processing UBB for year 2017 and month 11
+Processing UBB for year 2017 and month 12
+#executed by process	15 in 5117.91s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2017 --sim UBB --ext
+mode extreme: activated
+Processing UBB for year 2011 and month 01
+Processing UBB for year 2011 and month 02
+Processing UBB for year 2011 and month 03
+Processing UBB for year 2011 and month 04
+Processing UBB for year 2011 and month 05
+Processing UBB for year 2011 and month 06
+Processing UBB for year 2011 and month 07
+Processing UBB for year 2011 and month 08
+Processing UBB for year 2011 and month 09
+Processing UBB for year 2011 and month 10
+Processing UBB for year 2011 and month 11
+Processing UBB for year 2011 and month 12
+#executed by process	23 in 6100.85s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2011 --sim UBB --ext
+mode extreme: activated
+Processing UBB for year 1999 and month 01
+Processing UBB for year 1999 and month 02
+Processing UBB for year 1999 and month 03
+Processing UBB for year 1999 and month 04
+Processing UBB for year 1999 and month 05
+Processing UBB for year 1999 and month 06
+Processing UBB for year 1999 and month 07
+Processing UBB for year 1999 and month 08
+Processing UBB for year 1999 and month 09
+Processing UBB for year 1999 and month 10
+Processing UBB for year 1999 and month 11
+Processing UBB for year 1999 and month 12
+#executed by process	8 in 6401.15s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1999 --sim UBB --ext
+mode extreme: activated
+Processing UBB for year 1998 and month 01
+Processing UBB for year 1998 and month 02
+Processing UBB for year 1998 and month 03
+Processing UBB for year 1998 and month 04
+Processing UBB for year 1998 and month 05
+Processing UBB for year 1998 and month 06
+Processing UBB for year 1998 and month 07
+Processing UBB for year 1998 and month 08
+Processing UBB for year 1998 and month 09
+Processing UBB for year 1998 and month 10
+Processing UBB for year 1998 and month 11
+Processing UBB for year 1998 and month 12
+#executed by process	7 in 6407.49s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1998 --sim UBB --ext
+mode extreme: activated
+Processing UBB for year 1994 and month 01
+Processing UBB for year 1994 and month 02
+Processing UBB for year 1994 and month 03
+Processing UBB for year 1994 and month 04
+Processing UBB for year 1994 and month 05
+Processing UBB for year 1994 and month 06
+Processing UBB for year 1994 and month 07
+Processing UBB for year 1994 and month 08
+Processing UBB for year 1994 and month 09
+Processing UBB for year 1994 and month 10
+Processing UBB for year 1994 and month 11
+Processing UBB for year 1994 and month 12
+#executed by process	11 in 6431.34s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1994 --sim UBB --ext
+mode extreme: activated
+Processing UBB for year 2000 and month 01
+Processing UBB for year 2000 and month 02
+Processing UBB for year 2000 and month 03
+Processing UBB for year 2000 and month 04
+Processing UBB for year 2000 and month 05
+Processing UBB for year 2000 and month 06
+Processing UBB for year 2000 and month 07
+Processing UBB for year 2000 and month 08
+Processing UBB for year 2000 and month 09
+Processing UBB for year 2000 and month 10
+Processing UBB for year 2000 and month 11
+Processing UBB for year 2000 and month 12
+#executed by process	10 in 6402.28s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2000 --sim UBB --ext
+mode extreme: activated
+Processing UBB for year 2001 and month 01
+Processing UBB for year 2001 and month 02
+Processing UBB for year 2001 and month 03
+Processing UBB for year 2001 and month 04
+Processing UBB for year 2001 and month 05
+Processing UBB for year 2001 and month 06
+Processing UBB for year 2001 and month 07
+Processing UBB for year 2001 and month 08
+Processing UBB for year 2001 and month 09
+Processing UBB for year 2001 and month 10
+Processing UBB for year 2001 and month 11
+Processing UBB for year 2001 and month 12
+#executed by process	33 in 6405.32s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2001 --sim UBB --ext
+mode extreme: activated
+Processing UBD for year 1979 and month 01
+Processing UBD for year 1979 and month 02
+Processing UBD for year 1979 and month 03
+Processing UBD for year 1979 and month 04
+Processing UBD for year 1979 and month 05
+Processing UBD for year 1979 and month 06
+Processing UBD for year 1979 and month 07
+Processing UBD for year 1979 and month 08
+Processing UBD for year 1979 and month 09
+Processing UBD for year 1979 and month 10
+Processing UBD for year 1979 and month 11
+Processing UBD for year 1979 and month 12
+#executed by process	38 in 1650.59s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1979 --sim UBD --ext
+mode extreme: activated
+Processing UBB for year 2002 and month 01
+Processing UBB for year 2002 and month 02
+Processing UBB for year 2002 and month 03
+Processing UBB for year 2002 and month 04
+Processing UBB for year 2002 and month 05
+Processing UBB for year 2002 and month 06
+Processing UBB for year 2002 and month 07
+Processing UBB for year 2002 and month 08
+Processing UBB for year 2002 and month 09
+Processing UBB for year 2002 and month 10
+Processing UBB for year 2002 and month 11
+Processing UBB for year 2002 and month 12
+#executed by process	9 in 6433.66s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2002 --sim UBB --ext
+mode extreme: activated
+Processing UBB for year 2009 and month 01
+Processing UBB for year 2009 and month 02
+Processing UBB for year 2009 and month 03
+Processing UBB for year 2009 and month 04
+Processing UBB for year 2009 and month 05
+Processing UBB for year 2009 and month 06
+Processing UBB for year 2009 and month 07
+Processing UBB for year 2009 and month 08
+Processing UBB for year 2009 and month 09
+Processing UBB for year 2009 and month 10
+Processing UBB for year 2009 and month 11
+Processing UBB for year 2009 and month 12
+#executed by process	24 in 6421.84s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2009 --sim UBB --ext
+mode extreme: activated
+Processing UBB for year 1997 and month 01
+Processing UBB for year 1997 and month 02
+Processing UBB for year 1997 and month 03
+Processing UBB for year 1997 and month 04
+Processing UBB for year 1997 and month 05
+Processing UBB for year 1997 and month 06
+Processing UBB for year 1997 and month 07
+Processing UBB for year 1997 and month 08
+Processing UBB for year 1997 and month 09
+Processing UBB for year 1997 and month 10
+Processing UBB for year 1997 and month 11
+Processing UBB for year 1997 and month 12
+#executed by process	4 in 6588.11s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1997 --sim UBB --ext
+mode extreme: activated
+Processing UBB for year 2008 and month 01
+Processing UBB for year 2008 and month 02
+Processing UBB for year 2008 and month 03
+Processing UBB for year 2008 and month 04
+Processing UBB for year 2008 and month 05
+Processing UBB for year 2008 and month 06
+Processing UBB for year 2008 and month 07
+Processing UBB for year 2008 and month 08
+Processing UBB for year 2008 and month 09
+Processing UBB for year 2008 and month 10
+Processing UBB for year 2008 and month 11
+Processing UBB for year 2008 and month 12
+#executed by process	28 in 6485.01s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2008 --sim UBB --ext
+mode extreme: activated
+Processing UBB for year 2006 and month 01
+Processing UBB for year 2006 and month 02
+Processing UBB for year 2006 and month 03
+Processing UBB for year 2006 and month 04
+Processing UBB for year 2006 and month 05
+Processing UBB for year 2006 and month 06
+Processing UBB for year 2006 and month 07
+Processing UBB for year 2006 and month 08
+Processing UBB for year 2006 and month 09
+Processing UBB for year 2006 and month 10
+Processing UBB for year 2006 and month 11
+Processing UBB for year 2006 and month 12
+#executed by process	32 in 6524.92s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2006 --sim UBB --ext
+mode extreme: activated
+Processing UBB for year 2018 and month 01
+Processing UBB for year 2018 and month 02
+Processing UBB for year 2018 and month 03
+Processing UBB for year 2018 and month 04
+Processing UBB for year 2018 and month 05
+Processing UBB for year 2018 and month 06
+Processing UBB for year 2018 and month 07
+Processing UBB for year 2018 and month 08
+Processing UBB for year 2018 and month 09
+Processing UBB for year 2018 and month 10
+Processing UBB for year 2018 and month 11
+Processing UBB for year 2018 and month 12
+#executed by process	36 in 5100.47s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2018 --sim UBB --ext
+mode extreme: activated
+Processing UBB for year 2003 and month 01
+Processing UBB for year 2003 and month 02
+Processing UBB for year 2003 and month 03
+Processing UBB for year 2003 and month 04
+Processing UBB for year 2003 and month 05
+Processing UBB for year 2003 and month 06
+Processing UBB for year 2003 and month 07
+Processing UBB for year 2003 and month 08
+Processing UBB for year 2003 and month 09
+Processing UBB for year 2003 and month 10
+Processing UBB for year 2003 and month 11
+Processing UBB for year 2003 and month 12
+#executed by process	26 in 6598.87s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2003 --sim UBB --ext
+mode extreme: activated
+Processing UBB for year 2004 and month 01
+Processing UBB for year 2004 and month 02
+Processing UBB for year 2004 and month 03
+Processing UBB for year 2004 and month 04
+Processing UBB for year 2004 and month 05
+Processing UBB for year 2004 and month 06
+Processing UBB for year 2004 and month 07
+Processing UBB for year 2004 and month 08
+Processing UBB for year 2004 and month 09
+Processing UBB for year 2004 and month 10
+Processing UBB for year 2004 and month 11
+Processing UBB for year 2004 and month 12
+#executed by process	22 in 6604.57s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2004 --sim UBB --ext
+mode extreme: activated
+Processing UBB for year 2007 and month 01
+Processing UBB for year 2007 and month 02
+Processing UBB for year 2007 and month 03
+Processing UBB for year 2007 and month 04
+Processing UBB for year 2007 and month 05
+Processing UBB for year 2007 and month 06
+Processing UBB for year 2007 and month 07
+Processing UBB for year 2007 and month 08
+Processing UBB for year 2007 and month 09
+Processing UBB for year 2007 and month 10
+Processing UBB for year 2007 and month 11
+Processing UBB for year 2007 and month 12
+#executed by process	34 in 6712.09s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2007 --sim UBB --ext
+mode extreme: activated
+Processing UBB for year 1995 and month 01
+Processing UBB for year 1995 and month 02
+Processing UBB for year 1995 and month 03
+Processing UBB for year 1995 and month 04
+Processing UBB for year 1995 and month 05
+Processing UBB for year 1995 and month 06
+Processing UBB for year 1995 and month 07
+Processing UBB for year 1995 and month 08
+Processing UBB for year 1995 and month 09
+Processing UBB for year 1995 and month 10
+Processing UBB for year 1995 and month 11
+Processing UBB for year 1995 and month 12
+#executed by process	5 in 6890.49s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1995 --sim UBB --ext
+mode extreme: activated
+Processing UBB for year 2005 and month 01
+Processing UBB for year 2005 and month 02
+Processing UBB for year 2005 and month 03
+Processing UBB for year 2005 and month 04
+Processing UBB for year 2005 and month 05
+Processing UBB for year 2005 and month 06
+Processing UBB for year 2005 and month 07
+Processing UBB for year 2005 and month 08
+Processing UBB for year 2005 and month 09
+Processing UBB for year 2005 and month 10
+Processing UBB for year 2005 and month 11
+Processing UBB for year 2005 and month 12
+#executed by process	30 in 6812.59s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2005 --sim UBB --ext
+mode extreme: activated
+Processing UBB for year 2019 and month 01
+Processing UBB for year 2019 and month 02
+Processing UBB for year 2019 and month 03
+Processing UBB for year 2019 and month 04
+Processing UBB for year 2019 and month 05
+Processing UBB for year 2019 and month 06
+Processing UBB for year 2019 and month 07
+Processing UBB for year 2019 and month 08
+Processing UBB for year 2019 and month 09
+Processing UBB for year 2019 and month 10
+Processing UBB for year 2019 and month 11
+Processing UBB for year 2019 and month 12
+#executed by process	20 in 4158.44s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2019 --sim UBB --ext
+mode extreme: activated
+Processing UBB for year 2020 and month 01
+Processing UBB for year 2020 and month 02
+Processing UBB for year 2020 and month 03
+Processing UBB for year 2020 and month 04
+Processing UBB for year 2020 and month 05
+Processing UBB for year 2020 and month 06
+Processing UBB for year 2020 and month 07
+Processing UBB for year 2020 and month 08
+Processing UBB for year 2020 and month 09
+Processing UBB for year 2020 and month 10
+Processing UBB for year 2020 and month 11
+Processing UBB for year 2020 and month 12
+#executed by process	21 in 3931.88s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2020 --sim UBB --ext
+mode extreme: activated
+Processing UBB for year 2022 and month 01
+Processing UBB for year 2022 and month 02
+Processing UBB for year 2022 and month 03
+Processing UBB for year 2022 and month 04
+Processing UBB for year 2022 and month 05
+Processing UBB for year 2022 and month 06
+Processing UBB for year 2022 and month 07
+Processing UBB for year 2022 and month 08
+Processing UBB for year 2022 and month 09
+Processing UBB for year 2022 and month 10
+Processing UBB for year 2022 and month 11
+Processing UBB for year 2022 and month 12
+#executed by process	39 in 3969.72s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2022 --sim UBB --ext
+mode extreme: activated
+Processing UBB for year 2021 and month 01
+Processing UBB for year 2021 and month 02
+Processing UBB for year 2021 and month 03
+Processing UBB for year 2021 and month 04
+Processing UBB for year 2021 and month 05
+Processing UBB for year 2021 and month 06
+Processing UBB for year 2021 and month 07
+Processing UBB for year 2021 and month 08
+Processing UBB for year 2021 and month 09
+Processing UBB for year 2021 and month 10
+Processing UBB for year 2021 and month 11
+Processing UBB for year 2021 and month 12
+#executed by process	19 in 4528.61s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2021 --sim UBB --ext
+mode extreme: activated
+Processing UBE for year 1979 and month 01
+Processing UBE for year 1979 and month 02
+Processing UBE for year 1979 and month 03
+Processing UBE for year 1979 and month 04
+Processing UBE for year 1979 and month 05
+Processing UBE for year 1979 and month 06
+Processing UBE for year 1979 and month 07
+Processing UBE for year 1979 and month 08
+Processing UBE for year 1979 and month 09
+Processing UBE for year 1979 and month 10
+Processing UBE for year 1979 and month 11
+Processing UBE for year 1979 and month 12
+#executed by process	21 in 1213.37s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1979 --sim UBE --ext
+mode extreme: activated
+Processing UBB for year 2023 and month 01
+Processing UBB for year 2023 and month 02
+Processing UBB for year 2023 and month 03
+Processing UBB for year 2023 and month 04
+Processing UBB for year 2023 and month 05
+Processing UBB for year 2023 and month 06
+Processing UBB for year 2023 and month 07
+Processing UBB for year 2023 and month 08
+Processing UBB for year 2023 and month 09
+Processing UBB for year 2023 and month 10
+Processing UBB for year 2023 and month 11
+Processing UBB for year 2023 and month 12
+#executed by process	35 in 4709.83s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2023 --sim UBB --ext
+mode extreme: activated
+Processing UBD for year 1980 and month 01
+Processing UBD for year 1980 and month 02
+Processing UBD for year 1980 and month 03
+Processing UBD for year 1980 and month 04
+Processing UBD for year 1980 and month 05
+Processing UBD for year 1980 and month 06
+Processing UBD for year 1980 and month 07
+Processing UBD for year 1980 and month 08
+Processing UBD for year 1980 and month 09
+Processing UBD for year 1980 and month 10
+Processing UBD for year 1980 and month 11
+Processing UBD for year 1980 and month 12
+#executed by process	37 in 4979.14s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1980 --sim UBD --ext
+mode extreme: activated
+Processing UBD for year 1981 and month 01
+Processing UBD for year 1981 and month 02
+Processing UBD for year 1981 and month 03
+Processing UBD for year 1981 and month 04
+Processing UBD for year 1981 and month 05
+Processing UBD for year 1981 and month 06
+Processing UBD for year 1981 and month 07
+Processing UBD for year 1981 and month 08
+Processing UBD for year 1981 and month 09
+Processing UBD for year 1981 and month 10
+Processing UBD for year 1981 and month 11
+Processing UBD for year 1981 and month 12
+#executed by process	29 in 5039.4s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1981 --sim UBD --ext
+mode extreme: activated
+Processing UBD for year 1983 and month 01
+Processing UBD for year 1983 and month 02
+Processing UBD for year 1983 and month 03
+Processing UBD for year 1983 and month 04
+Processing UBD for year 1983 and month 05
+Processing UBD for year 1983 and month 06
+Processing UBD for year 1983 and month 07
+Processing UBD for year 1983 and month 08
+Processing UBD for year 1983 and month 09
+Processing UBD for year 1983 and month 10
+Processing UBD for year 1983 and month 11
+Processing UBD for year 1983 and month 12
+#executed by process	27 in 5132.57s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1983 --sim UBD --ext
+mode extreme: activated
+Processing UBD for year 1984 and month 01
+Processing UBD for year 1984 and month 02
+Processing UBD for year 1984 and month 03
+Processing UBD for year 1984 and month 04
+Processing UBD for year 1984 and month 05
+Processing UBD for year 1984 and month 06
+Processing UBD for year 1984 and month 07
+Processing UBD for year 1984 and month 08
+Processing UBD for year 1984 and month 09
+Processing UBD for year 1984 and month 10
+Processing UBD for year 1984 and month 11
+Processing UBD for year 1984 and month 12
+#executed by process	31 in 5407.17s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1984 --sim UBD --ext
+mode extreme: activated
+Processing UBD for year 1985 and month 01
+Processing UBD for year 1985 and month 02
+Processing UBD for year 1985 and month 03
+Processing UBD for year 1985 and month 04
+Processing UBD for year 1985 and month 05
+Processing UBD for year 1985 and month 06
+Processing UBD for year 1985 and month 07
+Processing UBD for year 1985 and month 08
+Processing UBD for year 1985 and month 09
+Processing UBD for year 1985 and month 10
+Processing UBD for year 1985 and month 11
+Processing UBD for year 1985 and month 12
+#executed by process	16 in 5465.66s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1985 --sim UBD --ext
+mode extreme: activated
+Processing UBD for year 1982 and month 01
+Processing UBD for year 1982 and month 02
+Processing UBD for year 1982 and month 03
+Processing UBD for year 1982 and month 04
+Processing UBD for year 1982 and month 05
+Processing UBD for year 1982 and month 06
+Processing UBD for year 1982 and month 07
+Processing UBD for year 1982 and month 08
+Processing UBD for year 1982 and month 09
+Processing UBD for year 1982 and month 10
+Processing UBD for year 1982 and month 11
+Processing UBD for year 1982 and month 12
+#executed by process	17 in 5658.2s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1982 --sim UBD --ext
+mode extreme: activated
+Processing UBD for year 2002 and month 01
+Processing UBD for year 2002 and month 02
+Processing UBD for year 2002 and month 03
+Processing UBD for year 2002 and month 04
+Processing UBD for year 2002 and month 05
+Processing UBD for year 2002 and month 06
+Processing UBD for year 2002 and month 07
+Processing UBD for year 2002 and month 08
+Processing UBD for year 2002 and month 09
+Processing UBD for year 2002 and month 10
+Processing UBD for year 2002 and month 11
+Processing UBD for year 2002 and month 12
+#executed by process	38 in 4618.83s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2002 --sim UBD --ext
+mode extreme: activated
+Processing UBD for year 1986 and month 01
+Processing UBD for year 1986 and month 02
+Processing UBD for year 1986 and month 03
+Processing UBD for year 1986 and month 04
+Processing UBD for year 1986 and month 05
+Processing UBD for year 1986 and month 06
+Processing UBD for year 1986 and month 07
+Processing UBD for year 1986 and month 08
+Processing UBD for year 1986 and month 09
+Processing UBD for year 1986 and month 10
+Processing UBD for year 1986 and month 11
+Processing UBD for year 1986 and month 12
+#executed by process	12 in 6206.98s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1986 --sim UBD --ext
+mode extreme: activated
+Processing UBD for year 1990 and month 01
+Processing UBD for year 1990 and month 02
+Processing UBD for year 1990 and month 03
+Processing UBD for year 1990 and month 04
+Processing UBD for year 1990 and month 05
+Processing UBD for year 1990 and month 06
+Processing UBD for year 1990 and month 07
+Processing UBD for year 1990 and month 08
+Processing UBD for year 1990 and month 09
+Processing UBD for year 1990 and month 10
+Processing UBD for year 1990 and month 11
+Processing UBD for year 1990 and month 12
+#executed by process	14 in 5894.49s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1990 --sim UBD --ext
+mode extreme: activated
+Processing UBD for year 2008 and month 01
+Processing UBD for year 2008 and month 02
+Processing UBD for year 2008 and month 03
+Processing UBD for year 2008 and month 04
+Processing UBD for year 2008 and month 05
+Processing UBD for year 2008 and month 06
+Processing UBD for year 2008 and month 07
+Processing UBD for year 2008 and month 08
+Processing UBD for year 2008 and month 09
+Processing UBD for year 2008 and month 10
+Processing UBD for year 2008 and month 11
+Processing UBD for year 2008 and month 12
+#executed by process	36 in 5035.38s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2008 --sim UBD --ext
+mode extreme: activated
+Processing UBD for year 1988 and month 01
+Processing UBD for year 1988 and month 02
+Processing UBD for year 1988 and month 03
+Processing UBD for year 1988 and month 04
+Processing UBD for year 1988 and month 05
+Processing UBD for year 1988 and month 06
+Processing UBD for year 1988 and month 07
+Processing UBD for year 1988 and month 08
+Processing UBD for year 1988 and month 09
+Processing UBD for year 1988 and month 10
+Processing UBD for year 1988 and month 11
+Processing UBD for year 1988 and month 12
+#executed by process	1 in 6452.18s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1988 --sim UBD --ext
+mode extreme: activated
+Processing UBD for year 1987 and month 01
+Processing UBD for year 1987 and month 02
+Processing UBD for year 1987 and month 03
+Processing UBD for year 1987 and month 04
+Processing UBD for year 1987 and month 05
+Processing UBD for year 1987 and month 06
+Processing UBD for year 1987 and month 07
+Processing UBD for year 1987 and month 08
+Processing UBD for year 1987 and month 09
+Processing UBD for year 1987 and month 10
+Processing UBD for year 1987 and month 11
+Processing UBD for year 1987 and month 12
+#executed by process	13 in 6609.33s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1987 --sim UBD --ext
+mode extreme: activated
+Processing UBD for year 1992 and month 01
+Processing UBD for year 1992 and month 02
+Processing UBD for year 1992 and month 03
+Processing UBD for year 1992 and month 04
+Processing UBD for year 1992 and month 05
+Processing UBD for year 1992 and month 06
+Processing UBD for year 1992 and month 07
+Processing UBD for year 1992 and month 08
+Processing UBD for year 1992 and month 09
+Processing UBD for year 1992 and month 10
+Processing UBD for year 1992 and month 11
+Processing UBD for year 1992 and month 12
+#executed by process	25 in 6145.32s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1992 --sim UBD --ext
+mode extreme: activated
+Processing UBD for year 1991 and month 01
+Processing UBD for year 1991 and month 02
+Processing UBD for year 1991 and month 03
+Processing UBD for year 1991 and month 04
+Processing UBD for year 1991 and month 05
+Processing UBD for year 1991 and month 06
+Processing UBD for year 1991 and month 07
+Processing UBD for year 1991 and month 08
+Processing UBD for year 1991 and month 09
+Processing UBD for year 1991 and month 10
+Processing UBD for year 1991 and month 11
+Processing UBD for year 1991 and month 12
+#executed by process	2 in 6476.82s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1991 --sim UBD --ext
+mode extreme: activated
+Processing UBD for year 2014 and month 01
+Processing UBD for year 2014 and month 02
+Processing UBD for year 2014 and month 03
+Processing UBD for year 2014 and month 04
+Processing UBD for year 2014 and month 05
+Processing UBD for year 2014 and month 06
+Processing UBD for year 2014 and month 07
+Processing UBD for year 2014 and month 08
+Processing UBD for year 2014 and month 09
+Processing UBD for year 2014 and month 10
+Processing UBD for year 2014 and month 11
+Processing UBD for year 2014 and month 12
+#executed by process	20 in 3996.91s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2014 --sim UBD --ext
+mode extreme: activated
+Processing UBD for year 1993 and month 01
+Processing UBD for year 1993 and month 02
+Processing UBD for year 1993 and month 03
+Processing UBD for year 1993 and month 04
+Processing UBD for year 1993 and month 05
+Processing UBD for year 1993 and month 06
+Processing UBD for year 1993 and month 07
+Processing UBD for year 1993 and month 08
+Processing UBD for year 1993 and month 09
+Processing UBD for year 1993 and month 10
+Processing UBD for year 1993 and month 11
+Processing UBD for year 1993 and month 12
+#executed by process	18 in 6497.19s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1993 --sim UBD --ext
+mode extreme: activated
+Processing UBD for year 1996 and month 01
+Processing UBD for year 1996 and month 02
+Processing UBD for year 1996 and month 03
+Processing UBD for year 1996 and month 04
+Processing UBD for year 1996 and month 05
+Processing UBD for year 1996 and month 06
+Processing UBD for year 1996 and month 07
+Processing UBD for year 1996 and month 08
+Processing UBD for year 1996 and month 09
+Processing UBD for year 1996 and month 10
+Processing UBD for year 1996 and month 11
+Processing UBD for year 1996 and month 12
+#executed by process	23 in 6124.02s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1996 --sim UBD --ext
+mode extreme: activated
+Processing UBD for year 1989 and month 01
+Processing UBD for year 1989 and month 02
+Processing UBD for year 1989 and month 03
+Processing UBD for year 1989 and month 04
+Processing UBD for year 1989 and month 05
+Processing UBD for year 1989 and month 06
+Processing UBD for year 1989 and month 07
+Processing UBD for year 1989 and month 08
+Processing UBD for year 1989 and month 09
+Processing UBD for year 1989 and month 10
+Processing UBD for year 1989 and month 11
+Processing UBD for year 1989 and month 12
+#executed by process	3 in 6937.84s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1989 --sim UBD --ext
+mode extreme: activated
+Processing UBD for year 1995 and month 01
+Processing UBD for year 1995 and month 02
+Processing UBD for year 1995 and month 03
+Processing UBD for year 1995 and month 04
+Processing UBD for year 1995 and month 05
+Processing UBD for year 1995 and month 06
+Processing UBD for year 1995 and month 07
+Processing UBD for year 1995 and month 08
+Processing UBD for year 1995 and month 09
+Processing UBD for year 1995 and month 10
+Processing UBD for year 1995 and month 11
+Processing UBD for year 1995 and month 12
+#executed by process	15 in 6532.48s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1995 --sim UBD --ext
+mode extreme: activated
+Processing UBE for year 1980 and month 01
+Processing UBE for year 1980 and month 02
+Processing UBE for year 1980 and month 03
+Processing UBE for year 1980 and month 04
+Processing UBE for year 1980 and month 05
+Processing UBE for year 1980 and month 06
+Processing UBE for year 1980 and month 07
+Processing UBE for year 1980 and month 08
+Processing UBE for year 1980 and month 09
+Processing UBE for year 1980 and month 10
+Processing UBE for year 1980 and month 11
+Processing UBE for year 1980 and month 12
+#executed by process	39 in 4008.6s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1980 --sim UBE --ext
+mode extreme: activated
+Processing UBD for year 2004 and month 01
+Processing UBD for year 2004 and month 02
+Processing UBD for year 2004 and month 03
+Processing UBD for year 2004 and month 04
+Processing UBD for year 2004 and month 05
+Processing UBD for year 2004 and month 06
+Processing UBD for year 2004 and month 07
+Processing UBD for year 2004 and month 08
+Processing UBD for year 2004 and month 09
+Processing UBD for year 2004 and month 10
+Processing UBD for year 2004 and month 11
+Processing UBD for year 2004 and month 12
+#executed by process	24 in 6723.47s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2004 --sim UBD --ext
+mode extreme: activated
+Processing UBE for year 1982 and month 01
+Processing UBE for year 1982 and month 02
+Processing UBE for year 1982 and month 03
+Processing UBE for year 1982 and month 04
+Processing UBE for year 1982 and month 05
+Processing UBE for year 1982 and month 06
+Processing UBE for year 1982 and month 07
+Processing UBE for year 1982 and month 08
+Processing UBE for year 1982 and month 09
+Processing UBE for year 1982 and month 10
+Processing UBE for year 1982 and month 11
+Processing UBE for year 1982 and month 12
+#executed by process	21 in 3834.47s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1982 --sim UBE --ext
+mode extreme: activated
+Processing UBD for year 2009 and month 01
+Processing UBD for year 2009 and month 02
+Processing UBD for year 2009 and month 03
+Processing UBD for year 2009 and month 04
+Processing UBD for year 2009 and month 05
+Processing UBD for year 2009 and month 06
+Processing UBD for year 2009 and month 07
+Processing UBD for year 2009 and month 08
+Processing UBD for year 2009 and month 09
+Processing UBD for year 2009 and month 10
+Processing UBD for year 2009 and month 11
+Processing UBD for year 2009 and month 12
+#executed by process	26 in 6661.81s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2009 --sim UBD --ext
+mode extreme: activated
+Processing UBD for year 2006 and month 01
+Processing UBD for year 2006 and month 02
+Processing UBD for year 2006 and month 03
+Processing UBD for year 2006 and month 04
+Processing UBD for year 2006 and month 05
+Processing UBD for year 2006 and month 06
+Processing UBD for year 2006 and month 07
+Processing UBD for year 2006 and month 08
+Processing UBD for year 2006 and month 09
+Processing UBD for year 2006 and month 10
+Processing UBD for year 2006 and month 11
+Processing UBD for year 2006 and month 12
+#executed by process	28 in 6766.45s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2006 --sim UBD --ext
+mode extreme: activated
+Processing UBD for year 2007 and month 01
+Processing UBD for year 2007 and month 02
+Processing UBD for year 2007 and month 03
+Processing UBD for year 2007 and month 04
+Processing UBD for year 2007 and month 05
+Processing UBD for year 2007 and month 06
+Processing UBD for year 2007 and month 07
+Processing UBD for year 2007 and month 08
+Processing UBD for year 2007 and month 09
+Processing UBD for year 2007 and month 10
+Processing UBD for year 2007 and month 11
+Processing UBD for year 2007 and month 12
+#executed by process	32 in 6779.22s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2007 --sim UBD --ext
+mode extreme: activated
+Processing UBD for year 2001 and month 01
+Processing UBD for year 2001 and month 02
+Processing UBD for year 2001 and month 03
+Processing UBD for year 2001 and month 04
+Processing UBD for year 2001 and month 05
+Processing UBD for year 2001 and month 06
+Processing UBD for year 2001 and month 07
+Processing UBD for year 2001 and month 08
+Processing UBD for year 2001 and month 09
+Processing UBD for year 2001 and month 10
+Processing UBD for year 2001 and month 11
+Processing UBD for year 2001 and month 12
+#executed by process	33 in 7055.55s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2001 --sim UBD --ext
+mode extreme: activated
+Processing UBD for year 2013 and month 01
+Processing UBD for year 2013 and month 02
+Processing UBD for year 2013 and month 03
+Processing UBD for year 2013 and month 04
+Processing UBD for year 2013 and month 05
+Processing UBD for year 2013 and month 06
+Processing UBD for year 2013 and month 07
+Processing UBD for year 2013 and month 08
+Processing UBD for year 2013 and month 09
+Processing UBD for year 2013 and month 10
+Processing UBD for year 2013 and month 11
+Processing UBD for year 2013 and month 12
+#executed by process	30 in 6646.25s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2013 --sim UBD --ext
+mode extreme: activated
+Processing UBD for year 1997 and month 01
+Processing UBD for year 1997 and month 02
+Processing UBD for year 1997 and month 03
+Processing UBD for year 1997 and month 04
+Processing UBD for year 1997 and month 05
+Processing UBD for year 1997 and month 06
+Processing UBD for year 1997 and month 07
+Processing UBD for year 1997 and month 08
+Processing UBD for year 1997 and month 09
+Processing UBD for year 1997 and month 10
+Processing UBD for year 1997 and month 11
+Processing UBD for year 1997 and month 12
+#executed by process	8 in 7420.57s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1997 --sim UBD --ext
+mode extreme: activated
+Processing UBD for year 1994 and month 01
+Processing UBD for year 1994 and month 02
+Processing UBD for year 1994 and month 03
+Processing UBD for year 1994 and month 04
+Processing UBD for year 1994 and month 05
+Processing UBD for year 1994 and month 06
+Processing UBD for year 1994 and month 07
+Processing UBD for year 1994 and month 08
+Processing UBD for year 1994 and month 09
+Processing UBD for year 1994 and month 10
+Processing UBD for year 1994 and month 11
+Processing UBD for year 1994 and month 12
+#executed by process	6 in 7851.11s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1994 --sim UBD --ext
+mode extreme: activated
+Processing UBD for year 1998 and month 01
+Processing UBD for year 1998 and month 02
+Processing UBD for year 1998 and month 03
+Processing UBD for year 1998 and month 04
+Processing UBD for year 1998 and month 05
+Processing UBD for year 1998 and month 06
+Processing UBD for year 1998 and month 07
+Processing UBD for year 1998 and month 08
+Processing UBD for year 1998 and month 09
+Processing UBD for year 1998 and month 10
+Processing UBD for year 1998 and month 11
+Processing UBD for year 1998 and month 12
+#executed by process	7 in 7466.19s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1998 --sim UBD --ext
+mode extreme: activated
+Processing UBD for year 2010 and month 01
+Processing UBD for year 2010 and month 02
+Processing UBD for year 2010 and month 03
+Processing UBD for year 2010 and month 04
+Processing UBD for year 2010 and month 05
+Processing UBD for year 2010 and month 06
+Processing UBD for year 2010 and month 07
+Processing UBD for year 2010 and month 08
+Processing UBD for year 2010 and month 09
+Processing UBD for year 2010 and month 10
+Processing UBD for year 2010 and month 11
+Processing UBD for year 2010 and month 12
+#executed by process	22 in 7282.96s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2010 --sim UBD --ext
+mode extreme: activated
+Processing UBE for year 1981 and month 01
+Processing UBE for year 1981 and month 02
+Processing UBE for year 1981 and month 03
+Processing UBE for year 1981 and month 04
+Processing UBE for year 1981 and month 05
+Processing UBE for year 1981 and month 06
+Processing UBE for year 1981 and month 07
+Processing UBE for year 1981 and month 08
+Processing UBE for year 1981 and month 09
+Processing UBE for year 1981 and month 10
+Processing UBE for year 1981 and month 11
+Processing UBE for year 1981 and month 12
+#executed by process	19 in 4875.37s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1981 --sim UBE --ext
+mode extreme: activated
+Processing UBD for year 2011 and month 01
+Processing UBD for year 2011 and month 02
+Processing UBD for year 2011 and month 03
+Processing UBD for year 2011 and month 04
+Processing UBD for year 2011 and month 05
+Processing UBD for year 2011 and month 06
+Processing UBD for year 2011 and month 07
+Processing UBD for year 2011 and month 08
+Processing UBD for year 2011 and month 09
+Processing UBD for year 2011 and month 10
+Processing UBD for year 2011 and month 11
+Processing UBD for year 2011 and month 12
+#executed by process	34 in 7276.47s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2011 --sim UBD --ext
+mode extreme: activated
+Processing UBD for year 1999 and month 01
+Processing UBD for year 1999 and month 02
+Processing UBD for year 1999 and month 03
+Processing UBD for year 1999 and month 04
+Processing UBD for year 1999 and month 05
+Processing UBD for year 1999 and month 06
+Processing UBD for year 1999 and month 07
+Processing UBD for year 1999 and month 08
+Processing UBD for year 1999 and month 09
+Processing UBD for year 1999 and month 10
+Processing UBD for year 1999 and month 11
+Processing UBD for year 1999 and month 12
+#executed by process	11 in 7781.96s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1999 --sim UBD --ext
+mode extreme: activated
+Processing UBD for year 2012 and month 01
+Processing UBD for year 2012 and month 02
+Processing UBD for year 2012 and month 03
+Processing UBD for year 2012 and month 04
+Processing UBD for year 2012 and month 05
+Processing UBD for year 2012 and month 06
+Processing UBD for year 2012 and month 07
+Processing UBD for year 2012 and month 08
+Processing UBD for year 2012 and month 09
+Processing UBD for year 2012 and month 10
+Processing UBD for year 2012 and month 11
+Processing UBD for year 2012 and month 12
+#executed by process	5 in 7470.65s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2012 --sim UBD --ext
+mode extreme: activated
+Processing UBE for year 1984 and month 01
+Processing UBE for year 1984 and month 02
+Processing UBE for year 1984 and month 03
+Processing UBE for year 1984 and month 04
+Processing UBE for year 1984 and month 05
+Processing UBE for year 1984 and month 06
+Processing UBE for year 1984 and month 07
+Processing UBE for year 1984 and month 08
+Processing UBE for year 1984 and month 09
+Processing UBE for year 1984 and month 10
+Processing UBE for year 1984 and month 11
+Processing UBE for year 1984 and month 12
+#executed by process	37 in 4589.55s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1984 --sim UBE --ext
+mode extreme: activated
+Processing UBD for year 2003 and month 01
+Processing UBD for year 2003 and month 02
+Processing UBD for year 2003 and month 03
+Processing UBD for year 2003 and month 04
+Processing UBD for year 2003 and month 05
+Processing UBD for year 2003 and month 06
+Processing UBD for year 2003 and month 07
+Processing UBD for year 2003 and month 08
+Processing UBD for year 2003 and month 09
+Processing UBD for year 2003 and month 10
+Processing UBD for year 2003 and month 11
+Processing UBD for year 2003 and month 12
+#executed by process	9 in 8000.96s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2003 --sim UBD --ext
+mode extreme: activated
+Processing UBD for year 2000 and month 01
+Processing UBD for year 2000 and month 02
+Processing UBD for year 2000 and month 03
+Processing UBD for year 2000 and month 04
+Processing UBD for year 2000 and month 05
+Processing UBD for year 2000 and month 06
+Processing UBD for year 2000 and month 07
+Processing UBD for year 2000 and month 08
+Processing UBD for year 2000 and month 09
+Processing UBD for year 2000 and month 10
+Processing UBD for year 2000 and month 11
+Processing UBD for year 2000 and month 12
+#executed by process	10 in 8132.3s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2000 --sim UBD --ext
+mode extreme: activated
+Processing UBE for year 1983 and month 01
+Processing UBE for year 1983 and month 02
+Processing UBE for year 1983 and month 03
+Processing UBE for year 1983 and month 04
+Processing UBE for year 1983 and month 05
+Processing UBE for year 1983 and month 06
+Processing UBE for year 1983 and month 07
+Processing UBE for year 1983 and month 08
+Processing UBE for year 1983 and month 09
+Processing UBE for year 1983 and month 10
+Processing UBE for year 1983 and month 11
+Processing UBE for year 1983 and month 12
+#executed by process	35 in 5305.59s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1983 --sim UBE --ext
+mode extreme: activated
+Processing UBE for year 1985 and month 01
+Processing UBE for year 1985 and month 02
+Processing UBE for year 1985 and month 03
+Processing UBE for year 1985 and month 04
+Processing UBE for year 1985 and month 05
+Processing UBE for year 1985 and month 06
+Processing UBE for year 1985 and month 07
+Processing UBE for year 1985 and month 08
+Processing UBE for year 1985 and month 09
+Processing UBE for year 1985 and month 10
+Processing UBE for year 1985 and month 11
+Processing UBE for year 1985 and month 12
+#executed by process	29 in 4914.04s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1985 --sim UBE --ext
+mode extreme: activated
+Processing UBE for year 1986 and month 01
+Processing UBE for year 1986 and month 02
+Processing UBE for year 1986 and month 03
+Processing UBE for year 1986 and month 04
+Processing UBE for year 1986 and month 05
+Processing UBE for year 1986 and month 06
+Processing UBE for year 1986 and month 07
+Processing UBE for year 1986 and month 08
+Processing UBE for year 1986 and month 09
+Processing UBE for year 1986 and month 10
+Processing UBE for year 1986 and month 11
+Processing UBE for year 1986 and month 12
+#executed by process	27 in 5451.85s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1986 --sim UBE --ext
+mode extreme: activated
+Processing UBE for year 1987 and month 01
+Processing UBE for year 1987 and month 02
+Processing UBE for year 1987 and month 03
+Processing UBE for year 1987 and month 04
+Processing UBE for year 1987 and month 05
+Processing UBE for year 1987 and month 06
+Processing UBE for year 1987 and month 07
+Processing UBE for year 1987 and month 08
+Processing UBE for year 1987 and month 09
+Processing UBE for year 1987 and month 10
+Processing UBE for year 1987 and month 11
+Processing UBE for year 1987 and month 12
+#executed by process	31 in 5239.68s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1987 --sim UBE --ext
+mode extreme: activated
+Processing UBD for year 2005 and month 01
+Processing UBD for year 2005 and month 02
+Processing UBD for year 2005 and month 03
+Processing UBD for year 2005 and month 04
+Processing UBD for year 2005 and month 05
+Processing UBD for year 2005 and month 06
+Processing UBD for year 2005 and month 07
+Processing UBD for year 2005 and month 08
+Processing UBD for year 2005 and month 09
+Processing UBD for year 2005 and month 10
+Processing UBD for year 2005 and month 11
+Processing UBD for year 2005 and month 12
+#executed by process	4 in 9193.99s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2005 --sim UBD --ext
+mode extreme: activated
+Processing UBE for year 1990 and month 01
+Processing UBE for year 1990 and month 02
+Processing UBE for year 1990 and month 03
+Processing UBE for year 1990 and month 04
+Processing UBE for year 1990 and month 05
+Processing UBE for year 1990 and month 06
+Processing UBE for year 1990 and month 07
+Processing UBE for year 1990 and month 08
+Processing UBE for year 1990 and month 09
+Processing UBE for year 1990 and month 10
+Processing UBE for year 1990 and month 11
+Processing UBE for year 1990 and month 12
+#executed by process	38 in 4895.3s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1990 --sim UBE --ext
+mode extreme: activated
+Processing UBF for year 1979 and month 01
+Processing UBF for year 1979 and month 02
+Processing UBF for year 1979 and month 03
+Processing UBF for year 1979 and month 04
+Processing UBF for year 1979 and month 05
+Processing UBF for year 1979 and month 06
+Processing UBF for year 1979 and month 07
+Processing UBF for year 1979 and month 08
+Processing UBF for year 1979 and month 09
+Processing UBF for year 1979 and month 10
+Processing UBF for year 1979 and month 11
+Processing UBF for year 1979 and month 12
+#executed by process	19 in 1939.03s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1979 --sim UBF --ext
+mode extreme: activated
+Processing UBE for year 1993 and month 01
+Processing UBE for year 1993 and month 02
+Processing UBE for year 1993 and month 03
+Processing UBE for year 1993 and month 04
+Processing UBE for year 1993 and month 05
+Processing UBE for year 1993 and month 06
+Processing UBE for year 1993 and month 07
+Processing UBE for year 1993 and month 08
+Processing UBE for year 1993 and month 09
+Processing UBE for year 1993 and month 10
+Processing UBE for year 1993 and month 11
+Processing UBE for year 1993 and month 12
+#executed by process	36 in 4637.11s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1993 --sim UBE --ext
+mode extreme: activated
+Processing UBE for year 1998 and month 01
+Processing UBE for year 1998 and month 02
+Processing UBE for year 1998 and month 03
+Processing UBE for year 1998 and month 04
+Processing UBE for year 1998 and month 05
+Processing UBE for year 1998 and month 06
+Processing UBE for year 1998 and month 07
+Processing UBE for year 1998 and month 08
+Processing UBE for year 1998 and month 09
+Processing UBE for year 1998 and month 10
+Processing UBE for year 1998 and month 11
+Processing UBE for year 1998 and month 12
+#executed by process	20 in 4185.5s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1998 --sim UBE --ext
+mode extreme: activated
+Processing UBE for year 2005 and month 01
+Processing UBE for year 2005 and month 02
+Processing UBE for year 2005 and month 03
+Processing UBE for year 2005 and month 04
+Processing UBE for year 2005 and month 05
+Processing UBE for year 2005 and month 06
+Processing UBE for year 2005 and month 07
+Processing UBE for year 2005 and month 08
+Processing UBE for year 2005 and month 09
+Processing UBE for year 2005 and month 10
+Processing UBE for year 2005 and month 11
+Processing UBE for year 2005 and month 12
+#executed by process	21 in 3494.24s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2005 --sim UBE --ext
+mode extreme: activated
+Processing UBE for year 2003 and month 01
+Processing UBE for year 2003 and month 02
+Processing UBE for year 2003 and month 03
+Processing UBE for year 2003 and month 04
+Processing UBE for year 2003 and month 05
+Processing UBE for year 2003 and month 06
+Processing UBE for year 2003 and month 07
+Processing UBE for year 2003 and month 08
+Processing UBE for year 2003 and month 09
+Processing UBE for year 2003 and month 10
+Processing UBE for year 2003 and month 11
+Processing UBE for year 2003 and month 12
+#executed by process	39 in 4214.9s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2003 --sim UBE --ext
+mode extreme: activated
+Processing UBE for year 1988 and month 01
+Processing UBE for year 1988 and month 02
+Processing UBE for year 1988 and month 03
+Processing UBE for year 1988 and month 04
+Processing UBE for year 1988 and month 05
+Processing UBE for year 1988 and month 06
+Processing UBE for year 1988 and month 07
+Processing UBE for year 1988 and month 08
+Processing UBE for year 1988 and month 09
+Processing UBE for year 1988 and month 10
+Processing UBE for year 1988 and month 11
+Processing UBE for year 1988 and month 12
+#executed by process	16 in 6344.63s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1988 --sim UBE --ext
+mode extreme: activated
+Processing UBE for year 1996 and month 01
+Processing UBE for year 1996 and month 02
+Processing UBE for year 1996 and month 03
+Processing UBE for year 1996 and month 04
+Processing UBE for year 1996 and month 05
+Processing UBE for year 1996 and month 06
+Processing UBE for year 1996 and month 07
+Processing UBE for year 1996 and month 08
+Processing UBE for year 1996 and month 09
+Processing UBE for year 1996 and month 10
+Processing UBE for year 1996 and month 11
+Processing UBE for year 1996 and month 12
+#executed by process	25 in 5472.49s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1996 --sim UBE --ext
+mode extreme: activated
+Processing UBE for year 1989 and month 01
+Processing UBE for year 1989 and month 02
+Processing UBE for year 1989 and month 03
+Processing UBE for year 1989 and month 04
+Processing UBE for year 1989 and month 05
+Processing UBE for year 1989 and month 06
+Processing UBE for year 1989 and month 07
+Processing UBE for year 1989 and month 08
+Processing UBE for year 1989 and month 09
+Processing UBE for year 1989 and month 10
+Processing UBE for year 1989 and month 11
+Processing UBE for year 1989 and month 12
+#executed by process	17 in 6872.36s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1989 --sim UBE --ext
+mode extreme: activated
+Processing UBE for year 1991 and month 01
+Processing UBE for year 1991 and month 02
+Processing UBE for year 1991 and month 03
+Processing UBE for year 1991 and month 04
+Processing UBE for year 1991 and month 05
+Processing UBE for year 1991 and month 06
+Processing UBE for year 1991 and month 07
+Processing UBE for year 1991 and month 08
+Processing UBE for year 1991 and month 09
+Processing UBE for year 1991 and month 10
+Processing UBE for year 1991 and month 11
+Processing UBE for year 1991 and month 12
+#executed by process	12 in 6419.5s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1991 --sim UBE --ext
+mode extreme: activated
+Processing UBE for year 1994 and month 01
+Processing UBE for year 1994 and month 02
+Processing UBE for year 1994 and month 03
+Processing UBE for year 1994 and month 04
+Processing UBE for year 1994 and month 05
+Processing UBE for year 1994 and month 06
+Processing UBE for year 1994 and month 07
+Processing UBE for year 1994 and month 08
+Processing UBE for year 1994 and month 09
+Processing UBE for year 1994 and month 10
+Processing UBE for year 1994 and month 11
+Processing UBE for year 1994 and month 12
+#executed by process	1 in 6195.67s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1994 --sim UBE --ext
+mode extreme: activated
+Processing UBE for year 1992 and month 01
+Processing UBE for year 1992 and month 02
+Processing UBE for year 1992 and month 03
+Processing UBE for year 1992 and month 04
+Processing UBE for year 1992 and month 05
+Processing UBE for year 1992 and month 06
+Processing UBE for year 1992 and month 07
+Processing UBE for year 1992 and month 08
+Processing UBE for year 1992 and month 09
+Processing UBE for year 1992 and month 10
+Processing UBE for year 1992 and month 11
+Processing UBE for year 1992 and month 12
+#executed by process	14 in 6406.99s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1992 --sim UBE --ext
+mode extreme: activated
+Processing UBE for year 2000 and month 01
+Processing UBE for year 2000 and month 02
+Processing UBE for year 2000 and month 03
+Processing UBE for year 2000 and month 04
+Processing UBE for year 2000 and month 05
+Processing UBE for year 2000 and month 06
+Processing UBE for year 2000 and month 07
+Processing UBE for year 2000 and month 08
+Processing UBE for year 2000 and month 09
+Processing UBE for year 2000 and month 10
+Processing UBE for year 2000 and month 11
+Processing UBE for year 2000 and month 12
+#executed by process	23 in 5722.24s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2000 --sim UBE --ext
+mode extreme: activated
+Processing UBE for year 1995 and month 01
+Processing UBE for year 1995 and month 02
+Processing UBE for year 1995 and month 03
+Processing UBE for year 1995 and month 04
+Processing UBE for year 1995 and month 05
+Processing UBE for year 1995 and month 06
+Processing UBE for year 1995 and month 07
+Processing UBE for year 1995 and month 08
+Processing UBE for year 1995 and month 09
+Processing UBE for year 1995 and month 10
+Processing UBE for year 1995 and month 11
+Processing UBE for year 1995 and month 12
+#executed by process	13 in 6651.77s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1995 --sim UBE --ext
+mode extreme: activated
+Processing UBE for year 1997 and month 01
+Processing UBE for year 1997 and month 02
+Processing UBE for year 1997 and month 03
+Processing UBE for year 1997 and month 04
+Processing UBE for year 1997 and month 05
+Processing UBE for year 1997 and month 06
+Processing UBE for year 1997 and month 07
+Processing UBE for year 1997 and month 08
+Processing UBE for year 1997 and month 09
+Processing UBE for year 1997 and month 10
+Processing UBE for year 1997 and month 11
+Processing UBE for year 1997 and month 12
+#executed by process	2 in 6534.19s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1997 --sim UBE --ext
+mode extreme: activated
+Processing UBE for year 2002 and month 01
+Processing UBE for year 2002 and month 02
+Processing UBE for year 2002 and month 03
+Processing UBE for year 2002 and month 04
+Processing UBE for year 2002 and month 05
+Processing UBE for year 2002 and month 06
+Processing UBE for year 2002 and month 07
+Processing UBE for year 2002 and month 08
+Processing UBE for year 2002 and month 09
+Processing UBE for year 2002 and month 10
+Processing UBE for year 2002 and month 11
+Processing UBE for year 2002 and month 12
+#executed by process	15 in 6167.02s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2002 --sim UBE --ext
+mode extreme: activated
+Processing UBE for year 1999 and month 01
+Processing UBE for year 1999 and month 02
+Processing UBE for year 1999 and month 03
+Processing UBE for year 1999 and month 04
+Processing UBE for year 1999 and month 05
+Processing UBE for year 1999 and month 06
+Processing UBE for year 1999 and month 07
+Processing UBE for year 1999 and month 08
+Processing UBE for year 1999 and month 09
+Processing UBE for year 1999 and month 10
+Processing UBE for year 1999 and month 11
+Processing UBE for year 1999 and month 12
+#executed by process	18 in 6541.98s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1999 --sim UBE --ext
+mode extreme: activated
+Processing UBE for year 2001 and month 01
+Processing UBE for year 2001 and month 02
+Processing UBE for year 2001 and month 03
+Processing UBE for year 2001 and month 04
+Processing UBE for year 2001 and month 05
+Processing UBE for year 2001 and month 06
+Processing UBE for year 2001 and month 07
+Processing UBE for year 2001 and month 08
+Processing UBE for year 2001 and month 09
+Processing UBE for year 2001 and month 10
+Processing UBE for year 2001 and month 11
+Processing UBE for year 2001 and month 12
+#executed by process	3 in 6698.47s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2001 --sim UBE --ext
+mode extreme: activated
+Processing UBE for year 2004 and month 01
+Processing UBE for year 2004 and month 02
+Processing UBE for year 2004 and month 03
+Processing UBE for year 2004 and month 04
+Processing UBE for year 2004 and month 05
+Processing UBE for year 2004 and month 06
+Processing UBE for year 2004 and month 07
+Processing UBE for year 2004 and month 08
+Processing UBE for year 2004 and month 09
+Processing UBE for year 2004 and month 10
+Processing UBE for year 2004 and month 11
+Processing UBE for year 2004 and month 12
+#executed by process	24 in 6245.08s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2004 --sim UBE --ext
+mode extreme: activated
+Processing UBE for year 2009 and month 01
+Processing UBE for year 2009 and month 02
+Processing UBE for year 2009 and month 03
+Processing UBE for year 2009 and month 04
+Processing UBE for year 2009 and month 05
+Processing UBE for year 2009 and month 06
+Processing UBE for year 2009 and month 07
+Processing UBE for year 2009 and month 08
+Processing UBE for year 2009 and month 09
+Processing UBE for year 2009 and month 10
+Processing UBE for year 2009 and month 11
+Processing UBE for year 2009 and month 12
+#executed by process	33 in 6392.54s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2009 --sim UBE --ext
+mode extreme: activated
+Processing UBF for year 1983 and month 01
+Processing UBF for year 1983 and month 02
+Processing UBF for year 1983 and month 03
+Processing UBF for year 1983 and month 04
+Processing UBF for year 1983 and month 05
+Processing UBF for year 1983 and month 06
+Processing UBF for year 1983 and month 07
+Processing UBF for year 1983 and month 08
+Processing UBF for year 1983 and month 09
+Processing UBF for year 1983 and month 10
+Processing UBF for year 1983 and month 11
+Processing UBF for year 1983 and month 12
+#executed by process	37 in 5442.91s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1983 --sim UBF --ext
+mode extreme: activated
+Processing UBE for year 2006 and month 01
+Processing UBE for year 2006 and month 02
+Processing UBE for year 2006 and month 03
+Processing UBE for year 2006 and month 04
+Processing UBE for year 2006 and month 05
+Processing UBE for year 2006 and month 06
+Processing UBE for year 2006 and month 07
+Processing UBE for year 2006 and month 08
+Processing UBE for year 2006 and month 09
+Processing UBE for year 2006 and month 10
+Processing UBE for year 2006 and month 11
+Processing UBE for year 2006 and month 12
+#executed by process	26 in 6631.65s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2006 --sim UBE --ext
+mode extreme: activated
+Processing UBE for year 2007 and month 01
+Processing UBE for year 2007 and month 02
+Processing UBE for year 2007 and month 03
+Processing UBE for year 2007 and month 04
+Processing UBE for year 2007 and month 05
+Processing UBE for year 2007 and month 06
+Processing UBE for year 2007 and month 07
+Processing UBE for year 2007 and month 08
+Processing UBE for year 2007 and month 09
+Processing UBE for year 2007 and month 10
+Processing UBE for year 2007 and month 11
+Processing UBE for year 2007 and month 12
+#executed by process	28 in 6620.37s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2007 --sim UBE --ext
+mode extreme: activated
+Processing UBE for year 2008 and month 01
+Processing UBE for year 2008 and month 02
+Processing UBE for year 2008 and month 03
+Processing UBE for year 2008 and month 04
+Processing UBE for year 2008 and month 05
+Processing UBE for year 2008 and month 06
+Processing UBE for year 2008 and month 07
+Processing UBE for year 2008 and month 08
+Processing UBE for year 2008 and month 09
+Processing UBE for year 2008 and month 10
+Processing UBE for year 2008 and month 11
+Processing UBE for year 2008 and month 12
+#executed by process	32 in 6633.74s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2008 --sim UBE --ext
+mode extreme: activated
+Processing UBE for year 2010 and month 01
+Processing UBE for year 2010 and month 02
+Processing UBE for year 2010 and month 03
+Processing UBE for year 2010 and month 04
+Processing UBE for year 2010 and month 05
+Processing UBE for year 2010 and month 06
+Processing UBE for year 2010 and month 07
+Processing UBE for year 2010 and month 08
+Processing UBE for year 2010 and month 09
+Processing UBE for year 2010 and month 10
+Processing UBE for year 2010 and month 11
+Processing UBE for year 2010 and month 12
+#executed by process	30 in 6494.63s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2010 --sim UBE --ext
+mode extreme: activated
+Processing UBF for year 1986 and month 01
+Processing UBF for year 1986 and month 02
+Processing UBF for year 1986 and month 03
+Processing UBF for year 1986 and month 04
+Processing UBF for year 1986 and month 05
+Processing UBF for year 1986 and month 06
+Processing UBF for year 1986 and month 07
+Processing UBF for year 1986 and month 08
+Processing UBF for year 1986 and month 09
+Processing UBF for year 1986 and month 10
+Processing UBF for year 1986 and month 11
+Processing UBF for year 1986 and month 12
+#executed by process	35 in 5391.34s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1986 --sim UBF --ext
+mode extreme: activated
+Processing UBE for year 2014 and month 01
+Processing UBE for year 2014 and month 02
+Processing UBE for year 2014 and month 03
+Processing UBE for year 2014 and month 04
+Processing UBE for year 2014 and month 05
+Processing UBE for year 2014 and month 06
+Processing UBE for year 2014 and month 07
+Processing UBE for year 2014 and month 08
+Processing UBE for year 2014 and month 09
+Processing UBE for year 2014 and month 10
+Processing UBE for year 2014 and month 11
+Processing UBE for year 2014 and month 12
+#executed by process	22 in 6606.79s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2014 --sim UBE --ext
+mode extreme: activated
+Processing UBF for year 1987 and month 01
+Processing UBF for year 1987 and month 02
+Processing UBF for year 1987 and month 03
+Processing UBF for year 1987 and month 04
+Processing UBF for year 1987 and month 05
+Processing UBF for year 1987 and month 06
+Processing UBF for year 1987 and month 07
+Processing UBF for year 1987 and month 08
+Processing UBF for year 1987 and month 09
+Processing UBF for year 1987 and month 10
+Processing UBF for year 1987 and month 11
+Processing UBF for year 1987 and month 12
+#executed by process	29 in 5853.23s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1987 --sim UBF --ext
+mode extreme: activated
+Processing UBF for year 1995 and month 01
+Processing UBF for year 1995 and month 02
+Processing UBF for year 1995 and month 03
+Processing UBF for year 1995 and month 04
+Processing UBF for year 1995 and month 05
+Processing UBF for year 1995 and month 06
+Processing UBF for year 1995 and month 07
+Processing UBF for year 1995 and month 08
+Processing UBF for year 1995 and month 09
+Processing UBF for year 1995 and month 10
+Processing UBF for year 1995 and month 11
+Processing UBF for year 1995 and month 12
+#executed by process	21 in 4206.45s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1995 --sim UBF --ext
+mode extreme: activated
+Processing UBF for year 1994 and month 01
+Processing UBF for year 1994 and month 02
+Processing UBF for year 1994 and month 03
+Processing UBF for year 1994 and month 04
+Processing UBF for year 1994 and month 05
+Processing UBF for year 1994 and month 06
+Processing UBF for year 1994 and month 07
+Processing UBF for year 1994 and month 08
+Processing UBF for year 1994 and month 09
+Processing UBF for year 1994 and month 10
+Processing UBF for year 1994 and month 11
+Processing UBF for year 1994 and month 12
+#executed by process	20 in 4739.49s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1994 --sim UBF --ext
+mode extreme: activated
+Processing UBE for year 2012 and month 01
+Processing UBE for year 2012 and month 02
+Processing UBE for year 2012 and month 03
+Processing UBE for year 2012 and month 04
+Processing UBE for year 2012 and month 05
+Processing UBE for year 2012 and month 06
+Processing UBE for year 2012 and month 07
+Processing UBE for year 2012 and month 08
+Processing UBE for year 2012 and month 09
+Processing UBE for year 2012 and month 10
+Processing UBE for year 2012 and month 11
+Processing UBE for year 2012 and month 12
+#executed by process	6 in 7388.22s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2012 --sim UBE --ext
+mode extreme: activated
+Processing UBF for year 1988 and month 01
+Processing UBF for year 1988 and month 02
+Processing UBF for year 1988 and month 03
+Processing UBF for year 1988 and month 04
+Processing UBF for year 1988 and month 05
+Processing UBF for year 1988 and month 06
+Processing UBF for year 1988 and month 07
+Processing UBF for year 1988 and month 08
+Processing UBF for year 1988 and month 09
+Processing UBF for year 1988 and month 10
+Processing UBF for year 1988 and month 11
+Processing UBF for year 1988 and month 12
+#executed by process	27 in 5846.78s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1988 --sim UBF --ext
+mode extreme: activated
+Processing UBF for year 1989 and month 01
+Processing UBF for year 1989 and month 02
+Processing UBF for year 1989 and month 03
+Processing UBF for year 1989 and month 04
+Processing UBF for year 1989 and month 05
+Processing UBF for year 1989 and month 06
+Processing UBF for year 1989 and month 07
+Processing UBF for year 1989 and month 08
+Processing UBF for year 1989 and month 09
+Processing UBF for year 1989 and month 10
+Processing UBF for year 1989 and month 11
+Processing UBF for year 1989 and month 12
+#executed by process	31 in 5850.45s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1989 --sim UBF --ext
+mode extreme: activated
+Processing UBF for year 1996 and month 01
+Processing UBF for year 1996 and month 02
+Processing UBF for year 1996 and month 03
+Processing UBF for year 1996 and month 04
+Processing UBF for year 1996 and month 05
+Processing UBF for year 1996 and month 06
+Processing UBF for year 1996 and month 07
+Processing UBF for year 1996 and month 08
+Processing UBF for year 1996 and month 09
+Processing UBF for year 1996 and month 10
+Processing UBF for year 1996 and month 11
+Processing UBF for year 1996 and month 12
+#executed by process	39 in 4616.45s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1996 --sim UBF --ext
+mode extreme: activated
+Processing UBF for year 1991 and month 01
+Processing UBF for year 1991 and month 02
+Processing UBF for year 1991 and month 03
+Processing UBF for year 1991 and month 04
+Processing UBF for year 1991 and month 05
+Processing UBF for year 1991 and month 06
+Processing UBF for year 1991 and month 07
+Processing UBF for year 1991 and month 08
+Processing UBF for year 1991 and month 09
+Processing UBF for year 1991 and month 10
+Processing UBF for year 1991 and month 11
+Processing UBF for year 1991 and month 12
+#executed by process	38 in 5584.88s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1991 --sim UBF --ext
+mode extreme: activated
+Processing UBF for year 1992 and month 01
+Processing UBF for year 1992 and month 02
+Processing UBF for year 1992 and month 03
+Processing UBF for year 1992 and month 04
+Processing UBF for year 1992 and month 05
+Processing UBF for year 1992 and month 06
+Processing UBF for year 1992 and month 07
+Processing UBF for year 1992 and month 08
+Processing UBF for year 1992 and month 09
+Processing UBF for year 1992 and month 10
+Processing UBF for year 1992 and month 11
+Processing UBF for year 1992 and month 12
+#executed by process	19 in 5558.04s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1992 --sim UBF --ext
+mode extreme: activated
+Processing UBF for year 1980 and month 01
+Processing UBF for year 1980 and month 02
+Processing UBF for year 1980 and month 03
+Processing UBF for year 1980 and month 04
+Processing UBF for year 1980 and month 05
+Processing UBF for year 1980 and month 06
+Processing UBF for year 1980 and month 07
+Processing UBF for year 1980 and month 08
+Processing UBF for year 1980 and month 09
+Processing UBF for year 1980 and month 10
+Processing UBF for year 1980 and month 11
+Processing UBF for year 1980 and month 12
+#executed by process	34 in 7737.89s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1980 --sim UBF --ext
+mode extreme: activated
+Processing UBE for year 2013 and month 01
+Processing UBE for year 2013 and month 02
+Processing UBE for year 2013 and month 03
+Processing UBE for year 2013 and month 04
+Processing UBE for year 2013 and month 05
+Processing UBE for year 2013 and month 06
+Processing UBE for year 2013 and month 07
+Processing UBE for year 2013 and month 08
+Processing UBE for year 2013 and month 09
+Processing UBE for year 2013 and month 10
+Processing UBE for year 2013 and month 11
+Processing UBE for year 2013 and month 12
+#executed by process	7 in 7968.13s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2013 --sim UBE --ext
+mode extreme: activated
+Processing UBF for year 1993 and month 01
+Processing UBF for year 1993 and month 02
+Processing UBF for year 1993 and month 03
+Processing UBF for year 1993 and month 04
+Processing UBF for year 1993 and month 05
+Processing UBF for year 1993 and month 06
+Processing UBF for year 1993 and month 07
+Processing UBF for year 1993 and month 08
+Processing UBF for year 1993 and month 09
+Processing UBF for year 1993 and month 10
+Processing UBF for year 1993 and month 11
+Processing UBF for year 1993 and month 12
+#executed by process	36 in 5584.86s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1993 --sim UBF --ext
+mode extreme: activated
+Processing UBE for year 2011 and month 01
+Processing UBE for year 2011 and month 02
+Processing UBE for year 2011 and month 03
+Processing UBE for year 2011 and month 04
+Processing UBE for year 2011 and month 05
+Processing UBE for year 2011 and month 06
+Processing UBE for year 2011 and month 07
+Processing UBE for year 2011 and month 08
+Processing UBE for year 2011 and month 09
+Processing UBE for year 2011 and month 10
+Processing UBE for year 2011 and month 11
+Processing UBE for year 2011 and month 12
+#executed by process	8 in 8294.63s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2011 --sim UBE --ext
+mode extreme: activated
+Processing UBF for year 1982 and month 01
+Processing UBF for year 1982 and month 02
+Processing UBF for year 1982 and month 03
+Processing UBF for year 1982 and month 04
+Processing UBF for year 1982 and month 05
+Processing UBF for year 1982 and month 06
+Processing UBF for year 1982 and month 07
+Processing UBF for year 1982 and month 08
+Processing UBF for year 1982 and month 09
+Processing UBF for year 1982 and month 10
+Processing UBF for year 1982 and month 11
+Processing UBF for year 1982 and month 12
+#executed by process	5 in 8077.35s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1982 --sim UBF --ext
+mode extreme: activated
+Processing UBF for year 1998 and month 01
+Processing UBF for year 1998 and month 02
+Processing UBF for year 1998 and month 03
+Processing UBF for year 1998 and month 04
+Processing UBF for year 1998 and month 05
+Processing UBF for year 1998 and month 06
+Processing UBF for year 1998 and month 07
+Processing UBF for year 1998 and month 08
+Processing UBF for year 1998 and month 09
+Processing UBF for year 1998 and month 10
+Processing UBF for year 1998 and month 11
+Processing UBF for year 1998 and month 12
+#executed by process	25 in 5486.57s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1998 --sim UBF --ext
+mode extreme: activated
+Processing UBF for year 1984 and month 01
+Processing UBF for year 1984 and month 02
+Processing UBF for year 1984 and month 03
+Processing UBF for year 1984 and month 04
+Processing UBF for year 1984 and month 05
+Processing UBF for year 1984 and month 06
+Processing UBF for year 1984 and month 07
+Processing UBF for year 1984 and month 08
+Processing UBF for year 1984 and month 09
+Processing UBF for year 1984 and month 10
+Processing UBF for year 1984 and month 11
+Processing UBF for year 1984 and month 12
+#executed by process	9 in 8664.93s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1984 --sim UBF --ext
+mode extreme: activated
+Processing UBF for year 1981 and month 01
+Processing UBF for year 1981 and month 02
+Processing UBF for year 1981 and month 03
+Processing UBF for year 1981 and month 04
+Processing UBF for year 1981 and month 05
+Processing UBF for year 1981 and month 06
+Processing UBF for year 1981 and month 07
+Processing UBF for year 1981 and month 08
+Processing UBF for year 1981 and month 09
+Processing UBF for year 1981 and month 10
+Processing UBF for year 1981 and month 11
+Processing UBF for year 1981 and month 12
+#executed by process	11 in 9012.23s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1981 --sim UBF --ext
+mode extreme: activated
+Processing UBF for year 1985 and month 01
+Processing UBF for year 1985 and month 02
+Processing UBF for year 1985 and month 03
+Processing UBF for year 1985 and month 04
+Processing UBF for year 1985 and month 05
+Processing UBF for year 1985 and month 06
+Processing UBF for year 1985 and month 07
+Processing UBF for year 1985 and month 08
+Processing UBF for year 1985 and month 09
+Processing UBF for year 1985 and month 10
+Processing UBF for year 1985 and month 11
+Processing UBF for year 1985 and month 12
+#executed by process	10 in 8848.23s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1985 --sim UBF --ext
+mode extreme: activated
+Processing UBF for year 1997 and month 01
+Processing UBF for year 1997 and month 02
+Processing UBF for year 1997 and month 03
+Processing UBF for year 1997 and month 04
+Processing UBF for year 1997 and month 05
+Processing UBF for year 1997 and month 06
+Processing UBF for year 1997 and month 07
+Processing UBF for year 1997 and month 08
+Processing UBF for year 1997 and month 09
+Processing UBF for year 1997 and month 10
+Processing UBF for year 1997 and month 11
+Processing UBF for year 1997 and month 12
+#executed by process	16 in 6717.32s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1997 --sim UBF --ext
+mode extreme: activated
+Processing UBF for year 1999 and month 01
+Processing UBF for year 1999 and month 02
+Processing UBF for year 1999 and month 03
+Processing UBF for year 1999 and month 04
+Processing UBF for year 1999 and month 05
+Processing UBF for year 1999 and month 06
+Processing UBF for year 1999 and month 07
+Processing UBF for year 1999 and month 08
+Processing UBF for year 1999 and month 09
+Processing UBF for year 1999 and month 10
+Processing UBF for year 1999 and month 11
+Processing UBF for year 1999 and month 12
+#executed by process	17 in 6361.02s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1999 --sim UBF --ext
+mode extreme: activated
+Processing UBF for year 1990 and month 01
+Processing UBF for year 1990 and month 02
+Processing UBF for year 1990 and month 03
+Processing UBF for year 1990 and month 04
+Processing UBF for year 1990 and month 05
+Processing UBF for year 1990 and month 06
+Processing UBF for year 1990 and month 07
+Processing UBF for year 1990 and month 08
+Processing UBF for year 1990 and month 09
+Processing UBF for year 1990 and month 10
+Processing UBF for year 1990 and month 11
+Processing UBF for year 1990 and month 12
+#executed by process	4 in 8462.42s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 1990 --sim UBF --ext
+mode extreme: activated
+Processing UBF for year 2000 and month 01
+Processing UBF for year 2000 and month 02
+Processing UBF for year 2000 and month 03
+Processing UBF for year 2000 and month 04
+Processing UBF for year 2000 and month 05
+Processing UBF for year 2000 and month 06
+Processing UBF for year 2000 and month 07
+Processing UBF for year 2000 and month 08
+Processing UBF for year 2000 and month 09
+Processing UBF for year 2000 and month 10
+Processing UBF for year 2000 and month 11
+Processing UBF for year 2000 and month 12
+#executed by process	12 in 6574.42s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2000 --sim UBF --ext
+mode extreme: activated
+Processing UBF for year 2003 and month 01
+Processing UBF for year 2003 and month 02
+Processing UBF for year 2003 and month 03
+Processing UBF for year 2003 and month 04
+Processing UBF for year 2003 and month 05
+Processing UBF for year 2003 and month 06
+Processing UBF for year 2003 and month 07
+Processing UBF for year 2003 and month 08
+Processing UBF for year 2003 and month 09
+Processing UBF for year 2003 and month 10
+Processing UBF for year 2003 and month 11
+Processing UBF for year 2003 and month 12
+#executed by process	23 in 6176.59s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2003 --sim UBF --ext
+mode extreme: activated
+Processing UBF for year 2002 and month 01
+Processing UBF for year 2002 and month 02
+Processing UBF for year 2002 and month 03
+Processing UBF for year 2002 and month 04
+Processing UBF for year 2002 and month 05
+Processing UBF for year 2002 and month 06
+Processing UBF for year 2002 and month 07
+Processing UBF for year 2002 and month 08
+Processing UBF for year 2002 and month 09
+Processing UBF for year 2002 and month 10
+Processing UBF for year 2002 and month 11
+Processing UBF for year 2002 and month 12
+#executed by process	14 in 6630.52s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2002 --sim UBF --ext
+mode extreme: activated
+Processing UBF for year 2001 and month 01
+Processing UBF for year 2001 and month 02
+Processing UBF for year 2001 and month 03
+Processing UBF for year 2001 and month 04
+Processing UBF for year 2001 and month 05
+Processing UBF for year 2001 and month 06
+Processing UBF for year 2001 and month 07
+Processing UBF for year 2001 and month 08
+Processing UBF for year 2001 and month 09
+Processing UBF for year 2001 and month 10
+Processing UBF for year 2001 and month 11
+Processing UBF for year 2001 and month 12
+#executed by process	1 in 6936.32s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2001 --sim UBF --ext
+mode extreme: activated
+Processing UBG for year 2066 and month 01
+Processing UBG for year 2066 and month 02
+Processing UBG for year 2066 and month 03
+Processing UBG for year 2066 and month 04
+Processing UBG for year 2066 and month 05
+Processing UBG for year 2066 and month 06
+Processing UBG for year 2066 and month 07
+Processing UBG for year 2066 and month 08
+Processing UBG for year 2066 and month 09
+Processing UBG for year 2066 and month 10
+Processing UBG for year 2066 and month 11
+Processing UBG for year 2066 and month 12
+#executed by process	35 in 4877.41s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2066 --sim UBG --ext
+mode extreme: activated
+Processing UBF for year 2004 and month 01
+Processing UBF for year 2004 and month 02
+Processing UBF for year 2004 and month 03
+Processing UBF for year 2004 and month 04
+Processing UBF for year 2004 and month 05
+Processing UBF for year 2004 and month 06
+Processing UBF for year 2004 and month 07
+Processing UBF for year 2004 and month 08
+Processing UBF for year 2004 and month 09
+Processing UBF for year 2004 and month 10
+Processing UBF for year 2004 and month 11
+Processing UBF for year 2004 and month 12
+#executed by process	13 in 6647.11s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2004 --sim UBF --ext
+mode extreme: activated
+Processing UBG for year 2070 and month 01
+Processing UBG for year 2070 and month 02
+Processing UBG for year 2070 and month 03
+Processing UBG for year 2070 and month 04
+Processing UBG for year 2070 and month 05
+Processing UBG for year 2070 and month 06
+Processing UBG for year 2070 and month 07
+Processing UBG for year 2070 and month 08
+Processing UBG for year 2070 and month 09
+Processing UBG for year 2070 and month 10
+Processing UBG for year 2070 and month 11
+Processing UBG for year 2070 and month 12
+#executed by process	20 in 4038.13s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2070 --sim UBG --ext
+mode extreme: activated
+Processing UBG for year 2069 and month 01
+Processing UBG for year 2069 and month 02
+Processing UBG for year 2069 and month 03
+Processing UBG for year 2069 and month 04
+Processing UBG for year 2069 and month 05
+Processing UBG for year 2069 and month 06
+Processing UBG for year 2069 and month 07
+Processing UBG for year 2069 and month 08
+Processing UBG for year 2069 and month 09
+Processing UBG for year 2069 and month 10
+Processing UBG for year 2069 and month 11
+Processing UBG for year 2069 and month 12
+#executed by process	21 in 4154.26s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2069 --sim UBG --ext
+mode extreme: activated
+Processing UBF for year 2007 and month 01
+Processing UBF for year 2007 and month 02
+Processing UBF for year 2007 and month 03
+Processing UBF for year 2007 and month 04
+Processing UBF for year 2007 and month 05
+Processing UBF for year 2007 and month 06
+Processing UBF for year 2007 and month 07
+Processing UBF for year 2007 and month 08
+Processing UBF for year 2007 and month 09
+Processing UBF for year 2007 and month 10
+Processing UBF for year 2007 and month 11
+Processing UBF for year 2007 and month 12
+#executed by process	18 in 6329.61s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2007 --sim UBF --ext
+mode extreme: activated
+Processing UBF for year 2011 and month 01
+Processing UBF for year 2011 and month 02
+Processing UBF for year 2011 and month 03
+Processing UBF for year 2011 and month 04
+Processing UBF for year 2011 and month 05
+Processing UBF for year 2011 and month 06
+Processing UBF for year 2011 and month 07
+Processing UBF for year 2011 and month 08
+Processing UBF for year 2011 and month 09
+Processing UBF for year 2011 and month 10
+Processing UBF for year 2011 and month 11
+Processing UBF for year 2011 and month 12
+mode extreme: activated
+Processing UBF for year 2006 and month 01
+Processing UBF for year 2006 and month 02
+Processing UBF for year 2006 and month 03
+Processing UBF for year 2006 and month 04
+Processing UBF for year 2006 and month 05
+Processing UBF for year 2006 and month 06
+Processing UBF for year 2006 and month 07
+Processing UBF for year 2006 and month 08
+Processing UBF for year 2006 and month 09
+Processing UBF for year 2006 and month 10
+Processing UBF for year 2006 and month 11
+Processing UBF for year 2006 and month 12
+#executed by process	37 in 5467.34s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2011 --sim UBF --ext
+#executed by process	15 in 6577.21s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2006 --sim UBF --ext
+mode extreme: activated
+Processing UBF for year 2005 and month 01
+Processing UBF for year 2005 and month 02
+Processing UBF for year 2005 and month 03
+Processing UBF for year 2005 and month 04
+Processing UBF for year 2005 and month 05
+Processing UBF for year 2005 and month 06
+Processing UBF for year 2005 and month 07
+Processing UBF for year 2005 and month 08
+Processing UBF for year 2005 and month 09
+Processing UBF for year 2005 and month 10
+Processing UBF for year 2005 and month 11
+Processing UBF for year 2005 and month 12
+#executed by process	2 in 6960.91s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2005 --sim UBF --ext
+mode extreme: activated
+Processing UBG for year 2074 and month 01
+Processing UBG for year 2074 and month 02
+Processing UBG for year 2074 and month 03
+Processing UBG for year 2074 and month 04
+Processing UBG for year 2074 and month 05
+Processing UBG for year 2074 and month 06
+Processing UBG for year 2074 and month 07
+Processing UBG for year 2074 and month 08
+Processing UBG for year 2074 and month 09
+Processing UBG for year 2074 and month 10
+Processing UBG for year 2074 and month 11
+Processing UBG for year 2074 and month 12
+#executed by process	39 in 4154.32s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2074 --sim UBG --ext
+mode extreme: activated
+Processing UBF for year 2008 and month 01
+Processing UBF for year 2008 and month 02
+Processing UBF for year 2008 and month 03
+Processing UBF for year 2008 and month 04
+Processing UBF for year 2008 and month 05
+Processing UBF for year 2008 and month 06
+Processing UBF for year 2008 and month 07
+Processing UBF for year 2008 and month 08
+Processing UBF for year 2008 and month 09
+Processing UBF for year 2008 and month 10
+Processing UBF for year 2008 and month 11
+Processing UBF for year 2008 and month 12
+#executed by process	3 in 6503.05s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2008 --sim UBF --ext
+mode extreme: activated
+Processing UBG for year 2068 and month 01
+Processing UBG for year 2068 and month 02
+Processing UBG for year 2068 and month 03
+Processing UBG for year 2068 and month 04
+Processing UBG for year 2068 and month 05
+Processing UBG for year 2068 and month 06
+Processing UBG for year 2068 and month 07
+Processing UBG for year 2068 and month 08
+Processing UBG for year 2068 and month 09
+Processing UBG for year 2068 and month 10
+Processing UBG for year 2068 and month 11
+Processing UBG for year 2068 and month 12
+#executed by process	29 in 5233.83s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2068 --sim UBG --ext
+mode extreme: activated
+Processing UBG for year 2076 and month 01
+Processing UBG for year 2076 and month 02
+Processing UBG for year 2076 and month 03
+Processing UBG for year 2076 and month 04
+Processing UBG for year 2076 and month 05
+Processing UBG for year 2076 and month 06
+Processing UBG for year 2076 and month 07
+Processing UBG for year 2076 and month 08
+Processing UBG for year 2076 and month 09
+Processing UBG for year 2076 and month 10
+Processing UBG for year 2076 and month 11
+Processing UBG for year 2076 and month 12
+#executed by process	19 in 4670.09s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2076 --sim UBG --ext
+mode extreme: activated
+Processing UBF for year 2009 and month 01
+Processing UBF for year 2009 and month 02
+Processing UBF for year 2009 and month 03
+Processing UBF for year 2009 and month 04
+Processing UBF for year 2009 and month 05
+Processing UBF for year 2009 and month 06
+Processing UBF for year 2009 and month 07
+Processing UBF for year 2009 and month 08
+Processing UBF for year 2009 and month 09
+Processing UBF for year 2009 and month 10
+Processing UBF for year 2009 and month 11
+Processing UBF for year 2009 and month 12
+#executed by process	24 in 6747.55s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2009 --sim UBF --ext
+mode extreme: activated
+Processing UBG for year 2072 and month 01
+Processing UBG for year 2072 and month 02
+Processing UBG for year 2072 and month 03
+Processing UBG for year 2072 and month 04
+Processing UBG for year 2072 and month 05
+Processing UBG for year 2072 and month 06
+Processing UBG for year 2072 and month 07
+Processing UBG for year 2072 and month 08
+Processing UBG for year 2072 and month 09
+Processing UBG for year 2072 and month 10
+Processing UBG for year 2072 and month 11
+Processing UBG for year 2072 and month 12
+#executed by process	27 in 4885.01s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2072 --sim UBG --ext
+mode extreme: activated
+Processing UBG for year 2073 and month 01
+Processing UBG for year 2073 and month 02
+Processing UBG for year 2073 and month 03
+Processing UBG for year 2073 and month 04
+Processing UBG for year 2073 and month 05
+Processing UBG for year 2073 and month 06
+Processing UBG for year 2073 and month 07
+Processing UBG for year 2073 and month 08
+Processing UBG for year 2073 and month 09
+Processing UBG for year 2073 and month 10
+Processing UBG for year 2073 and month 11
+Processing UBG for year 2073 and month 12
+#executed by process	31 in 4919.81s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2073 --sim UBG --ext
+mode extreme: activated
+Processing UBG for year 2075 and month 01
+Processing UBG for year 2075 and month 02
+Processing UBG for year 2075 and month 03
+Processing UBG for year 2075 and month 04
+Processing UBG for year 2075 and month 05
+Processing UBG for year 2075 and month 06
+Processing UBG for year 2075 and month 07
+Processing UBG for year 2075 and month 08
+Processing UBG for year 2075 and month 09
+Processing UBG for year 2075 and month 10
+Processing UBG for year 2075 and month 11
+Processing UBG for year 2075 and month 12
+#executed by process	38 in 5098.38s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2075 --sim UBG --ext
+mode extreme: activated
+Processing UBF for year 2014 and month 01
+Processing UBF for year 2014 and month 02
+Processing UBF for year 2014 and month 03
+Processing UBF for year 2014 and month 04
+Processing UBF for year 2014 and month 05
+Processing UBF for year 2014 and month 06
+Processing UBF for year 2014 and month 07
+Processing UBF for year 2014 and month 08
+Processing UBF for year 2014 and month 09
+Processing UBF for year 2014 and month 10
+Processing UBF for year 2014 and month 11
+Processing UBF for year 2014 and month 12
+#executed by process	32 in 6604.77s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2014 --sim UBF --ext
+mode extreme: activated
+Processing UBF for year 2013 and month 01
+Processing UBF for year 2013 and month 02
+Processing UBF for year 2013 and month 03
+Processing UBF for year 2013 and month 04
+Processing UBF for year 2013 and month 05
+Processing UBF for year 2013 and month 06
+Processing UBF for year 2013 and month 07
+Processing UBF for year 2013 and month 08
+Processing UBF for year 2013 and month 09
+Processing UBF for year 2013 and month 10
+Processing UBF for year 2013 and month 11
+Processing UBF for year 2013 and month 12
+#executed by process	28 in 6737.94s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2013 --sim UBF --ext
+mode extreme: activated
+Processing UBG for year 2079 and month 01
+Processing UBG for year 2079 and month 02
+Processing UBG for year 2079 and month 03
+Processing UBG for year 2079 and month 04
+Processing UBG for year 2079 and month 05
+Processing UBG for year 2079 and month 06
+Processing UBG for year 2079 and month 07
+Processing UBG for year 2079 and month 08
+Processing UBG for year 2079 and month 09
+Processing UBG for year 2079 and month 10
+Processing UBG for year 2079 and month 11
+Processing UBG for year 2079 and month 12
+#executed by process	36 in 4894.41s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2079 --sim UBG --ext
+mode extreme: activated
+Processing UBF for year 2010 and month 01
+Processing UBF for year 2010 and month 02
+Processing UBF for year 2010 and month 03
+Processing UBF for year 2010 and month 04
+Processing UBF for year 2010 and month 05
+Processing UBF for year 2010 and month 06
+Processing UBF for year 2010 and month 07
+Processing UBF for year 2010 and month 08
+Processing UBF for year 2010 and month 09
+Processing UBF for year 2010 and month 10
+Processing UBF for year 2010 and month 11
+Processing UBF for year 2010 and month 12
+#executed by process	33 in 7078.91s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2010 --sim UBF --ext
+mode extreme: activated
+Processing UBG for year 2065 and month 01
+Processing UBG for year 2065 and month 02
+Processing UBG for year 2065 and month 03
+Processing UBG for year 2065 and month 04
+Processing UBG for year 2065 and month 05
+Processing UBG for year 2065 and month 06
+Processing UBG for year 2065 and month 07
+Processing UBG for year 2065 and month 08
+Processing UBG for year 2065 and month 09
+Processing UBG for year 2065 and month 10
+Processing UBG for year 2065 and month 11
+Processing UBG for year 2065 and month 12
+#executed by process	30 in 6972.05s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2065 --sim UBG --ext
+mode extreme: activated
+Processing UBF for year 2012 and month 01
+Processing UBF for year 2012 and month 02
+Processing UBF for year 2012 and month 03
+Processing UBF for year 2012 and month 04
+Processing UBF for year 2012 and month 05
+Processing UBF for year 2012 and month 06
+Processing UBF for year 2012 and month 07
+Processing UBF for year 2012 and month 08
+Processing UBF for year 2012 and month 09
+Processing UBF for year 2012 and month 10
+Processing UBF for year 2012 and month 11
+Processing UBF for year 2012 and month 12
+#executed by process	26 in 7215.19s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2012 --sim UBF --ext
+mode extreme: activated
+Processing UBG for year 2067 and month 01
+Processing UBG for year 2067 and month 02
+Processing UBG for year 2067 and month 03
+Processing UBG for year 2067 and month 04
+Processing UBG for year 2067 and month 05
+Processing UBG for year 2067 and month 06
+Processing UBG for year 2067 and month 07
+Processing UBG for year 2067 and month 08
+Processing UBG for year 2067 and month 09
+Processing UBG for year 2067 and month 10
+Processing UBG for year 2067 and month 11
+Processing UBG for year 2067 and month 12
+#executed by process	22 in 7166.17s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2067 --sim UBG --ext
+mode extreme: activated
+Processing UBG for year 2071 and month 01
+Processing UBG for year 2071 and month 02
+Processing UBG for year 2071 and month 03
+Processing UBG for year 2071 and month 04
+Processing UBG for year 2071 and month 05
+Processing UBG for year 2071 and month 06
+Processing UBG for year 2071 and month 07
+Processing UBG for year 2071 and month 08
+Processing UBG for year 2071 and month 09
+Processing UBG for year 2071 and month 10
+Processing UBG for year 2071 and month 11
+Processing UBG for year 2071 and month 12
+#executed by process	6 in 7040.63s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2071 --sim UBG --ext
+mode extreme: activated
+Processing UBG for year 2087 and month 01
+Processing UBG for year 2087 and month 02
+Processing UBG for year 2087 and month 03
+Processing UBG for year 2087 and month 04
+Processing UBG for year 2087 and month 05
+Processing UBG for year 2087 and month 06
+Processing UBG for year 2087 and month 07
+Processing UBG for year 2087 and month 08
+Processing UBG for year 2087 and month 09
+Processing UBG for year 2087 and month 10
+Processing UBG for year 2087 and month 11
+Processing UBG for year 2087 and month 12
+#executed by process	17 in 4733.46s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2087 --sim UBG --ext
+mode extreme: activated
+Processing UBG for year 2086 and month 01
+Processing UBG for year 2086 and month 02
+Processing UBG for year 2086 and month 03
+Processing UBG for year 2086 and month 04
+Processing UBG for year 2086 and month 05
+Processing UBG for year 2086 and month 06
+Processing UBG for year 2086 and month 07
+Processing UBG for year 2086 and month 08
+Processing UBG for year 2086 and month 09
+Processing UBG for year 2086 and month 10
+Processing UBG for year 2086 and month 11
+Processing UBG for year 2086 and month 12
+#executed by process	16 in 4973.98s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2086 --sim UBG --ext
+mode extreme: activated
+Processing UBG for year 2080 and month 01
+Processing UBG for year 2080 and month 02
+Processing UBG for year 2080 and month 03
+Processing UBG for year 2080 and month 04
+Processing UBG for year 2080 and month 05
+Processing UBG for year 2080 and month 06
+Processing UBG for year 2080 and month 07
+Processing UBG for year 2080 and month 08
+Processing UBG for year 2080 and month 09
+Processing UBG for year 2080 and month 10
+Processing UBG for year 2080 and month 11
+Processing UBG for year 2080 and month 12
+#executed by process	8 in 6511.68s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2080 --sim UBG --ext
+mode extreme: activated
+Processing UBG for year 2096 and month 01
+Processing UBG for year 2096 and month 02
+Processing UBG for year 2096 and month 03
+Processing UBG for year 2096 and month 04
+Processing UBG for year 2096 and month 05
+Processing UBG for year 2096 and month 06
+Processing UBG for year 2096 and month 07
+Processing UBG for year 2096 and month 08
+Processing UBG for year 2096 and month 09
+Processing UBG for year 2096 and month 10
+Processing UBG for year 2096 and month 11
+Processing UBG for year 2096 and month 12
+#executed by process	21 in 3528.92s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2096 --sim UBG --ext
+mode extreme: activated
+Processing UBG for year 2077 and month 01
+Processing UBG for year 2077 and month 02
+Processing UBG for year 2077 and month 03
+Processing UBG for year 2077 and month 04
+Processing UBG for year 2077 and month 05
+Processing UBG for year 2077 and month 06
+Processing UBG for year 2077 and month 07
+Processing UBG for year 2077 and month 08
+Processing UBG for year 2077 and month 09
+Processing UBG for year 2077 and month 10
+Processing UBG for year 2077 and month 11
+Processing UBG for year 2077 and month 12
+#executed by process	34 in 6865.82s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2077 --sim UBG --ext
+mode extreme: activated
+Processing UBG for year 2082 and month 01
+Processing UBG for year 2082 and month 02
+Processing UBG for year 2082 and month 03
+Processing UBG for year 2082 and month 04
+Processing UBG for year 2082 and month 05
+Processing UBG for year 2082 and month 06
+Processing UBG for year 2082 and month 07
+Processing UBG for year 2082 and month 08
+Processing UBG for year 2082 and month 09
+Processing UBG for year 2082 and month 10
+Processing UBG for year 2082 and month 11
+Processing UBG for year 2082 and month 12
+#executed by process	25 in 5900.41s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2082 --sim UBG --ext
+mode extreme: activated
+Processing UBG for year 2078 and month 01
+Processing UBG for year 2078 and month 02
+Processing UBG for year 2078 and month 03
+Processing UBG for year 2078 and month 04
+Processing UBG for year 2078 and month 05
+Processing UBG for year 2078 and month 06
+Processing UBG for year 2078 and month 07
+Processing UBG for year 2078 and month 08
+Processing UBG for year 2078 and month 09
+Processing UBG for year 2078 and month 10
+Processing UBG for year 2078 and month 11
+Processing UBG for year 2078 and month 12
+#executed by process	7 in 7151.09s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2078 --sim UBG --ext
+mode extreme: activated
+Processing UBG for year 2095 and month 01
+Processing UBG for year 2095 and month 02
+Processing UBG for year 2095 and month 03
+Processing UBG for year 2095 and month 04
+Processing UBG for year 2095 and month 05
+Processing UBG for year 2095 and month 06
+Processing UBG for year 2095 and month 07
+Processing UBG for year 2095 and month 08
+Processing UBG for year 2095 and month 09
+Processing UBG for year 2095 and month 10
+Processing UBG for year 2095 and month 11
+Processing UBG for year 2095 and month 12
+#executed by process	20 in 4056.74s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2095 --sim UBG --ext
+mode extreme: activated
+Processing UBG for year 2083 and month 01
+Processing UBG for year 2083 and month 02
+Processing UBG for year 2083 and month 03
+Processing UBG for year 2083 and month 04
+Processing UBG for year 2083 and month 05
+Processing UBG for year 2083 and month 06
+Processing UBG for year 2083 and month 07
+Processing UBG for year 2083 and month 08
+Processing UBG for year 2083 and month 09
+Processing UBG for year 2083 and month 10
+Processing UBG for year 2083 and month 11
+Processing UBG for year 2083 and month 12
+#executed by process	9 in 6324.44s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2083 --sim UBG --ext
+mode extreme: activated
+Processing UBG for year 2081 and month 01
+Processing UBG for year 2081 and month 02
+Processing UBG for year 2081 and month 03
+Processing UBG for year 2081 and month 04
+Processing UBG for year 2081 and month 05
+Processing UBG for year 2081 and month 06
+Processing UBG for year 2081 and month 07
+Processing UBG for year 2081 and month 08
+Processing UBG for year 2081 and month 09
+Processing UBG for year 2081 and month 10
+Processing UBG for year 2081 and month 11
+Processing UBG for year 2081 and month 12
+#executed by process	5 in 7093.45s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2081 --sim UBG --ext
+mode extreme: activated
+Processing UBG for year 2091 and month 01
+Processing UBG for year 2091 and month 02
+Processing UBG for year 2091 and month 03
+Processing UBG for year 2091 and month 04
+Processing UBG for year 2091 and month 05
+Processing UBG for year 2091 and month 06
+Processing UBG for year 2091 and month 07
+Processing UBG for year 2091 and month 08
+Processing UBG for year 2091 and month 09
+Processing UBG for year 2091 and month 10
+Processing UBG for year 2091 and month 11
+Processing UBG for year 2091 and month 12
+#executed by process	14 in 5158.37s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2091 --sim UBG --ext
+mode extreme: activated
+Processing UBG for year 2089 and month 01
+Processing UBG for year 2089 and month 02
+Processing UBG for year 2089 and month 03
+Processing UBG for year 2089 and month 04
+Processing UBG for year 2089 and month 05
+Processing UBG for year 2089 and month 06
+Processing UBG for year 2089 and month 07
+Processing UBG for year 2089 and month 08
+Processing UBG for year 2089 and month 09
+Processing UBG for year 2089 and month 10
+Processing UBG for year 2089 and month 11
+Processing UBG for year 2089 and month 12
+#executed by process	12 in 5366.3s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2089 --sim UBG --ext
+mode extreme: activated
+Processing UBG for year 2084 and month 01
+Processing UBG for year 2084 and month 02
+Processing UBG for year 2084 and month 03
+Processing UBG for year 2084 and month 04
+Processing UBG for year 2084 and month 05
+Processing UBG for year 2084 and month 06
+Processing UBG for year 2084 and month 07
+Processing UBG for year 2084 and month 08
+Processing UBG for year 2084 and month 09
+Processing UBG for year 2084 and month 10
+Processing UBG for year 2084 and month 11
+Processing UBG for year 2084 and month 12
+#executed by process	11 in 6510.66s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2084 --sim UBG --ext
+mode extreme: activated
+Processing UBG for year 2085 and month 01
+Processing UBG for year 2085 and month 02
+Processing UBG for year 2085 and month 03
+Processing UBG for year 2085 and month 04
+Processing UBG for year 2085 and month 05
+Processing UBG for year 2085 and month 06
+Processing UBG for year 2085 and month 07
+Processing UBG for year 2085 and month 08
+Processing UBG for year 2085 and month 09
+Processing UBG for year 2085 and month 10
+Processing UBG for year 2085 and month 11
+Processing UBG for year 2085 and month 12
+#executed by process	10 in 6401.61s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2085 --sim UBG --ext
+mode extreme: activated
+Processing UBG for year 2092 and month 01
+Processing UBG for year 2092 and month 02
+Processing UBG for year 2092 and month 03
+Processing UBG for year 2092 and month 04
+Processing UBG for year 2092 and month 05
+Processing UBG for year 2092 and month 06
+Processing UBG for year 2092 and month 07
+Processing UBG for year 2092 and month 08
+Processing UBG for year 2092 and month 09
+Processing UBG for year 2092 and month 10
+Processing UBG for year 2092 and month 11
+Processing UBG for year 2092 and month 12
+#executed by process	1 in 4994.15s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2092 --sim UBG --ext
+mode extreme: activated
+Processing UBG for year 2093 and month 01
+Processing UBG for year 2093 and month 02
+Processing UBG for year 2093 and month 03
+Processing UBG for year 2093 and month 04
+Processing UBG for year 2093 and month 05
+Processing UBG for year 2093 and month 06
+Processing UBG for year 2093 and month 07
+Processing UBG for year 2093 and month 08
+Processing UBG for year 2093 and month 09
+Processing UBG for year 2093 and month 10
+Processing UBG for year 2093 and month 11
+Processing UBG for year 2093 and month 12
+#executed by process	35 in 4739.33s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2093 --sim UBG --ext
+mode extreme: activated
+Processing UBH for year 2065 and month 01
+Processing UBH for year 2065 and month 02
+Processing UBH for year 2065 and month 03
+Processing UBH for year 2065 and month 04
+Processing UBH for year 2065 and month 05
+Processing UBH for year 2065 and month 06
+Processing UBH for year 2065 and month 07
+Processing UBH for year 2065 and month 08
+Processing UBH for year 2065 and month 09
+Processing UBH for year 2065 and month 10
+Processing UBH for year 2065 and month 11
+Processing UBH for year 2065 and month 12
+#executed by process	39 in 4136.33s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2065 --sim UBH --ext
+mode extreme: activated
+Processing UBG for year 2098 and month 01
+Processing UBG for year 2098 and month 02
+Processing UBG for year 2098 and month 03
+Processing UBG for year 2098 and month 04
+Processing UBG for year 2098 and month 05
+Processing UBG for year 2098 and month 06
+Processing UBG for year 2098 and month 07
+Processing UBG for year 2098 and month 08
+Processing UBG for year 2098 and month 09
+Processing UBG for year 2098 and month 10
+Processing UBG for year 2098 and month 11
+Processing UBG for year 2098 and month 12
+#executed by process	37 in 4589.23s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2098 --sim UBG --ext
+mode extreme: activated
+Processing UBG for year 2094 and month 01
+Processing UBG for year 2094 and month 02
+Processing UBG for year 2094 and month 03
+Processing UBG for year 2094 and month 04
+Processing UBG for year 2094 and month 05
+Processing UBG for year 2094 and month 06
+Processing UBG for year 2094 and month 07
+Processing UBG for year 2094 and month 08
+Processing UBG for year 2094 and month 09
+Processing UBG for year 2094 and month 10
+Processing UBG for year 2094 and month 11
+Processing UBG for year 2094 and month 12
+#executed by process	13 in 5023.11s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2094 --sim UBG --ext
+mode extreme: activated
+Processing UBG for year 2097 and month 01
+Processing UBG for year 2097 and month 02
+Processing UBG for year 2097 and month 03
+Processing UBG for year 2097 and month 04
+Processing UBG for year 2097 and month 05
+Processing UBG for year 2097 and month 06
+Processing UBG for year 2097 and month 07
+Processing UBG for year 2097 and month 08
+Processing UBG for year 2097 and month 09
+Processing UBG for year 2097 and month 10
+Processing UBG for year 2097 and month 11
+Processing UBG for year 2097 and month 12
+#executed by process	18 in 5104.86s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2097 --sim UBG --ext
+mode extreme: activated
+Processing UBG for year 2090 and month 01
+Processing UBG for year 2090 and month 02
+Processing UBG for year 2090 and month 03
+Processing UBG for year 2090 and month 04
+Processing UBG for year 2090 and month 05
+Processing UBG for year 2090 and month 06
+Processing UBG for year 2090 and month 07
+Processing UBG for year 2090 and month 08
+Processing UBG for year 2090 and month 09
+Processing UBG for year 2090 and month 10
+Processing UBG for year 2090 and month 11
+Processing UBG for year 2090 and month 12
+#executed by process	23 in 6013.65s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2090 --sim UBG --ext
+mode extreme: activated
+Processing UBG for year 2099 and month 01
+Processing UBG for year 2099 and month 02
+Processing UBG for year 2099 and month 03
+Processing UBG for year 2099 and month 04
+Processing UBG for year 2099 and month 05
+Processing UBG for year 2099 and month 06
+Processing UBG for year 2099 and month 07
+Processing UBG for year 2099 and month 08
+Processing UBG for year 2099 and month 09
+Processing UBG for year 2099 and month 10
+Processing UBG for year 2099 and month 11
+Processing UBG for year 2099 and month 12
+#executed by process	15 in 5014.79s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2099 --sim UBG --ext
+mode extreme: activated
+Processing UBG for year 2088 and month 01
+Processing UBG for year 2088 and month 02
+Processing UBG for year 2088 and month 03
+Processing UBG for year 2088 and month 04
+Processing UBG for year 2088 and month 05
+Processing UBG for year 2088 and month 06
+Processing UBG for year 2088 and month 07
+Processing UBG for year 2088 and month 08
+Processing UBG for year 2088 and month 09
+Processing UBG for year 2088 and month 10
+Processing UBG for year 2088 and month 11
+Processing UBG for year 2088 and month 12
+#executed by process	4 in 6489.16s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2088 --sim UBG --ext
+mode extreme: activated
+Processing UBG for year 2100 and month 01
+Processing UBG for year 2100 and month 02
+Processing UBG for year 2100 and month 03
+Processing UBG for year 2100 and month 04
+Processing UBG for year 2100 and month 05
+Processing UBG for year 2100 and month 06
+Processing UBG for year 2100 and month 07
+Processing UBG for year 2100 and month 08
+Processing UBG for year 2100 and month 09
+Processing UBG for year 2100 and month 10
+Processing UBG for year 2100 and month 11
+Processing UBG for year 2100 and month 12
+#executed by process	2 in 5280.17s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2100 --sim UBG --ext
+mode extreme: activated
+Processing UBH for year 2068 and month 01
+Processing UBH for year 2068 and month 02
+Processing UBH for year 2068 and month 03
+Processing UBH for year 2068 and month 04
+Processing UBH for year 2068 and month 05
+Processing UBH for year 2068 and month 06
+Processing UBH for year 2068 and month 07
+Processing UBH for year 2068 and month 08
+Processing UBH for year 2068 and month 09
+Processing UBH for year 2068 and month 10
+Processing UBH for year 2068 and month 11
+Processing UBH for year 2068 and month 12
+#executed by process	19 in 4595.77s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2068 --sim UBH --ext
+mode extreme: activated
+Processing UBH for year 2067 and month 01
+Processing UBH for year 2067 and month 02
+Processing UBH for year 2067 and month 03
+Processing UBH for year 2067 and month 04
+Processing UBH for year 2067 and month 05
+Processing UBH for year 2067 and month 06
+Processing UBH for year 2067 and month 07
+Processing UBH for year 2067 and month 08
+Processing UBH for year 2067 and month 09
+Processing UBH for year 2067 and month 10
+Processing UBH for year 2067 and month 11
+Processing UBH for year 2067 and month 12
+#executed by process	29 in 5097.62s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2067 --sim UBH --ext
+mode extreme: activated
+Processing UBH for year 2066 and month 01
+Processing UBH for year 2066 and month 02
+Processing UBH for year 2066 and month 03
+Processing UBH for year 2066 and month 04
+Processing UBH for year 2066 and month 05
+Processing UBH for year 2066 and month 06
+Processing UBH for year 2066 and month 07
+Processing UBH for year 2066 and month 08
+Processing UBH for year 2066 and month 09
+Processing UBH for year 2066 and month 10
+Processing UBH for year 2066 and month 11
+Processing UBH for year 2066 and month 12
+#executed by process	3 in 5418.99s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2066 --sim UBH --ext
+mode extreme: activated
+Processing UBH for year 2070 and month 01
+Processing UBH for year 2070 and month 02
+Processing UBH for year 2070 and month 03
+Processing UBH for year 2070 and month 04
+Processing UBH for year 2070 and month 05
+Processing UBH for year 2070 and month 06
+Processing UBH for year 2070 and month 07
+Processing UBH for year 2070 and month 08
+Processing UBH for year 2070 and month 09
+Processing UBH for year 2070 and month 10
+Processing UBH for year 2070 and month 11
+Processing UBH for year 2070 and month 12
+#executed by process	27 in 5052.05s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2070 --sim UBH --ext
+mode extreme: activated
+Processing UBH for year 2071 and month 01
+Processing UBH for year 2071 and month 02
+Processing UBH for year 2071 and month 03
+Processing UBH for year 2071 and month 04
+Processing UBH for year 2071 and month 05
+Processing UBH for year 2071 and month 06
+Processing UBH for year 2071 and month 07
+Processing UBH for year 2071 and month 08
+Processing UBH for year 2071 and month 09
+Processing UBH for year 2071 and month 10
+Processing UBH for year 2071 and month 11
+Processing UBH for year 2071 and month 12
+#executed by process	31 in 5202.63s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2071 --sim UBH --ext
+mode extreme: activated
+Processing UBH for year 2072 and month 01
+Processing UBH for year 2072 and month 02
+Processing UBH for year 2072 and month 03
+Processing UBH for year 2072 and month 04
+Processing UBH for year 2072 and month 05
+Processing UBH for year 2072 and month 06
+Processing UBH for year 2072 and month 07
+Processing UBH for year 2072 and month 08
+Processing UBH for year 2072 and month 09
+Processing UBH for year 2072 and month 10
+Processing UBH for year 2072 and month 11
+Processing UBH for year 2072 and month 12
+#executed by process	38 in 5190.89s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2072 --sim UBH --ext
+mode extreme: activated
+Processing UBH for year 2075 and month 01
+Processing UBH for year 2075 and month 02
+Processing UBH for year 2075 and month 03
+Processing UBH for year 2075 and month 04
+Processing UBH for year 2075 and month 05
+Processing UBH for year 2075 and month 06
+Processing UBH for year 2075 and month 07
+Processing UBH for year 2075 and month 08
+Processing UBH for year 2075 and month 09
+Processing UBH for year 2075 and month 10
+Processing UBH for year 2075 and month 11
+Processing UBH for year 2075 and month 12
+#executed by process	36 in 5057.07s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2075 --sim UBH --ext
+mode extreme: activated
+Processing UBH for year 2084 and month 01
+Processing UBH for year 2084 and month 02
+Processing UBH for year 2084 and month 03
+Processing UBH for year 2084 and month 04
+Processing UBH for year 2084 and month 05
+Processing UBH for year 2084 and month 06
+Processing UBH for year 2084 and month 07
+Processing UBH for year 2084 and month 08
+Processing UBH for year 2084 and month 09
+Processing UBH for year 2084 and month 10
+Processing UBH for year 2084 and month 11
+Processing UBH for year 2084 and month 12
+#executed by process	21 in 3500.66s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2084 --sim UBH --ext
+mode extreme: activated
+Processing UBH for year 2082 and month 01
+Processing UBH for year 2082 and month 02
+Processing UBH for year 2082 and month 03
+Processing UBH for year 2082 and month 04
+Processing UBH for year 2082 and month 05
+Processing UBH for year 2082 and month 06
+Processing UBH for year 2082 and month 07
+Processing UBH for year 2082 and month 08
+Processing UBH for year 2082 and month 09
+Processing UBH for year 2082 and month 10
+Processing UBH for year 2082 and month 11
+Processing UBH for year 2082 and month 12
+#executed by process	16 in 4319.84s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2082 --sim UBH --ext
+mode extreme: activated
+Processing UBH for year 2081 and month 01
+Processing UBH for year 2081 and month 02
+Processing UBH for year 2081 and month 03
+Processing UBH for year 2081 and month 04
+Processing UBH for year 2081 and month 05
+Processing UBH for year 2081 and month 06
+Processing UBH for year 2081 and month 07
+Processing UBH for year 2081 and month 08
+Processing UBH for year 2081 and month 09
+Processing UBH for year 2081 and month 10
+Processing UBH for year 2081 and month 11
+Processing UBH for year 2081 and month 12
+#executed by process	17 in 4404.76s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2081 --sim UBH --ext
+mode extreme: activated
+Processing UBH for year 2086 and month 01
+Processing UBH for year 2086 and month 02
+Processing UBH for year 2086 and month 03
+Processing UBH for year 2086 and month 04
+Processing UBH for year 2086 and month 05
+Processing UBH for year 2086 and month 06
+Processing UBH for year 2086 and month 07
+Processing UBH for year 2086 and month 08
+Processing UBH for year 2086 and month 09
+Processing UBH for year 2086 and month 10
+Processing UBH for year 2086 and month 11
+Processing UBH for year 2086 and month 12
+#executed by process	25 in 4388.9s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2086 --sim UBH --ext
+mode extreme: activated
+Processing UBH for year 2073 and month 01
+Processing UBH for year 2073 and month 02
+Processing UBH for year 2073 and month 03
+Processing UBH for year 2073 and month 04
+Processing UBH for year 2073 and month 05
+Processing UBH for year 2073 and month 06
+Processing UBH for year 2073 and month 07
+Processing UBH for year 2073 and month 08
+Processing UBH for year 2073 and month 09
+Processing UBH for year 2073 and month 10
+Processing UBH for year 2073 and month 11
+Processing UBH for year 2073 and month 12
+#executed by process	32 in 6548.22s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2073 --sim UBH --ext
+mode extreme: activated
+Processing UBH for year 2076 and month 01
+Processing UBH for year 2076 and month 02
+Processing UBH for year 2076 and month 03
+Processing UBH for year 2076 and month 04
+Processing UBH for year 2076 and month 05
+Processing UBH for year 2076 and month 06
+Processing UBH for year 2076 and month 07
+Processing UBH for year 2076 and month 08
+Processing UBH for year 2076 and month 09
+Processing UBH for year 2076 and month 10
+Processing UBH for year 2076 and month 11
+Processing UBH for year 2076 and month 12
+#executed by process	33 in 6264.44s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2076 --sim UBH --ext
+mode extreme: activated
+Processing UBH for year 2088 and month 01
+Processing UBH for year 2088 and month 02
+Processing UBH for year 2088 and month 03
+Processing UBH for year 2088 and month 04
+Processing UBH for year 2088 and month 05
+Processing UBH for year 2088 and month 06
+Processing UBH for year 2088 and month 07
+Processing UBH for year 2088 and month 08
+Processing UBH for year 2088 and month 09
+Processing UBH for year 2088 and month 10
+Processing UBH for year 2088 and month 11
+Processing UBH for year 2088 and month 12
+#executed by process	20 in 4035.16s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2088 --sim UBH --ext
+mode extreme: activated
+Processing UBH for year 2074 and month 01
+Processing UBH for year 2074 and month 02
+Processing UBH for year 2074 and month 03
+Processing UBH for year 2074 and month 04
+Processing UBH for year 2074 and month 05
+Processing UBH for year 2074 and month 06
+Processing UBH for year 2074 and month 07
+Processing UBH for year 2074 and month 08
+Processing UBH for year 2074 and month 09
+Processing UBH for year 2074 and month 10
+Processing UBH for year 2074 and month 11
+Processing UBH for year 2074 and month 12
+#executed by process	28 in 6527.12s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2074 --sim UBH --ext
+mode extreme: activated
+Processing UBH for year 2069 and month 01
+Processing UBH for year 2069 and month 02
+Processing UBH for year 2069 and month 03
+Processing UBH for year 2069 and month 04
+Processing UBH for year 2069 and month 05
+Processing UBH for year 2069 and month 06
+Processing UBH for year 2069 and month 07
+Processing UBH for year 2069 and month 08
+Processing UBH for year 2069 and month 09
+Processing UBH for year 2069 and month 10
+Processing UBH for year 2069 and month 11
+Processing UBH for year 2069 and month 12
+#executed by process	24 in 7017.49s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2069 --sim UBH --ext
+mode extreme: activated
+Processing UBH for year 2080 and month 01
+Processing UBH for year 2080 and month 02
+Processing UBH for year 2080 and month 03
+Processing UBH for year 2080 and month 04
+Processing UBH for year 2080 and month 05
+Processing UBH for year 2080 and month 06
+Processing UBH for year 2080 and month 07
+Processing UBH for year 2080 and month 08
+Processing UBH for year 2080 and month 09
+Processing UBH for year 2080 and month 10
+Processing UBH for year 2080 and month 11
+Processing UBH for year 2080 and month 12
+#executed by process	6 in 5080.21s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2080 --sim UBH --ext
+mode extreme: activated
+Processing UBH for year 2077 and month 01
+Processing UBH for year 2077 and month 02
+Processing UBH for year 2077 and month 03
+Processing UBH for year 2077 and month 04
+Processing UBH for year 2077 and month 05
+Processing UBH for year 2077 and month 06
+Processing UBH for year 2077 and month 07
+Processing UBH for year 2077 and month 08
+Processing UBH for year 2077 and month 09
+Processing UBH for year 2077 and month 10
+Processing UBH for year 2077 and month 11
+Processing UBH for year 2077 and month 12
+#executed by process	30 in 6406s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2077 --sim UBH --ext
+mode extreme: activated
+Processing UBH for year 2087 and month 01
+Processing UBH for year 2087 and month 02
+Processing UBH for year 2087 and month 03
+Processing UBH for year 2087 and month 04
+Processing UBH for year 2087 and month 05
+Processing UBH for year 2087 and month 06
+Processing UBH for year 2087 and month 07
+Processing UBH for year 2087 and month 08
+Processing UBH for year 2087 and month 09
+Processing UBH for year 2087 and month 10
+Processing UBH for year 2087 and month 11
+Processing UBH for year 2087 and month 12
+#executed by process	7 in 4436.6s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2087 --sim UBH --ext
+mode extreme: activated
+Processing UBH for year 2097 and month 01
+Processing UBH for year 2097 and month 02
+Processing UBH for year 2097 and month 03
+Processing UBH for year 2097 and month 04
+Processing UBH for year 2097 and month 05
+Processing UBH for year 2097 and month 06
+Processing UBH for year 2097 and month 07
+Processing UBH for year 2097 and month 08
+Processing UBH for year 2097 and month 09
+Processing UBH for year 2097 and month 10
+Processing UBH for year 2097 and month 11
+Processing UBH for year 2097 and month 12
+#executed by process	39 in 3622.96s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2097 --sim UBH --ext
+mode extreme: activated
+Processing UBH for year 2079 and month 01
+Processing UBH for year 2079 and month 02
+Processing UBH for year 2079 and month 03
+Processing UBH for year 2079 and month 04
+Processing UBH for year 2079 and month 05
+Processing UBH for year 2079 and month 06
+Processing UBH for year 2079 and month 07
+Processing UBH for year 2079 and month 08
+Processing UBH for year 2079 and month 09
+Processing UBH for year 2079 and month 10
+Processing UBH for year 2079 and month 11
+Processing UBH for year 2079 and month 12
+#executed by process	22 in 5947.39s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2079 --sim UBH --ext
+mode extreme: activated
+Processing UBH for year 2090 and month 01
+Processing UBH for year 2090 and month 02
+Processing UBH for year 2090 and month 03
+Processing UBH for year 2090 and month 04
+Processing UBH for year 2090 and month 05
+Processing UBH for year 2090 and month 06
+Processing UBH for year 2090 and month 07
+Processing UBH for year 2090 and month 08
+Processing UBH for year 2090 and month 09
+Processing UBH for year 2090 and month 10
+Processing UBH for year 2090 and month 11
+Processing UBH for year 2090 and month 12
+#executed by process	5 in 4238.88s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2090 --sim UBH --ext
+mode extreme: activated
+Processing UBH for year 2095 and month 01
+Processing UBH for year 2095 and month 02
+Processing UBH for year 2095 and month 03
+Processing UBH for year 2095 and month 04
+Processing UBH for year 2095 and month 05
+Processing UBH for year 2095 and month 06
+Processing UBH for year 2095 and month 07
+Processing UBH for year 2095 and month 08
+Processing UBH for year 2095 and month 09
+Processing UBH for year 2095 and month 10
+Processing UBH for year 2095 and month 11
+Processing UBH for year 2095 and month 12
+#executed by process	1 in 4009.69s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2095 --sim UBH --ext
+mode extreme: activated
+Processing UBH for year 2078 and month 01
+Processing UBH for year 2078 and month 02
+Processing UBH for year 2078 and month 03
+Processing UBH for year 2078 and month 04
+Processing UBH for year 2078 and month 05
+Processing UBH for year 2078 and month 06
+Processing UBH for year 2078 and month 07
+Processing UBH for year 2078 and month 08
+Processing UBH for year 2078 and month 09
+Processing UBH for year 2078 and month 10
+Processing UBH for year 2078 and month 11
+Processing UBH for year 2078 and month 12
+#executed by process	26 in 6784.8s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2078 --sim UBH --ext
+mode extreme: activated
+Processing UBH for year 2096 and month 01
+Processing UBH for year 2096 and month 02
+Processing UBH for year 2096 and month 03
+Processing UBH for year 2096 and month 04
+Processing UBH for year 2096 and month 05
+Processing UBH for year 2096 and month 06
+Processing UBH for year 2096 and month 07
+Processing UBH for year 2096 and month 08
+Processing UBH for year 2096 and month 09
+Processing UBH for year 2096 and month 10
+Processing UBH for year 2096 and month 11
+Processing UBH for year 2096 and month 12
+#executed by process	35 in 4149.97s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2096 --sim UBH --ext
+mode extreme: activated
+Processing UBH for year 2100 and month 01
+Processing UBH for year 2100 and month 02
+Processing UBH for year 2100 and month 03
+Processing UBH for year 2100 and month 04
+Processing UBH for year 2100 and month 05
+Processing UBH for year 2100 and month 06
+Processing UBH for year 2100 and month 07
+Processing UBH for year 2100 and month 08
+Processing UBH for year 2100 and month 09
+Processing UBH for year 2100 and month 10
+Processing UBH for year 2100 and month 11
+Processing UBH for year 2100 and month 12
+#executed by process	18 in 3822.02s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2100 --sim UBH --ext
+mode extreme: activated
+Processing UBH for year 2083 and month 01
+Processing UBH for year 2083 and month 02
+Processing UBH for year 2083 and month 03
+Processing UBH for year 2083 and month 04
+Processing UBH for year 2083 and month 05
+Processing UBH for year 2083 and month 06
+Processing UBH for year 2083 and month 07
+Processing UBH for year 2083 and month 08
+Processing UBH for year 2083 and month 09
+Processing UBH for year 2083 and month 10
+Processing UBH for year 2083 and month 11
+Processing UBH for year 2083 and month 12
+#executed by process	8 in 5551.67s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2083 --sim UBH --ext
+mode extreme: activated
+Processing UBH for year 2085 and month 01
+Processing UBH for year 2085 and month 02
+Processing UBH for year 2085 and month 03
+Processing UBH for year 2085 and month 04
+Processing UBH for year 2085 and month 05
+Processing UBH for year 2085 and month 06
+Processing UBH for year 2085 and month 07
+Processing UBH for year 2085 and month 08
+Processing UBH for year 2085 and month 09
+Processing UBH for year 2085 and month 10
+Processing UBH for year 2085 and month 11
+Processing UBH for year 2085 and month 12
+#executed by process	34 in 5526.53s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2085 --sim UBH --ext
+mode extreme: activated
+Processing UBH for year 2098 and month 01
+Processing UBH for year 2098 and month 02
+Processing UBH for year 2098 and month 03
+Processing UBH for year 2098 and month 04
+Processing UBH for year 2098 and month 05
+Processing UBH for year 2098 and month 06
+Processing UBH for year 2098 and month 07
+Processing UBH for year 2098 and month 08
+Processing UBH for year 2098 and month 09
+Processing UBH for year 2098 and month 10
+Processing UBH for year 2098 and month 11
+Processing UBH for year 2098 and month 12
+#executed by process	37 in 4404.13s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2098 --sim UBH --ext
+mode extreme: activated
+Processing UBH for year 2092 and month 01
+Processing UBH for year 2092 and month 02
+Processing UBH for year 2092 and month 03
+Processing UBH for year 2092 and month 04
+Processing UBH for year 2092 and month 05
+Processing UBH for year 2092 and month 06
+Processing UBH for year 2092 and month 07
+Processing UBH for year 2092 and month 08
+Processing UBH for year 2092 and month 09
+Processing UBH for year 2092 and month 10
+Processing UBH for year 2092 and month 11
+Processing UBH for year 2092 and month 12
+#executed by process	12 in 4687.08s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2092 --sim UBH --ext
+mode extreme: activated
+Processing UBH for year 2089 and month 01
+Processing UBH for year 2089 and month 02
+Processing UBH for year 2089 and month 03
+Processing UBH for year 2089 and month 04
+Processing UBH for year 2089 and month 05
+Processing UBH for year 2089 and month 06
+Processing UBH for year 2089 and month 07
+Processing UBH for year 2089 and month 08
+Processing UBH for year 2089 and month 09
+Processing UBH for year 2089 and month 10
+Processing UBH for year 2089 and month 11
+Processing UBH for year 2089 and month 12
+#executed by process	9 in 5090.81s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2089 --sim UBH --ext
+mode extreme: activated
+Processing UBH for year 2099 and month 01
+Processing UBH for year 2099 and month 02
+Processing UBH for year 2099 and month 03
+Processing UBH for year 2099 and month 04
+Processing UBH for year 2099 and month 05
+Processing UBH for year 2099 and month 06
+Processing UBH for year 2099 and month 07
+Processing UBH for year 2099 and month 08
+Processing UBH for year 2099 and month 09
+Processing UBH for year 2099 and month 10
+Processing UBH for year 2099 and month 11
+Processing UBH for year 2099 and month 12
+#executed by process	13 in 4492.13s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2099 --sim UBH --ext
+mode extreme: activated
+Processing UBH for year 2091 and month 01
+Processing UBH for year 2091 and month 02
+Processing UBH for year 2091 and month 03
+Processing UBH for year 2091 and month 04
+Processing UBH for year 2091 and month 05
+Processing UBH for year 2091 and month 06
+Processing UBH for year 2091 and month 07
+Processing UBH for year 2091 and month 08
+Processing UBH for year 2091 and month 09
+Processing UBH for year 2091 and month 10
+Processing UBH for year 2091 and month 11
+Processing UBH for year 2091 and month 12
+#executed by process	14 in 5006.71s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2091 --sim UBH --ext
+mode extreme: activated
+Processing UBH for year 2093 and month 01
+Processing UBH for year 2093 and month 02
+Processing UBH for year 2093 and month 03
+Processing UBH for year 2093 and month 04
+Processing UBH for year 2093 and month 05
+Processing UBH for year 2093 and month 06
+Processing UBH for year 2093 and month 07
+Processing UBH for year 2093 and month 08
+Processing UBH for year 2093 and month 09
+Processing UBH for year 2093 and month 10
+Processing UBH for year 2093 and month 11
+Processing UBH for year 2093 and month 12
+#executed by process	11 in 5226.28s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2093 --sim UBH --ext
+mode extreme: activated
+Processing UBH for year 2094 and month 01
+Processing UBH for year 2094 and month 02
+Processing UBH for year 2094 and month 03
+Processing UBH for year 2094 and month 04
+Processing UBH for year 2094 and month 05
+Processing UBH for year 2094 and month 06
+Processing UBH for year 2094 and month 07
+Processing UBH for year 2094 and month 08
+Processing UBH for year 2094 and month 09
+Processing UBH for year 2094 and month 10
+Processing UBH for year 2094 and month 11
+Processing UBH for year 2094 and month 12
+#executed by process	10 in 5156.21s	with status	0 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py 2094 --sim UBH --ext
+master is 0 , nb slaves: 39

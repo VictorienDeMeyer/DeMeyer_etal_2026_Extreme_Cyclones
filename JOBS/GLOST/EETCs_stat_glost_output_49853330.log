@@ -1,0 +1,23 @@
+
+Lmod is automatically replacing "nixpkgs/16.09" with "gentoo/2023".
+
+-------------------------------------------------------------------------------
+There are messages associated with the following module(s):
+-------------------------------------------------------------------------------
+
+nixpkgs/16.09:
+   These standard environment modules are deprecated and now contain
+   software packages that have security issues. We recommend not using
+   these, and instead use our more recent StdEnv modules. Use at your own
+   risk.
+
+-------------------------------------------------------------------------------*** An error occurred in MPI_Init_thread
+*** on a NULL communicator
+*** MPI_ERRORS_ARE_FATAL (processes in this communicator will now abort,
+***    and potentially your MPI job)
+[nl10301:1227508] Local abort before MPI_INIT completed completed successfully, but am not able to aggregate error messages, and not able to guarantee that all other processes were killed!
+#executed by process	0 in 11.3524s	with status	1 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/EETCs_stat.py 1979 --sim ERA5 --metric ratio
+slurmstepd: error:  mpi/pmix_v4: _errhandler: nl10301 [0]: pmixp_client_v2.c:212: Error handler invoked: status = -61, source = [slurm.pmix.49853330.0:0]
+slurmstepd: error: *** STEP 49853330.0 ON nl10301 CANCELLED AT 2025-09-18T05:30:37 ***
+srun: Job step aborted: Waiting up to 62 seconds for job step to finish.
+srun: error: nl10301: task 0: Killed

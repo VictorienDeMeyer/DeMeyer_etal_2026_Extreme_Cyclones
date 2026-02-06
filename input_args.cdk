@@ -1,0 +1,53 @@
+
+! pcrit          : Maximum sea level pressure to be considered as center [hPa]
+! vcrit          : Minimum vorticity value to be considered as center
+! distcc         : Maximum distance between pressure and
+!                  vorticity center to be considered as center [km] [modified by TC]
+! disttr         : Maximum distance for a new center to be considered a continuation of 
+!                  an existing storm [km]    [modified by TC]
+! frame          : Frame around domain in which not to check for storms [km]
+! p_min          : Minimum pressure of at least one center of the track [hPa]
+! span           : Minimum distance the storm must travel [km]
+! lon_W, -lon_E, -lat_S, -lat_N : Lower-left and upper-right corner
+!                                 of window in which to look for storms
+! v_lev          : Level of vorticity field
+! v_ip1          : IP1 coded level of vorticity field
+! w_lev          : Level of wind field
+! w_ip1          : IP1 coded level of wind field
+! c_field        : Name of field used to look for storm centers, default 'PNS'
+! p_field        : Name of pressure  field; default: 'PNS'
+! v_field        : Name of vorticity field, default: 'VORT'
+! use_GeoWind_L  : .true. - use geostrophic wind for tracking
+! min_hours      : Number of hours storm has to exist
+! min_centers    : Minimum distance storm has to travel [km]
+! plot_10mWind_L : .true. - print 10 m wind strength in output table
+! print_help_L   : .true. - print help
+! debug_L        : .true. - print more comments
+! quiet_L        : .true. - print less comments
+! nf_pres        : Name of NetCDF variable for "real" sea level pressure;            default: 'pres'
+! nf_pres_s      : Name of NetCDF variable for smoothed sea level pressure ;         default: 'pres_smooth'
+! nf_vort        : Name of NetCDF variable for vorticity field (smoothed or "real"); default: 'vort850'
+! nf_wind        : Name of NetCDF variable for near surface wind speed;              default: 'sfcWind'
+
+
+  ! Input files
+  character(len=1024) :: ifile, mfile, ofile, tfile, cfile, tdfile
+
+  ! Input parameters
+  real    ::  vcrit, pcrit, distcc, frame, p_min, span, disttr
+  real    ::  lon_W, lon_E, lat_S, lat_N
+  integer ::  v_ip1, w_ip1, min_centers, min_hours, f1, f2
+  logical ::  use_GeoWind_L, plot_10mWind_L, print_help_L, debug_L, quiet_L
+  character(len=4)  :: p_field, v_field, c_field
+  character(len=16) :: v_lev, w_lev
+  character(len=64) :: nf_pres, nf_pres_s, nf_vort, nf_wind
+
+  ! Common blocks
+  common /in_files/    ifile, mfile, ofile, tfile, cfile, tdfile
+  common /in_args_r/   vcrit, pcrit, distcc, frame, p_min, span, disttr, &
+                       lon_W, lon_E, lat_S, lat_N
+  common /in_args_i/   v_ip1, w_ip1, min_centers, min_hours, f1, f2
+  common /in_args_l/   use_GeoWind_L, plot_10mWind_L, print_help_L, debug_L, quiet_L
+  common /in_args_c4/  p_field, v_field, c_field
+  common /in_args_c16/ v_lev, w_lev
+  common /in_args_c64/ nf_pres, nf_pres_s, nf_vort, nf_wind

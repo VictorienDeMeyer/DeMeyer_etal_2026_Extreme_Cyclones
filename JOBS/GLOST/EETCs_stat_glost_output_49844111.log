@@ -1,0 +1,29 @@
+
+Lmod is automatically replacing "gcc/12.3" with "intel/2023.2.1".
+
+
+Lmod is automatically replacing "gentoo/2023" with "nixpkgs/16.09".
+
+Lmod has detected the following error: The following module(s) are unknown:
+"python/3.11"
+
+Please check the spelling or version number. Also try "module spider ..."
+It is also possible your cache file is out-of-date; it may help to try:
+  $ module --ignore_cache load "python/3.11"
+
+Also make sure that all modulefiles written in TCL start with the string
+#%Module
+
+
+
+slurmstepd: error: execve(): glost_launch: No such file or directory
+slurmstepd: error: execve(): glost_launch: No such file or directory
+slurmstepd: error: execve(): glost_launch: No such file or directory
+slurmstepd: error: execve(): glost_launch: No such file or directory
+slurmstepd: error: execve(): glost_launch: No such file or directory
+slurmstepd: error: execve(): glost_launch: No such file or directory
+slurmstepd: error: execve(): glost_launch: No such file or directory
+slurmstepd: error: execve(): glost_launch: No such file or directory
+slurmstepd: error: execve(): glost_launch: No such file or directory
+slurmstepd: error: execve(): glost_launch: No such file or directory
+srun: error: nl20501: tasks 0-9: Exited with exit code 2

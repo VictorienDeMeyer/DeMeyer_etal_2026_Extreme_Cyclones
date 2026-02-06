@@ -1,0 +1,13 @@
+*.nc
+*.csv
+*.h5
+*.dat
+JOBS/OUTPUTS
+POSTPROCESSING/USELESS
+PLOT/USELESS
+PREPROCESSING/USELESS
+POSTPROCESSING/Midi_Atmo
+
+.ipynb_checkpoints/
+__pycache__/
+.DS_Store

@@ -1,0 +1,81 @@
+
+Lmod is automatically replacing "gcc/12.3" with "intel/2023.2.1".
+
+Lmod Warning:
+-------------------------------------------------------------------------------
+The following dependent module(s) are not currently loaded: gcccore/.12.3
+(required by: intel/2023.2.1)
+-------------------------------------------------------------------------------
+
+
+
+
+Inactive Modules:
+  1) gcccore/.12.3
+
+Lmod Warning:
+-------------------------------------------------------------------------------
+The following dependent module(s) are not currently loaded: gcccore/.12.3
+(required by: intel/2023.2.1)
+-------------------------------------------------------------------------------
+
+
+
+*** An error occurred in MPI_Init_thread
+*** on a NULL communicator
+*** MPI_ERRORS_ARE_FATAL (processes in this communicator will now abort,
+***    and potentially your MPI job)
+[nl10902:2916099] Local abort before MPI_INIT completed completed successfully, but am not able to aggregate error messages, and not able to guarantee that all other processes were killed!
+*** An error occurred in MPI_Init_thread
+*** on a NULL communicator
+*** MPI_ERRORS_ARE_FATAL (processes in this communicator will now abort,
+***    and potentially your MPI job)
+[nl10902:2916098] Local abort before MPI_INIT completed completed successfully, but am not able to aggregate error messages, and not able to guarantee that all other processes were killed!
+*** An error occurred in MPI_Init_thread
+*** on a NULL communicator
+*** MPI_ERRORS_ARE_FATAL (processes in this communicator will now abort,
+***    and potentially your MPI job)
+[nl10902:2916091] Local abort before MPI_INIT completed completed successfully, but am not able to aggregate error messages, and not able to guarantee that all other processes were killed!
+*** An error occurred in MPI_Init_thread
+*** on a NULL communicator
+*** MPI_ERRORS_ARE_FATAL (processes in this communicator will now abort,
+***    and potentially your MPI job)
+[nl10902:2916095] Local abort before MPI_INIT completed completed successfully, but am not able to aggregate error messages, and not able to guarantee that all other processes were killed!
+*** An error occurred in MPI_Init_thread
+*** on a NULL communicator
+*** MPI_ERRORS_ARE_FATAL (processes in this communicator will now abort,
+***    and potentially your MPI job)
+[nl10902:2916096] Local abort before MPI_INIT completed completed successfully, but am not able to aggregate error messages, and not able to guarantee that all other processes were killed!
+*** An error occurred in MPI_Init_thread
+*** on a NULL communicator
+*** MPI_ERRORS_ARE_FATAL (processes in this communicator will now abort,
+***    and potentially your MPI job)
+[nl10902:2916093] Local abort before MPI_INIT completed completed successfully, but am not able to aggregate error messages, and not able to guarantee that all other processes were killed!
+*** An error occurred in MPI_Init_thread
+*** on a NULL communicator
+*** MPI_ERRORS_ARE_FATAL (processes in this communicator will now abort,
+***    and potentially your MPI job)
+[nl10902:2916097] Local abort before MPI_INIT completed completed successfully, but am not able to aggregate error messages, and not able to guarantee that all other processes were killed!
+*** An error occurred in MPI_Init_thread
+*** on a NULL communicator
+*** MPI_ERRORS_ARE_FATAL (processes in this communicator will now abort,
+***    and potentially your MPI job)
+[nl10902:2916094] Local abort before MPI_INIT completed completed successfully, but am not able to aggregate error messages, and not able to guarantee that all other processes were killed!
+#executed by process	8 in 13.2872s	with status	1 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/EETCs_stat.py 1986 --sim ERA5 --metric ratio
+#executed by process	9 in 13.2872s	with status	1 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/EETCs_stat.py 1987 --sim ERA5 --metric ratio
+#executed by process	1 in 13.2938s	with status	1 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/EETCs_stat.py 1979 --sim ERA5 --metric ratio
+*** An error occurred in MPI_Init_thread
+*** on a NULL communicator
+*** MPI_ERRORS_ARE_FATAL (processes in this communicator will now abort,
+***    and potentially your MPI job)
+[nl10902:2916092] Local abort before MPI_INIT completed completed successfully, but am not able to aggregate error messages, and not able to guarantee that all other processes were killed!
+#executed by process	6 in 13.3094s	with status	1 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/EETCs_stat.py 1985 --sim ERA5 --metric ratio
+#executed by process	4 in 13.314s	with status	1 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/EETCs_stat.py 1984 --sim ERA5 --metric ratio
+#executed by process	5 in 13.314s	with status	1 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/EETCs_stat.py 1981 --sim ERA5 --metric ratio
+#executed by process	2 in 13.3159s	with status	1 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/EETCs_stat.py 1983 --sim ERA5 --metric ratio
+#executed by process	7 in 13.3157s	with status	1 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/EETCs_stat.py 1982 --sim ERA5 --metric ratio
+#executed by process	3 in 13.3448s	with status	1 : python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/EETCs_stat.py 1980 --sim ERA5 --metric ratio
+slurmstepd: error:  mpi/pmix_v4: _errhandler: nl10902 [0]: pmixp_client_v2.c:212: Error handler invoked: status = -61, source = [slurm.pmix.49846387.0:8]
+slurmstepd: error: *** STEP 49846387.0 ON nl10902 CANCELLED AT 2025-09-18T04:36:28 ***
+srun: Job step aborted: Waiting up to 62 seconds for job step to finish.
+srun: error: nl10902: tasks 0-9: Killed
