@@ -2,7 +2,7 @@
 Study of North American Extreme Extratropical Cyclones.
 
 ## Description
-The project aims to track extratropical cyclones from regional simulations and ERA5 reanalysis over the North American continent, to identify the most intense extratropical cyclones based on objective metrics related to the associated precipitation and surface winds, and further study the performance of models to replicate ERA5 as well as future changes.
+The project aims to track extratropical cyclones from regional simulations and ERA5 reanalysis over North America, to identify the most intense extratropical cyclones based on objective metrics related to the associated precipitation and surface winds, and further study the performance of models to replicate ERA5 as well as future changes.
 
 ## Usage
 The project steps are divided as follows:
