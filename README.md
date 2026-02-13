@@ -11,7 +11,7 @@ The project steps are divided as follows:
 - Transfer of precipitation data, surface meridional wind, surface zonal wind, 850hPa relative vorticity, and mean sea level pressure to the Calcul Canada servers.
 - Creation of a mask to restrict ERA5 data to the CRCM6 grid and create a buffer of 200km around the domain for the storm tracking algorithm (`create_mask_CRCM6_for_ERA5.ipynb`).
 - Smoothing of relative vorticity and/or mean sea level pressure fields (`preprocess_year.py` or `create_storm_fields.sh` depending on whether the file is NetCDF or RPN, respectively).
-- For CRCM6 only: combine the smoothed mean sea level pressure yearly NetCDF files into decadal files (`slice_decade_preprocess.py`).
+<!-- - For CRCM6 only: combine the smoothed mean sea level pressure yearly NetCDF files into decadal files (`slice_decade_preprocess.py`). -->
 
 ### Tracking
 - Launching the tracking of extratropical cyclones by decade (`make_tracks_ERA5.sh` or `make_tracks_CRCM6.sh` depending on the input data).

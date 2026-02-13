@@ -69,12 +69,15 @@ def haversine(lon1, lat1, lon2, lat2):
 def get_sim_context(sim, year, base_dir='/home/vdemeyer/projects/rrg-gachon/vdemeyer'):
     """
     Handles paths, dates, and precise file selection logic.
-    Optimized for complex Globus directory structures and 2083 transition.
+    Optimized for nested directory structures and 2083 transition.
     """
     sim_lower = sim.lower()
     
     # 1. Default Strategy: Dec (Y-1) + All Y + Jan (Y+1)
     file_strategy = [(year - 1, 12), (year, 'all'), (year + 1, 1)]
+    if sim in ['UBG', 'UBH', 'UBI'] and (year - 1) >= 2083:
+        file_strategy.insert(0, (year - 1, 11))
+
     start = f"{year-1}-12-01 00:00:00"
     end = f"{year+1}-01-31 23:00:00"
 
@@ -107,7 +110,6 @@ def get_sim_context(sim, year, base_dir='/home/vdemeyer/projects/rrg-gachon/vdem
         if year == 2015:
             file_strategy = [(year, 'all'), (year + 1, 1)]
             start = f"{year}-01-01 01:00:00"
-        
         if year == 2100 and sim in ['UBG', 'UBH']:
             file_strategy = [(year - 1, 12), (year, 'all')]
             end = f"{year}-12-31 00:00:00"
@@ -117,6 +119,17 @@ def get_sim_context(sim, year, base_dir='/home/vdemeyer/projects/rrg-gachon/vdem
 
     # 3. Dynamic File List Building
     input_files = []
+    
+    # SPECIAL SUTURE FOR 2083:
+    # If processing 2083, we specifically need to add the Globus Dec 2082 file 
+    # even though our strategy already includes the Standard Dec 2082 file.
+    if sim in ['UBG', 'UBH', 'UBI'] and year == 2083:
+        t_dir_globus = f"{base_dir}/GLOBUS_TRANSFER/{sim_lower}/psl"
+        # Search for Dec 2082 in Globus to get that Jan 1st 00h timestamp
+        pattern_gap_filler = f"{t_dir_globus}/**/*_208212*/*.nc4"
+        gap_files = sorted(glob(pattern_gap_filler, recursive=True))
+        input_files.extend(gap_files)
+        print(f"  - 2083 Transition: Added {len(gap_files)} Globus Dec 2082 files to fill 00h gap.")
 
     for y, m in file_strategy:
         # Determine if this specific year/month is in Globus or Standard
@@ -126,27 +139,18 @@ def get_sim_context(sim, year, base_dir='/home/vdemeyer/projects/rrg-gachon/vdem
             # Globus Case: Handling deep subfolders and 'var_PN_' naming
             # Structure: .../psl/ubi_NetCDF/ubi_209402/var_PN_209402.nc4
             t_dir = f"{base_dir}/GLOBUS_TRANSFER/{sim_lower}/psl"
-            if m == 'all':
-                # Match any month directory for the year 'y'
-                pattern = f"{t_dir}/**/*_{y}*/*.nc4"
-            else:
-                # Match a specific month 'm' for year 'y' (e.g., 208301)
-                pattern = f"{t_dir}/**/*_{y}{m:02d}/*.nc4"
-            
-            # recursive=True is necessary for '**' 
+            date_str = f"{y}" if m == 'all' else f"{y}{m:02d}"
+            # Recursive search for the nested .nc4 files
+            pattern = f"{t_dir}/**/*_{date_str}*/*.nc4"
             found_files = sorted(glob(pattern, recursive=True))
-        
         else:
             # Standard Case
             t_dir = f"{base_dir}/{sim}/PSL"
             if sim == 'ERA5':
-                # ERA5 Nested: .../psl/1979/01/*.nc4
                 pattern = f"{t_dir}/{y}/*/*.nc4" if m == 'all' else f"{t_dir}/{y}/{m:02d}/*.nc4"
-                found_files = sorted(glob(pattern))
             else:
-                # Standard Flat: .../psl/psl_ubi_208212_se.nc
-                pattern = f"{t_dir}/psl_{sim_lower}_{y}*.nc" if m == 'all' else f"{t_dir}/psl_{sim_lower}_{y}{m:02d}*.nc"
-                found_files = sorted(glob(pattern))
+                pattern = f"{t_dir}/psl_{sim_lower}_{y}*_se.nc" if m == 'all' else f"{t_dir}/psl_{sim_lower}_{y}{m:02d}_se.nc"
+            found_files = sorted(glob(pattern))
         
         input_files.extend(found_files)
 
@@ -384,7 +388,7 @@ def main(year, sim):
 
     expected_time = pd.date_range(start=start, end=end, freq="h").to_numpy()
 
-    ds = xr.open_mfdataset(input_files, combine='nested', concat_dim='time')
+    ds = xr.open_mfdataset(input_files, combine='by_coords')
 
     if hasattr(ds, 'lon'):
         var_lon, var_lat = 'lon', 'lat'
@@ -392,16 +396,18 @@ def main(year, sim):
         var_lon, var_lat = 'longitude', 'latitude'
     else:
         raise AttributeError(f'No dimension lon or longitude / lat or latitude in {input_files[0].split("/")[-1]}')
-
-    ds = convert_lon_lat(ds, var_lon, var_lat, to_180=False)
-
+      
     if sim=='ERA5':
+        ds = convert_lon_lat(ds, var_lon, var_lat, to_180=False)
         mask = xr.open_dataarray('/home/vdemeyer/projects/rrg-gachon/vdemeyer/MASK/mask_CRCM6_grid_for_ERA5_0_360.nc')
         ds = ds.where(mask, drop=True)
         # ds = get_mask(ds, var_lon, var_lat, west_longitude=-171+360, east_longitude=-23+360, north_latitude=76, south_latitude=12, plot=False)
     else:
         ds['time'] = ds['time'].dt.round('h')
     
+    if sim in ['UBG', 'UBH', 'UBI'] and year >= 2082:
+        ds = ds.sel(time=slice(start, end))
+
     if not np.array_equal(ds['time'].to_numpy(), expected_time):
         raise ValueError(f"The time coordinates is wrong")
 
