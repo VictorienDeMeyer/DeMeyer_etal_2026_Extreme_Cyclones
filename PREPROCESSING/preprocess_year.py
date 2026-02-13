@@ -51,7 +51,6 @@ def calc_grid_distance_area(longitude, latitude):
 
     return grid_distance
 
-
 def haversine(lon1, lat1, lon2, lat2):
     """
     Calculate the great circle distance between two points
@@ -66,6 +65,92 @@ def haversine(lon1, lat1, lon2, lat2):
     c = 2 * np.arcsin(np.sqrt(a))
     km = 6367 * c
     return km
+
+def get_sim_context(sim, year, base_dir='/home/vdemeyer/projects/rrg-gachon/vdemeyer'):
+    """
+    Handles paths, dates, and precise file selection logic.
+    Optimized for complex Globus directory structures and 2083 transition.
+    """
+    sim_lower = sim.lower()
+    
+    # 1. Default Strategy: Dec (Y-1) + All Y + Jan (Y+1)
+    file_strategy = [(year - 1, 12), (year, 'all'), (year + 1, 1)]
+    start = f"{year-1}-12-01 00:00:00"
+    end = f"{year+1}-01-31 23:00:00"
+
+    # 2. Refined Exceptions Handling for Dates and Strategy
+    if sim == 'ERA5':
+        if year == 1979:
+            file_strategy = [(year, 'all'), (year + 1, 1)]
+            start = f"{year}-01-01 00:00:00"
+        elif year == 2023:
+            file_strategy = [(year - 1, 12), (year, 'all')]
+            end = f"{year}-08-31 23:00:00"
+
+    elif sim == 'UBB':
+        if year == 1979:
+            file_strategy = [(year, 'all'), (year + 1, 1)]
+            start = f"{year}-09-01 01:00:00"
+        elif year == 2023:
+            file_strategy = [(year - 1, 12), (year, 'all')]
+            end = f"{year}-12-31 23:00:00"
+
+    elif sim in ['UBD', 'UBE', 'UBF']:
+        if year == 1979:
+            file_strategy = [(year, 'all'), (year + 1, 1)]
+            start = f"{year}-09-01 01:00:00"
+        elif year == 2014:
+            file_strategy = [(year - 1, 12), (year, 'all')]
+            end = f"{year}-12-31 23:00:00"
+
+    elif sim in ['UBG', 'UBH', 'UBI']:
+        if year == 2015:
+            file_strategy = [(year, 'all'), (year + 1, 1)]
+            start = f"{year}-01-01 01:00:00"
+        
+        if year == 2100 and sim in ['UBG', 'UBH']:
+            file_strategy = [(year - 1, 12), (year, 'all')]
+            end = f"{year}-12-31 00:00:00"
+        elif year == 2098 and sim == 'UBI':
+            file_strategy = [(year - 1, 12), (year, 'all')]
+            end = f"{year}-04-30 23:00:00"
+
+    # 3. Dynamic File List Building
+    input_files = []
+
+    for y, m in file_strategy:
+        # Determine if this specific year/month is in Globus or Standard
+        is_globus_target = (sim in ['UBG', 'UBH', 'UBI'] and y >= 2083)
+        
+        if is_globus_target:
+            # Globus Case: Handling deep subfolders and 'var_PN_' naming
+            # Structure: .../psl/ubi_NetCDF/ubi_209402/var_PN_209402.nc4
+            t_dir = f"{base_dir}/GLOBUS_TRANSFER/{sim_lower}/psl"
+            if m == 'all':
+                # Match any month directory for the year 'y'
+                pattern = f"{t_dir}/**/*_{y}*/*.nc4"
+            else:
+                # Match a specific month 'm' for year 'y' (e.g., 208301)
+                pattern = f"{t_dir}/**/*_{y}{m:02d}/*.nc4"
+            
+            # recursive=True is necessary for '**' 
+            found_files = sorted(glob(pattern, recursive=True))
+        
+        else:
+            # Standard Case
+            t_dir = f"{base_dir}/{sim}/PSL"
+            if sim == 'ERA5':
+                # ERA5 Nested: .../psl/1979/01/*.nc4
+                pattern = f"{t_dir}/{y}/*/*.nc4" if m == 'all' else f"{t_dir}/{y}/{m:02d}/*.nc4"
+                found_files = sorted(glob(pattern))
+            else:
+                # Standard Flat: .../psl/psl_ubi_208212_se.nc
+                pattern = f"{t_dir}/psl_{sim_lower}_{y}*.nc" if m == 'all' else f"{t_dir}/psl_{sim_lower}_{y}{m:02d}*.nc"
+                found_files = sorted(glob(pattern))
+        
+        input_files.extend(found_files)
+
+    return input_files, start, end
 
 def convert_lon_lat(ds, var_lon, var_lat, to_180=True):
     """
@@ -270,13 +355,6 @@ def calendar_conversion(ds):
     })
 
     return ds
-
-def braced_glob(path):
-    l = []
-    for x in braceexpand(path):
-        l.extend(glob(x))
-            
-    return l
     
 def main(year, sim):
     """
@@ -287,69 +365,26 @@ def main(year, sim):
     done file by file.
     """
 
-    input_dir  = f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/PSL'
-    output_dir = f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/TRACKING/KATJA/INPUTS/{sim}'
-    if not os.path.exists(output_dir):
-        os.makedirs(output_dir)
+    input_files, start, end = get_sim_context(sim, year)
 
-    if sim == 'ERA5':
-        mask = xr.open_dataarray('/home/vdemeyer/projects/rrg-gachon/vdemeyer/MASK/mask_CRCM6_grid_for_ERA5_0_360.nc')
-        # mask = convert_lon_lat(mask, 'longitude', 'latitude', to_180=False)
+    output_dir = f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/TRACKING/KATJA/INPUTS/{sim}'
+    os.makedirs(output_dir, exist_ok=True)
 
     output_file = f'{output_dir}/{sim}_psl_smoothed_400km_{year}_pres.nc'
-
     if os.path.exists(output_file):
         os.remove(output_file)
         print(f'\nOld {year} single NetCDF file removed')
         # print(f'\n{year} single NetCDF file already exists')
         # continue
 
-    if sim in ['UBB'] and year == 2019:
-        start = f"{year}-09-01 01:00:00"
-        end = f"{year}-12-31 23:00:00"
-    elif sim in ['UBG', 'UBH', 'UBI'] and year == 2015:
-        start = f"{year}-01-01 01:00:00"
-        end = f"{year}-12-31 23:00:00"
-    elif sim in ['UBG', 'UBH'] and year == 2100:
-        start = f"{year}-01-01 00:00:00"
-        end = f"{year}-12-31 00:00:00"
-    elif sim in ['UBI'] and year == 2098:
-        start = f"{year}-01-01 00:00:00"
-        end = f"{year}-04-30 23:00:00"
-    elif sim == 'ERA5' and year == 2023:
-        start = f"{year-1}-12-01 00:00:00"
-        end = f"{year}-08-31 23:00:00"
-    elif sim == 'ERA5' and year == 1979:
-        start = f"{year}-01-01 00:00:00"
-        end = f"{year+1}-01-31 23:00:00"
-    elif sim == 'ERA5' and year not in [1979, 2023]:
-        start = f"{year-1}-12-01 00:00:00"
-        end = f"{year+1}-01-31 23:00:00"
-    else:
-        start = f"{year}-01-01 00:00:00"
-        end = f"{year}-12-31 23:00:00"
-
-    expected_time = pd.date_range(
-        start=start,
-        end=end,
-        freq="h"
-    ).to_numpy()
-
-    if sim == 'ERA5':
-        if year == 1979:
-            input_files = sorted(glob(f'{input_dir}/{year}/*/*.nc4')) + sorted(glob(f'{input_dir}/{year+1}/01/*.nc4'))
-        elif year == 2023:
-            input_files = sorted(glob(f'{input_dir}/{year-1}/12/*.nc4')) + sorted(glob(f'{input_dir}/{year}/*/*.nc4'))
-        else:
-            input_files = sorted(glob(f'{input_dir}/{year-1}/12/*.nc4')) + sorted(glob(f'{input_dir}/{year}/*/*.nc4')) + sorted(glob(f'{input_dir}/{year+1}/01/*.nc4'))
-    else:
-        input_files = sorted(glob(f'{input_dir}/psl_{sim.lower()}_{year}*.nc'))
     if not input_files:
         print(f"\nNo input files found for {year}, stopping program.")
         return
     print(f'\nFirst input file for {year}:', input_files[0].split("/")[-1])
 
-    ds = xr.open_mfdataset(input_files)
+    expected_time = pd.date_range(start=start, end=end, freq="h").to_numpy()
+
+    ds = xr.open_mfdataset(input_files, combine='nested', concat_dim='time')
 
     if hasattr(ds, 'lon'):
         var_lon, var_lat = 'lon', 'lat'
@@ -361,6 +396,7 @@ def main(year, sim):
     ds = convert_lon_lat(ds, var_lon, var_lat, to_180=False)
 
     if sim=='ERA5':
+        mask = xr.open_dataarray('/home/vdemeyer/projects/rrg-gachon/vdemeyer/MASK/mask_CRCM6_grid_for_ERA5_0_360.nc')
         ds = ds.where(mask, drop=True)
         # ds = get_mask(ds, var_lon, var_lat, west_longitude=-171+360, east_longitude=-23+360, north_latitude=76, south_latitude=12, plot=False)
     else:
@@ -397,5 +433,5 @@ if __name__ == '__main__':
 
     main(year, sim)
 
-    # run /home/vdemeyer/TRACKING/KATJA/PREPROCESSING/preprocess.py UBF
-    # . /home/vdemeyer/TRACKING/KATJA/JOBS/submit_jobs_preprocess.sh
+    # run /home/vdemeyer/TRACKING/KATJA/PREPROCESSING/preprocess_year.py 2012 --sim UBF 
+    # . /home/vdemeyer/TRACKING/KATJA/JOBS/submit_jobs_preprocess_year.sh
