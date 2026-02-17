@@ -75,7 +75,8 @@ def get_sim_context(sim, year, base_dir='/home/vdemeyer/projects/rrg-gachon/vdem
     
     # 1. Default Strategy: Dec (Y-1) + All Y + Jan (Y+1)
     file_strategy = [(year - 1, 12), (year, 'all'), (year + 1, 1)]
-    if sim in ['UBG', 'UBH', 'UBI'] and (year - 1) >= 2083:
+
+    if sim in ['UBG', 'UBH', 'UBI'] and (year - 1) > 2083:
         file_strategy.insert(0, (year - 1, 11))
 
     start = f"{year-1}-12-01 00:00:00"
@@ -120,16 +121,15 @@ def get_sim_context(sim, year, base_dir='/home/vdemeyer/projects/rrg-gachon/vdem
     # 3. Dynamic File List Building
     input_files = []
     
-    # SPECIAL SUTURE FOR 2083:
-    # If processing 2083, we specifically need to add the Globus Dec 2082 file 
-    # even though our strategy already includes the Standard Dec 2082 file.
-    if sim in ['UBG', 'UBH', 'UBI'] and year == 2083:
+    # BRIDGE FOR TRANSITION (2082 and 2083):
+    # We need the Globus Dec 2082 file to get the Jan 1st 00h timestamp 
+    # for BOTH processing years.
+    if sim in ['UBG', 'UBH', 'UBI'] and year in [2082, 2083]:
         t_dir_globus = f"{base_dir}/GLOBUS_TRANSFER/{sim_lower}/psl"
-        # Search for Dec 2082 in Globus to get that Jan 1st 00h timestamp
-        pattern_gap_filler = f"{t_dir_globus}/**/*_208212*/*.nc4"
-        gap_files = sorted(glob(pattern_gap_filler, recursive=True))
-        input_files.extend(gap_files)
-        print(f"  - 2083 Transition: Added {len(gap_files)} Globus Dec 2082 files to fill 00h gap.")
+        pattern_bridge = f"{t_dir_globus}/**/*_208212*/*.nc4"
+        bridge_files = glob(pattern_bridge, recursive=True)
+        input_files.extend(bridge_files)
+        print(f"  - Bridge Added: Found {len(bridge_files)} Globus Dec 2082 file(s) for the 00h transition.")
 
     for y, m in file_strategy:
         # Determine if this specific year/month is in Globus or Standard
