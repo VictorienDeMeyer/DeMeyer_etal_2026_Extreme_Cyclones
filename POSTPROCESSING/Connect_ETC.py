@@ -3,14 +3,15 @@ import pandas as pd
 #run ~/TRACKING/KATJA/POSTPROCESSING/Connect_ETC.py
 
 simulations = ['UBI', 'UBB', 'ERA5', 'UBG', 'UBD', 'UBH', 'UBE', 'UBF']
+hist_future_map = {'UBG': 'UBD', 'UBH': 'UBE', 'UBI': 'UBF'}
 
 for sim in simulations:
     
     if sim in ['UBG', 'UBH']:
-        start_year = 2014
+        start_year = 2015
         end_year = 2100
     elif sim == 'UBI':
-        start_year = 2014
+        start_year = 2015
         end_year = 2098
     elif sim in ['UBB', 'ERA5']:
         start_year = 1979
