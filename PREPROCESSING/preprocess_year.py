@@ -76,9 +76,6 @@ def get_sim_context(sim, year, base_dir='/home/vdemeyer/projects/rrg-gachon/vdem
     # 1. Default Strategy: Dec (Y-1) + All Y + Jan (Y+1)
     file_strategy = [(year - 1, 12), (year, 'all'), (year + 1, 1)]
 
-    if sim in ['UBG', 'UBH', 'UBI'] and (year - 1) > 2083:
-        file_strategy.insert(0, (year - 1, 11))
-
     start = f"{year-1}-12-01 00:00:00"
     end = f"{year+1}-01-31 23:00:00"
 
@@ -121,37 +118,15 @@ def get_sim_context(sim, year, base_dir='/home/vdemeyer/projects/rrg-gachon/vdem
     # 3. Dynamic File List Building
     input_files = []
     
-    # BRIDGE FOR TRANSITION (2082 and 2083):
-    # We need the Globus Dec 2082 file to get the Jan 1st 00h timestamp 
-    # for BOTH processing years.
-    if sim in ['UBG', 'UBH', 'UBI'] and year in [2082, 2083]:
-        t_dir_globus = f"{base_dir}/GLOBUS_TRANSFER/{sim_lower}/psl"
-        pattern_bridge = f"{t_dir_globus}/**/*_208212*/*.nc4"
-        bridge_files = glob(pattern_bridge, recursive=True)
-        input_files.extend(bridge_files)
-        print(f"  - Bridge Added: Found {len(bridge_files)} Globus Dec 2082 file(s) for the 00h transition.")
-
     for y, m in file_strategy:
-        # Determine if this specific year/month is in Globus or Standard
-        is_globus_target = (sim in ['UBG', 'UBH', 'UBI'] and y >= 2083)
         
-        if is_globus_target:
-            # Globus Case: Handling deep subfolders and 'var_PN_' naming
-            # Structure: .../psl/ubi_NetCDF/ubi_209402/var_PN_209402.nc4
-            t_dir = f"{base_dir}/GLOBUS_TRANSFER/{sim_lower}/psl"
-            date_str = f"{y}" if m == 'all' else f"{y}{m:02d}"
-            # Recursive search for the nested .nc4 files
-            pattern = f"{t_dir}/**/*_{date_str}*/*.nc4"
-            found_files = sorted(glob(pattern, recursive=True))
+        t_dir = f"{base_dir}/{sim}/PSL"
+        if sim == 'ERA5':
+            pattern = f"{t_dir}/{y}/*/*.nc4" if m == 'all' else f"{t_dir}/{y}/{m:02d}/*.nc4"
         else:
-            # Standard Case
-            t_dir = f"{base_dir}/{sim}/PSL"
-            if sim == 'ERA5':
-                pattern = f"{t_dir}/{y}/*/*.nc4" if m == 'all' else f"{t_dir}/{y}/{m:02d}/*.nc4"
-            else:
-                pattern = f"{t_dir}/psl_{sim_lower}_{y}*_se.nc" if m == 'all' else f"{t_dir}/psl_{sim_lower}_{y}{m:02d}_se.nc"
-            found_files = sorted(glob(pattern))
-        
+            pattern = f"{t_dir}/psl_{sim_lower}_{y}*_se.nc" if m == 'all' else f"{t_dir}/psl_{sim_lower}_{y}{m:02d}_se.nc"
+        found_files = sorted(glob(pattern))
+    
         input_files.extend(found_files)
 
     return input_files, start, end
@@ -345,7 +320,7 @@ def calendar_conversion(ds):
 
     new_units = "hours since 1970-01-01 00:00:00"
     new_calendar = "proleptic_gregorian"
-
+    
     time_hours = cftime.date2num(ds["time"].values, new_units, new_calendar)
 
     ds = ds.assign_coords(time=("time", time_hours))
@@ -405,13 +380,10 @@ def main(year, sim):
     else:
         ds['time'] = ds['time'].dt.round('h')
     
-    if sim in ['UBG', 'UBH', 'UBI'] and year >= 2082:
-        ds = ds.sel(time=slice(start, end))
-
     if not np.array_equal(ds['time'].to_numpy(), expected_time):
         raise ValueError(f"The time coordinates is wrong")
 
-    slp = get_sea_level_pressure(ds) 
+    slp = get_sea_level_pressure(ds)
 
     Gridspacing = calc_grid_distance_area(slp[var_lon], slp[var_lat])
 
