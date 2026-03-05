@@ -13,13 +13,13 @@ The project steps are divided as follows:
 - Smoothing of relative vorticity and/or mean sea level pressure fields (`/PREPROCESSING/preprocess_year.py` or `create_storm_fields.sh` (not on GitHub) depending on whether the file is NetCDF or RPN, respectively).
 - Calculation of surface wind magnitude (`/PREPROCESSING/Calculate_Wind_Magnitude.py` or `/PREPROCESSING/Calculate_Wind_Magnitude.sh` depending on whether Python or cdo works better, respectively).
 - Calculation of wind and precipitation percentiles (`/PREPROCESSING/Calculate_Percentile.py`).
+- Adding the missing timestep on 2015-01-01:T00:00:00.00000 on surface wind for the future simulations (UBG, UBH and UBI) (`/PREPROCESSING/interpolate_missing_data_2015.py`).
 <!-- - For CRCM6 only: combine the smoothed mean sea level pressure yearly NetCDF files into decadal files (`slice_decade_preprocess.py`). -->
 
 ### Tracking
 - Launching the tracking of extratropical cyclones by decade (`/JOBS/make_tracks_ERA5.sh` or `/JOBS/make_tracks_CRCM6.sh` depending on the input data).
 
 ### Post-processing
-- Adding the missing timestep on 2015-01-01:T00:00:00.00000 on surface wind for the future simulations (UBG, UBH and UBI) (`/POSTPROCESSING/interpolate_missing_data_2015.py`).
 - Connecting extratropical cyclones from each file into a single text file covering the entire period (`/POSTPROCESSING/Connect_ETC.py`).
 - Calculation of extratropical cyclones track density (`/POSTPROCESSING/calculate_kde.py`).
 - Calculation of metrics for each extratropical cyclone year by year (`/POSTPROCESSING/EETCs_stat.py`).
