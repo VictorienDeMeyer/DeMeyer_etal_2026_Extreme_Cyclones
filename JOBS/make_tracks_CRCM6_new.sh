@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --time=00:15:00
 #SBATCH --account=rrg-gachon
-#SBATCH --mem=140G
+#SBATCH --mem=70G
 #SBATCH --ntasks=1
 
 #Shell script to submit ESCER tracking algorithm as a job to the scheduler. It goes with the submit_jobs.sh script.

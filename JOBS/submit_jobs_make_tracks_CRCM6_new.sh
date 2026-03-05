@@ -5,7 +5,6 @@
 # Define the simulations
 sims=("UBB" "UBD" "UBE" "UBF" "UBG" "UBH" "UBI")
 
-
 # Loop through each simulation
 for sim in "${sims[@]}"; do
 
@@ -29,4 +28,4 @@ for sim in "${sims[@]}"; do
 
 done
 
-#. /home/vdemeyer/TRACKING/KATJA/JOBS/submit_jobs_make_tracks_CRCM6.sh
+#. /home/vdemeyer/TRACKING/KATJA/JOBS/submit_jobs_make_tracks_CRCM6_new.sh
