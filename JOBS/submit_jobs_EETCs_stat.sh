@@ -1,7 +1,6 @@
 #!/bin/bash
 
-# sims=("ERA5" "UBB" "UBD" "UBE" "UBF" "UBG" "UBH" "UBI")
-sims=("ERA5")
+sims=("ERA5" "UBB" "UBD" "UBE" "UBF" "UBG" "UBH" "UBI")
 
 # Loop through each simulation
 for sim in "${sims[@]}"; do

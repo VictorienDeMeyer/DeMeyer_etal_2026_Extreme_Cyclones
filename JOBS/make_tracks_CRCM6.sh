@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --time=00:15:00
 #SBATCH --account=rrg-gachon
-#SBATCH --mem=70G
+#SBATCH --mem=60G
 #SBATCH --ntasks=1
 
 #Shell script to submit ESCER tracking algorithm as a job to the scheduler. It goes with the submit_jobs.sh script.
@@ -11,7 +11,7 @@ module load gcc netcdf-fortran
 TRACKS=/home/vdemeyer/TRACKING/KATJA/storm_tracks.Abs
 
 # Construire le chemin des fichiers pour les années spécifiées
-main_file="/home/vdemeyer/projects/rrg-gachon/vdemeyer/TRACKING/KATJA/INPUTS/${2}/${2}_psl_smoothed_400km_${1}_1month_pres.nc"
+main_file="/home/vdemeyer/projects/rrg-gachon/vdemeyer/TRACKING/KATJA/INPUTS/${2}/${2}_psl_smoothed_400km_${1}_pres.nc"
 output_file="/home/vdemeyer/projects/rrg-gachon/vdemeyer/TRACKING/KATJA/OUTPUTS/${2}_psl_smoothed_400km_12h_1005hPa_${1}_1month.txt"
 
 if [ -f "$output_file" ]; then
