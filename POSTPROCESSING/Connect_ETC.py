@@ -3,86 +3,33 @@ import pandas as pd
 #run ~/TRACKING/KATJA/POSTPROCESSING/Connect_ETC.py
 
 simulations = ['UBI', 'UBB', 'ERA5', 'UBG', 'UBD', 'UBH', 'UBE', 'UBF']
-hist_future_map = {'UBG': 'UBD', 'UBH': 'UBE', 'UBI': 'UBF'}
 
 for sim in simulations:
+    
+    if sim in ['UBG', 'UBH']:
+        start_year = 2014
+        end_year = 2100
+    elif sim == 'UBI':
+        start_year = 2014
+        end_year = 2098
+    elif sim in ['UBB', 'ERA5']:
+        start_year = 1979
+        end_year = 2023
+    else:
+        start_year = 1979
+        end_year = 2014
         
     print(f"Processing simulation: {sim}")
-    if sim in hist_future_map:
-        hist_sim = hist_future_map[sim]
-        dfs = []
-        periods_hist = []
-        hist_periods = ['1979-1979', '1980-1989', '1990-1999', '2000-2009']
-        periods_hist.extend((hist_sim, p) for p in hist_periods)
-        for start in range(2010, 2100, 10):
-            end = start + 9
-            if sim == 'UBI' and start == 2090:
-                end = 2098
-            periods_hist.append((sim, f"{start}-{end}"))
-        if sim != 'UBI':
-            periods_hist.append((sim, '2100-2100'))
 
-        for idx, (sim_name, period) in enumerate(periods_hist):
-            try:
-                df = pd.read_csv(
-                    f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/TRACKING/KATJA/OUTPUTS/{sim_name}_psl_smoothed_400km_12h_1005hPa_{period}_1month.txt',
-                    sep=r'\s+', header=14, engine='python',
-                    names=['storm','point','i','j','date','lat','lon','pressure']
-                )
-                df['date'] = pd.to_datetime(df['date'].astype(str), format='%Y%m%d%H', errors='coerce')
-                dfs.append(df)
-            except FileNotFoundError:
-                raise FileNotFoundError(f"File not found for simulation '{sim_name}' and period '{period}'")
-
-    elif sim == 'UBB':
-        df1 = pd.read_csv(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/TRACKING/KATJA/OUTPUTS/{sim}_psl_smoothed_400km_12h_1005hPa_1979-1979_1month.txt', sep=r'\s+', header=14, engine='python', names=['storm','point','i','j','date','lat','lon','pressure'])
-        df1['date'] = pd.to_datetime(df1['date'].astype(str), format='%Y%m%d%H', errors='coerce')
-
-        df2 = pd.read_csv(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/TRACKING/KATJA/OUTPUTS/{sim}_psl_smoothed_400km_12h_1005hPa_1980-1989_1month.txt', sep=r'\s+', header=14, engine='python', names=['storm','point','i','j','date','lat','lon','pressure'])
-        df2['date'] = pd.to_datetime(df2['date'].astype(str), format='%Y%m%d%H', errors='coerce')
-
-        df3 = pd.read_csv(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/TRACKING/KATJA/OUTPUTS/{sim}_psl_smoothed_400km_12h_1005hPa_1990-1999_1month.txt', sep=r'\s+', header=14, engine='python', names=['storm','point','i','j','date','lat','lon','pressure'])
-        df3['date'] = pd.to_datetime(df3['date'].astype(str), format='%Y%m%d%H', errors='coerce')
-
-        df4 = pd.read_csv(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/TRACKING/KATJA/OUTPUTS/{sim}_psl_smoothed_400km_12h_1005hPa_2000-2009_1month.txt', sep=r'\s+', header=14, engine='python', names=['storm','point','i','j','date','lat','lon','pressure'])
-        df4['date'] = pd.to_datetime(df4['date'].astype(str), format='%Y%m%d%H', errors='coerce')
-
-        df5 = pd.read_csv(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/TRACKING/KATJA/OUTPUTS/{sim}_psl_smoothed_400km_12h_1005hPa_2010-2019_1month.txt', sep=r'\s+', header=14, engine='python', names=['storm','point','i','j','date','lat','lon','pressure'])
-        df5['date'] = pd.to_datetime(df5['date'].astype(str), format='%Y%m%d%H', errors='coerce')
-
-        df6 = pd.read_csv(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/TRACKING/KATJA/OUTPUTS/{sim}_psl_smoothed_400km_12h_1005hPa_2020-2023_1month.txt', sep=r'\s+', header=14, engine='python', names=['storm','point','i','j','date','lat','lon','pressure'])
-        df6['date'] = pd.to_datetime(df6['date'].astype(str), format='%Y%m%d%H', errors='coerce')
-
-        dfs = [df1, df2, df3, df4, df5, df6]
-
-    elif sim == 'ERA5':
-        dfs = []
-        for year in range(1979, 2024):
-            df = pd.read_csv(
-            f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/TRACKING/KATJA/OUTPUTS/{sim}_psl_smoothed_400km_12h_1005hPa_{year}_1month.txt',
-            sep=r'\s+', header=14, engine='python',
-            names=['storm','point','i','j','date','lat','lon','pressure']
-            )
-            df['date'] = pd.to_datetime(df['date'].astype(str), format='%Y%m%d%H', errors='coerce')
-            dfs.append(df)
-            
-    else:
-        df1 = pd.read_csv(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/TRACKING/KATJA/OUTPUTS/{sim}_psl_smoothed_400km_12h_1005hPa_1979-1979_1month.txt', sep=r'\s+', header=14, engine='python', names=['storm','point','i','j','date','lat','lon','pressure'])
-        df1['date'] = pd.to_datetime(df1['date'].astype(str), format='%Y%m%d%H', errors='coerce')
-
-        df2 = pd.read_csv(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/TRACKING/KATJA/OUTPUTS/{sim}_psl_smoothed_400km_12h_1005hPa_1980-1989_1month.txt', sep=r'\s+', header=14, engine='python', names=['storm','point','i','j','date','lat','lon','pressure'])
-        df2['date'] = pd.to_datetime(df2['date'].astype(str), format='%Y%m%d%H', errors='coerce')
-
-        df3 = pd.read_csv(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/TRACKING/KATJA/OUTPUTS/{sim}_psl_smoothed_400km_12h_1005hPa_1990-1999_1month.txt', sep=r'\s+', header=14, engine='python', names=['storm','point','i','j','date','lat','lon','pressure'])
-        df3['date'] = pd.to_datetime(df3['date'].astype(str), format='%Y%m%d%H', errors='coerce')
-
-        df4 = pd.read_csv(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/TRACKING/KATJA/OUTPUTS/{sim}_psl_smoothed_400km_12h_1005hPa_2000-2009_1month.txt', sep=r'\s+', header=14, engine='python', names=['storm','point','i','j','date','lat','lon','pressure'])
-        df4['date'] = pd.to_datetime(df4['date'].astype(str), format='%Y%m%d%H', errors='coerce')
-
-        df5 = pd.read_csv(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/TRACKING/KATJA/OUTPUTS/{sim}_psl_smoothed_400km_12h_1005hPa_2010-2014_1month.txt', sep=r'\s+', header=14, engine='python', names=['storm','point','i','j','date','lat','lon','pressure'])
-        df5['date'] = pd.to_datetime(df5['date'].astype(str), format='%Y%m%d%H', errors='coerce')
-
-        dfs = [df1, df2, df3, df4, df5]
+    dfs = []
+    for year in range(start_year, end_year + 1):
+        df = pd.read_csv(
+        f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/TRACKING/KATJA/OUTPUTS/{sim}_psl_smoothed_400km_12h_1005hPa_{year}_1month.txt',
+        sep=r'\s+', header=14, engine='python',
+        names=['storm','point','i','j','date','lat','lon','pressure']
+        )
+        df['date'] = pd.to_datetime(df['date'].astype(str), format='%Y%m%d%H', errors='coerce')
+        dfs.append(df)
 
     # Fusionner les DataFrames et supprimer les doublons
     for i in range(len(dfs) - 1):
