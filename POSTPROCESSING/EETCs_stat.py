@@ -465,7 +465,9 @@ if __name__ == "__main__":
 
     if original_selection and (wetdays or future or metric=='ratio'):
         raise ValueError("original_selection cannot be combined with wetdays, future or ratio metric")
-    if not original_selection:
+    if original_selection:
+        output_file += '.pkl'
+    else:
         if wetdays:
             output_file += '_wetdays'
         if future and sim in ['UBG', 'UBH', 'UBI']:
