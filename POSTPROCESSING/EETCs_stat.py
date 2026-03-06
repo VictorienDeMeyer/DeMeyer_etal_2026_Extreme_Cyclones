@@ -74,7 +74,7 @@ def selection_percentile(sim, future_hist_sim, variable, wetdays=True, future=Tr
         historiques, 1979-2023 pour UBB et 1979-082023 pour ERA5.
         """
         base_sim = future_hist_sim.get(sim, sim)
-        filename = f"{prefix}_{base_sim}_percentile.nc"
+        filename = f"{prefix}_{base_sim.lower()}_percentile.nc"
     else:
         base_sim = sim if future else future_hist_sim.get(sim, sim)
         wetdays_str = '_wetdays' if (wetdays and variable == 'pr') else ''
