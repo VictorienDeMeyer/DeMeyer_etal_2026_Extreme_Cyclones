@@ -2,7 +2,8 @@ import pandas as pd
 
 #run ~/TRACKING/KATJA/POSTPROCESSING/Connect_ETC.py
 
-simulations = ['UBI', 'UBB', 'ERA5', 'UBG', 'UBD', 'UBH', 'UBE', 'UBF']
+# simulations = ['ERA5', 'UBB', 'UBD', 'UBE', 'UBF', 'UBG', 'UBH', 'UBI']
+simulations = ['UBG', 'UBH', 'UBI']
 hist_future_map = {'UBG': 'UBD', 'UBH': 'UBE', 'UBI': 'UBF'}
 
 for sim in simulations:
@@ -19,10 +20,31 @@ for sim in simulations:
     else:
         start_year = 1979
         end_year = 2014
-        
+
     print(f"Processing simulation: {sim}")
 
     dfs = []
+
+    # Pour les simulations futures, d'abord charger la partie historique (1979-2014)
+    if sim in hist_future_map:
+        hist_sim = hist_future_map[sim]
+        #When historical sim will be run year by year
+        # for year in range(1979, 2015):
+        #     df = pd.read_csv(
+        #     f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/TRACKING/KATJA/OUTPUTS/{hist_sim}_psl_smoothed_400km_12h_1005hPa_{year}_1month.txt',
+        #     sep=r'\s+', header=14, engine='python',
+        #     names=['storm','point','i','j','date','lat','lon','pressure']
+        #     )
+        hist_periods = ['1979-1979', '1980-1989', '1990-1999', '2000-2009', '2010-2014']
+        for period in hist_periods:
+            df = pd.read_csv(
+            f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/TRACKING/KATJA/OUTPUTS/{hist_sim}_psl_smoothed_400km_12h_1005hPa_{period}_1month.txt',
+            sep=r'\s+', header=14, engine='python',
+            names=['storm','point','i','j','date','lat','lon','pressure']
+            )
+            df['date'] = pd.to_datetime(df['date'].astype(str), format='%Y%m%d%H', errors='coerce')
+            dfs.append(df)
+
     for year in range(start_year, end_year + 1):
         df = pd.read_csv(
         f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/TRACKING/KATJA/OUTPUTS/{sim}_psl_smoothed_400km_12h_1005hPa_{year}_1month.txt',
