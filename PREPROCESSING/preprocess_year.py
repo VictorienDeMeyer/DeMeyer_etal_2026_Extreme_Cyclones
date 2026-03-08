@@ -117,16 +117,40 @@ def get_sim_context(sim, year, base_dir='/home/vdemeyer/projects/rrg-gachon/vdem
 
     # 3. Dynamic File List Building
     input_files = []
-    
+
+    # Mapping for historical/future pairs
+    hist2fut = {'UBD': 'UBG', 'UBE': 'UBH', 'UBF': 'UBI'}
+    fut2hist = {v: k for k, v in hist2fut.items()}
+
     for y, m in file_strategy:
-        
         t_dir = f"{base_dir}/{sim}/PSL"
         if sim == 'ERA5':
             pattern = f"{t_dir}/{y}/*/*.nc4" if m == 'all' else f"{t_dir}/{y}/{m:02d}/*.nc4"
-        else:
-            pattern = f"{t_dir}/psl_{sim_lower}_{y}*_se.nc" if m == 'all' else f"{t_dir}/psl_{sim_lower}_{y}{m:02d}_se.nc"
+            found_files = sorted(glob(pattern))
+            input_files.extend(found_files)
+            continue
+
+        # Cas spéciaux pour transition hist/fut
+        # Si sim est UBG/UBH/UBI et année==2015 et mois==12, aller chercher décembre 2014 du pendant historique
+        if sim in fut2hist and year == 2015 and y == 2014 and m == 12:
+            hist_sim = fut2hist[sim]
+            t_dir_hist = f"{base_dir}/{hist_sim}/PSL"
+            pattern = f"{t_dir_hist}/psl_{hist_sim.lower()}_{y}{m:02d}_se.nc"
+            found_files = sorted(glob(pattern))
+            input_files.extend(found_files)
+            continue
+        # Si sim est UBD/UBE/UBF et année==2014 et mois==1, aller chercher janvier 2015 du pendant future
+        if sim in hist2fut and year == 2014 and y == 2015 and m == 1:
+            fut_sim = hist2fut[sim]
+            t_dir_fut = f"{base_dir}/{fut_sim}/PSL"
+            pattern = f"{t_dir_fut}/psl_{fut_sim.lower()}_{y}{m:02d}_se.nc"
+            found_files = sorted(glob(pattern))
+            input_files.extend(found_files)
+            continue
+
+        # Cas standard
+        pattern = f"{t_dir}/psl_{sim_lower}_{y}*_se.nc" if m == 'all' else f"{t_dir}/psl_{sim_lower}_{y}{m:02d}_se.nc"
         found_files = sorted(glob(pattern))
-    
         input_files.extend(found_files)
 
     return input_files, start, end
