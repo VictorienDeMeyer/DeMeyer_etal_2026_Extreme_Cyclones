@@ -1,5 +1,4 @@
 #!/bin/bash
-#SBATCH --time=02:00:00
 #SBATCH --account=rrg-gachon
 #SBATCH --mem=4G
 #SBATCH --ntasks=1

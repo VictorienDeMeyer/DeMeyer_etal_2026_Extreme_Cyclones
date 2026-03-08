@@ -9,10 +9,10 @@ sims=("UBB" "UBD" "UBE" "UBF" "UBG" "UBH" "UBI")
 for sim in "${sims[@]}"; do
 
   if [[ "$sim" == "UBG" || "$sim" == "UBH" ]]; then
-      start_year=2014
+      start_year=2015
       end_year=2100
   elif [ "$sim" == "UBI" ]; then
-      start_year=2014
+      start_year=2015
       end_year=2098
   elif [ "$sim" == "UBB" ] || [ "$sim" == "ERA5" ]; then
       start_year=1979
