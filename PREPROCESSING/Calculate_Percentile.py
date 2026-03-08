@@ -20,9 +20,9 @@ def braced_glob(path):
 def calculate_percentile(output_file, ds_variable, filenames, sim, start_year, end_year):
 
     if args.cond:
-        log_file = f'/home/vdemeyer/DATA_COMPUTING/JOBS/OUTPUTS/Percentile_{ds_variable}_{sim.lower()}_wetdays.txt'
+        log_file = f'/home/vdemeyer/TRACKING/KATJA/JOBS/OUTPUTS/Percentile_{ds_variable}_{sim.lower()}_wetdays.txt'
     else:
-        log_file = f'/home/vdemeyer/DATA_COMPUTING/JOBS/OUTPUTS/Percentile_{ds_variable}_{sim.lower()}.txt'
+        log_file = f'/home/vdemeyer/TRACKING/KATJA/JOBS/OUTPUTS/Percentile_{ds_variable}_{sim.lower()}.txt'
     
     if os.path.exists(log_file):
         os.remove(log_file)
@@ -148,18 +148,16 @@ if __name__ == "__main__":
     sim_hist_fut = {'UBD': 'UBG', 'UBE': 'UBH', 'UBF': 'UBI'}
 
     if sim in sim_hist_fut or sim in ['ERA5', 'UBB']:
-        # start_year, end_year = 1980, 2014
-        start_year, end_year = 1980, 2004
-    # elif sim == 'UBI':
-        # start_year, end_year = 2063, 2097
+        start_year, end_year = 1980, 2014
+        # start_year, end_year = 1980, 2004
     else:
-        # start_year, end_year = 2066, 2100
-        start_year, end_year = 2058, 2082
+        # start_year, end_year = 2058, 2082
+        start_year, end_year = 2063, 2097
 
     if args.cond:
-        output_file = f'{output_dir}/{name_for_output_file}_{sim.lower()}_percentile_{start_year}-{end_year}_wetdays.nc' ########### modif vic
+        output_file = f'{output_dir}/{name_for_output_file}_{sim.lower()}_percentile_{start_year}-{end_year}_wetdays.nc'
     else:
-        output_file = f'{output_dir}/{name_for_output_file}_{sim.lower()}_percentile_{start_year}-{end_year}.nc' ############ modif vic
+        output_file = f'{output_dir}/{name_for_output_file}_{sim.lower()}_percentile_{start_year}-{end_year}.nc'
     if os.path.exists(output_file):
         os.remove(output_file)
 

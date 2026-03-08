@@ -66,12 +66,14 @@ def open_files(sim, metric='diff', wetdays=False, future=True, original_selectio
         storm_bounds = df.groupby('storm')['date'].agg(['min', 'max'])
         if sim in ['UBG', 'UBH', 'UBI']:
             # Conserver uniquement les storms dont la première date est >= 2058 et <= 2082
-            valid_storms = storm_bounds.query('min.dt.year >= 2058 and max.dt.year <= 2082').index
+            # valid_storms = storm_bounds.query('min.dt.year >= 2058 and max.dt.year <= 2082').index
+            valid_storms = storm_bounds.query('min.dt.year >= 2063 and max.dt.year <= 2097').index
             df = df[df['storm'].isin(valid_storms)]
             EETC_dict = {k: v for k, v in EETC_dict.items() if k in valid_storms}
         else:
             # Conserver uniquement les storms dont la première date est >= 1980 et <= 2004
-            valid_storms = storm_bounds.query('min.dt.year >= 1980 and max.dt.year <= 2004').index
+            # valid_storms = storm_bounds.query('min.dt.year >= 1980 and max.dt.year <= 2004').index
+            valid_storms = storm_bounds.query('min.dt.year >= 1980 and max.dt.year <= 2014').index
             df = df[df['storm'].isin(valid_storms)]
             EETC_dict = {k: v for k, v in EETC_dict.items() if k in valid_storms}
 

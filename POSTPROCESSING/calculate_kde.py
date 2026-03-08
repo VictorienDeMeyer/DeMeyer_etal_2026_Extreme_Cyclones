@@ -66,9 +66,9 @@ def main(sim, season):
     tracks, _ = open_files(sim, period_filtering=True)
 
     coord_path = (
-        '/home/vdemeyer/projects/rrg-gachon/vdemeyer/ERA5/PR_Percentile/pr_era5_percentile_1980-2004.nc'
+        '/home/vdemeyer/projects/rrg-gachon/vdemeyer/ERA5/PR_Percentile/pr_era5_percentile_1980-2014.nc'
         if sim == 'ERA5' else 
-        '/home/vdemeyer/projects/rrg-gachon/vdemeyer/UBB/PR_Percentile/pr_ubb_percentile_1980-2004.nc'
+        '/home/vdemeyer/projects/rrg-gachon/vdemeyer/UBB/PR_Percentile/pr_ubb_percentile_1980-2014.nc'
     )
     for_coord = xr.open_dataset(coord_path)
 
