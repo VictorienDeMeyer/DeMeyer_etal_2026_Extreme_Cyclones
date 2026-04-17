@@ -1,4 +1,5 @@
 # module load gcc netcdf-fortran
+# compile with "make tracks"
 
 EBROOTNETCDFMINFORTRAN = /cvmfs/soft.computecanada.ca/easybuild/software/2020/avx2/Compiler/gcc9/netcdf-fortran/4.6.0
 FC = gfortran

@@ -1,5 +1,34 @@
 program storm_tracks
 !
+! ==============================================================================
+! FIXED VERSION — V. De Meyer (Apr 2026)
+!
+!
+!   FIX — ROOT CAUSE of the "dates going backward" and "mixed-track" symptom,
+!         and of the 0:360 longitudes leaking into a -180:180 track.
+!         The original `maxCenters = 500` parameter was used BOTH as
+!         (a) the maximum number of detected centers per time step, and
+!         (b) the first dimension of the per-storm track arrays
+!             (clat, clon, cdate, ci, cj, cpres, ...).
+!         A storm lasting more than 500 time steps therefore wrote out of
+!         bounds into `clat(501..,t)`, which in Fortran column-major memory
+!         aliases to `clat(1..,t+1)`, silently corrupting the early points
+!         of the next storm slot. When that next slot was eventually written
+!         out, its early c=1..N points carried dates, grid indices and
+!         longitude values (including the 0:360 prediction values stored at
+!         `clat(p+1,t)`) from slot t's later writes — exactly matching the
+!         observed symptoms.
+!         Fix: split the parameter into `maxCenters = 500` (per-timestep
+!         candidate centers, unchanged) and `maxTrackLength = 5000`
+!         (per-storm track length). All per-storm 2D arrays are
+!         redimensioned on maxTrackLength. A hard abort is added before
+!         the cpoints++ increment in case a track ever reaches that ceiling.
+!
+! The center-detection stage and the tracking/matching logic are otherwise
+! untouched — every storm center still comes from the same pfield minima
+! logic as the original.
+! ==============================================================================
+!
 ! Compile with:
 ! module load  compiler/gcc-7.3  development/netcdf
 ! gfortran  $(nf-config --fflags)  $(nf-config --flibs) storm_tracks.f90 read_args_mod.f90 io_files_cdf_mod.f90  -o storm_tracks.Abs
@@ -181,14 +210,26 @@ program storm_tracks
 
 
 ! Variables needed for tracking
-  integer :: maxCenters, maxStorms
-  parameter ( maxCenters = 500, maxStorms = 1000 )
+! [FIX] maxCenters was originally used for TWO different purposes:
+!   (1) max number of detected centers per time step (for pmatch, pposi, pposj),
+!   (2) first dimension (track length) of all per-storm arrays (clat, clon, ...).
+! A storm lasting more than 500 hours (~21 days) therefore wrote OUT OF BOUNDS
+! into clat(501..,t), which in Fortran column-major memory aliases to
+! clat(1..,t+1) — corrupting the early points of the next storm slot.
+! That is the source of the "dates going backward" in the same storm ID:
+! the early points of slot t+1 got overwritten by slot t's late-time writes,
+! so when slot t+1 is eventually written out, its early c=1..N points carry
+! dates from slot t's late-time updates.
+!
+! Fix: split into two parameters.
+  integer :: maxCenters, maxStorms, maxTrackLength
+  parameter ( maxCenters = 500, maxStorms = 1000, maxTrackLength = 5000 )
   integer :: tracks(maxStorms)
-  real    :: clat(maxCenters,maxStorms) , clon(maxCenters,maxStorms)
-  real    :: cpres(maxCenters,maxStorms), cpres_real(maxCenters,maxStorms)
-  real    :: cwind(maxCenters,maxStorms), cvort(maxCenters,maxStorms)
-  real    :: cvorta(maxCenters,maxStorms)     ! [added by TC Chen]
-  real    :: cugeo(maxCenters,maxStorms), cvgeo(maxCenters,maxStorms)
+  real    :: clat(maxTrackLength,maxStorms) , clon(maxTrackLength,maxStorms)
+  real    :: cpres(maxTrackLength,maxStorms), cpres_real(maxTrackLength,maxStorms)
+  real    :: cwind(maxTrackLength,maxStorms), cvort(maxTrackLength,maxStorms)
+  real    :: cvorta(maxTrackLength,maxStorms)     ! [added by TC Chen]
+  real    :: cugeo(maxTrackLength,maxStorms), cvgeo(maxTrackLength,maxStorms)
   integer :: cpoints(maxStorms), num_storms, last_track
 !          pmatch contains track number to which new center belongs
   integer :: pmatch(maxCenters), cmatch(maxStorms)
@@ -203,8 +244,9 @@ program storm_tracks
   real    :: earthr, pi, deg2rad
   parameter (earthr = 6371.22e3) 
 
-  integer :: ci(maxCenters,maxStorms)   , cj(maxCenters,maxStorms)
-  integer :: cdate(maxCenters,maxStorms)
+! [FIX] use maxTrackLength (was maxCenters)
+  integer :: ci(maxTrackLength,maxStorms)   , cj(maxTrackLength,maxStorms)
+  integer :: cdate(maxTrackLength,maxStorms)
 
   real    :: next_lon, dx, ppoint
   logical :: global_L , center_check 
@@ -1115,7 +1157,7 @@ program storm_tracks
       if ( cmatch(t) .ne. 0 ) cycle  ! Match already found
 
       select case (pp)
-        !  ... according to wind and history      
+        !  ... according to wind and history
         case (1)
           if ( cpoints(t) .eq. 1 ) cycle
           clon(p+1,t) = clon(p,t) + w*dlonh + (1-w)*dlonw
@@ -1186,7 +1228,7 @@ program storm_tracks
         end if
         if ( j1 .eq. 0 )    j1 = 1
         if ( j2 .eq. nj+1 ) j2 = nj
- 
+
 
 !       dist = cdist(t)*4
         dist = max(cdist(t),disttr*1000)   ![modified by TC]
@@ -1233,7 +1275,7 @@ program storm_tracks
               min_dist = dist12
 
             !        To see if another center can be matched to the rejected storm
-            !        redo center finding for the rejected storm. Therefore add it 
+            !        redo center finding for the rejected storm. Therefore add it
             !        again to the list of tracks to check
 
               last_s = last_s + 1
@@ -1348,6 +1390,17 @@ program storm_tracks
       stop
     end if
 
+! [FIX] Hard bounds check. The original code silently wrote out of bounds
+!         once a storm track exceeded 500 points, corrupting the adjacent
+!         storm slot in memory. Abort loudly if maxTrackLength is ever
+!         reached — at that point the user should increase the parameter
+!         rather than continue with silently corrupted tracks.
+    if ( cpoints(t) .ge. maxTrackLength ) then
+      print *,'Track in slot ',t,' reached maxTrackLength = ',maxTrackLength,' points.'
+      print *,'Increase parameter: maxTrackLength'
+      print *,'    ===== ABORT ====='
+      stop
+    end if
     cpoints(t) = cpoints(t) + 1
     c = cpoints(t)
 

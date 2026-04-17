@@ -18,6 +18,6 @@ if [ -f "$output_file" ]; then
     rm "$output_file"
 fi
 
-$TRACKS -s ${main_file} -txt ${output_file} -nf_pres slp -p_field PN -c_field 'PN' -vcrit 0 -p_min 1005 -minh 12 -mask /home/vdemeyer/projects/rrg-gachon/vdemeyer/MASK/mask_CRCM6_grid_for_CRCM6_eroded.nc -quiet
+$TRACKS -s ${main_file} -txt ${output_file} -nf_pres slp -p_field PN -c_field 'PN' -vcrit 0 -p_min 1005 -minh 12 -span 500 -mask /home/vdemeyer/projects/rrg-gachon/vdemeyer/MASK/mask_CRCM6_grid_for_CRCM6_eroded.nc -quiet
 
 # sbatch --job-name=${sim}_psl_smooth_400km_12h_1005hPa_${year} -o "/home/vdemeyer/TRACKING/KATJA/JOBS/OUTPUTS/${sim}_psl_smooth_400km_12h_1005hPa_${year}.out" /home/vdemeyer/TRACKING/KATJA/JOBS/make_tracks_CRCM6.sh 1979 UBB
