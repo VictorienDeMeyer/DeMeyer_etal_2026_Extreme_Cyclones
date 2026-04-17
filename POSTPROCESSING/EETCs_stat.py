@@ -78,15 +78,14 @@ def selection_percentile(sim, future_hist_sim, variable, wetdays=True, future=Tr
     else:
         base_sim = sim if future else future_hist_sim.get(sim, sim)
         wetdays_str = '_wetdays' if (wetdays and variable == 'pr') else ''
-        # period = (
-        #     '2063-2097' if sim == 'UBI' and future
-        #     else '2066-2100' if future and sim in future_hist_sim
-        #     else '1980-2014'
-        # )
         period = (
-            '2058-2082' if future and sim in future_hist_sim
-            else '1980-2004'
+            '2063-2097' if future and sim in future_hist_sim
+            else '1980-2014'
         )
+        # period = (
+        #     '2058-2082' if future and sim in future_hist_sim
+        #     else '1980-2004'
+        # )
         filename = f"{prefix}_{base_sim.lower()}_percentile_{period}{wetdays_str}.nc"
 
     file_path = f"{base_dir}{base_sim}/{var_dir}/{filename}"
@@ -104,9 +103,8 @@ def selection_percentile(sim, future_hist_sim, variable, wetdays=True, future=Tr
 def main(iyear, sim, metric, wetdays, future, original_selection, output_file):
 
     future_hist_sim = {'UBG': 'UBD', 'UBH': 'UBE', 'UBI': 'UBF'}
-
-    if sim in future_hist_sim:
-        hist_sim = future_hist_sim[sim]
+    hist_future_sim = {v: k for k, v in future_hist_sim.items()}
+    fut_sim = hist_future_sim.get(sim, sim)
 
     # Define expected time range to check if time dimension of datasets is correct
     if sim != 'ERA5' and iyear == 1979:
@@ -115,7 +113,7 @@ def main(iyear, sim, metric, wetdays, future, original_selection, output_file):
     elif sim == 'ERA5' and iyear == 2023:
         start = f"{iyear}-01-01 00:00:00"
         end = f"{iyear}-08-31 23:00:00"
-    elif (sim in ['UBD', 'UBE', 'UBF'] and iyear == 2014) or (sim == 'UBB' and iyear == 2023):
+    elif sim == 'UBB' and iyear == 2023:
         start = f"{iyear}-01-01 00:00:00"
         end = f"{iyear}-12-31 23:00:00"
     elif sim in ['UBG', 'UBH'] and iyear == 2100:
@@ -151,11 +149,11 @@ def main(iyear, sim, metric, wetdays, future, original_selection, output_file):
         if iyear != 2023:
             filenames_precip += braced_glob(f'{input_dir}/{iyear+1}/{{01,02}}/*.nc4')
     else:
-        if sim in future_hist_sim and iyear == 2014:
-            filenames_precip = braced_glob(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{hist_sim}/PR/pr_{hist_sim.lower()}_{iyear}*_se.nc')
+        filenames_precip = braced_glob(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/PR/pr_{sim.lower()}_{iyear}*_se.nc')
+        if sim in hist_future_sim and iyear == 2014:
+            f2 = f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{fut_sim}/PR/pr_{fut_sim.lower()}_{iyear+1}{{01,02}}_se.nc'
         else:
-            filenames_precip = braced_glob(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/PR/pr_{sim.lower()}_{iyear}*_se.nc')
-        f2 = f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/PR/pr_{sim.lower()}_{iyear+1}{{01,02}}_se.nc'
+            f2 = f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/PR/pr_{sim.lower()}_{iyear+1}{{01,02}}_se.nc'
         filenames_precip.extend(braced_glob(f2))
 
     ds_precip = xr.open_mfdataset(
@@ -220,11 +218,11 @@ def main(iyear, sim, metric, wetdays, future, original_selection, output_file):
         if iyear != 2023:
             filenames_wind += braced_glob(f'{input_dir}/{iyear+1}/{{01,02}}/*.nc4')
     else:
-        if sim in future_hist_sim and iyear == 2014:
-            filenames_wind = braced_glob(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{hist_sim}/WIND/wind10_{hist_sim.lower()}_{iyear}*_se.nc')
+        filenames_wind = braced_glob(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/WIND/wind10_{sim.lower()}_{iyear}*_se.nc')
+        if sim in hist_future_sim and iyear == 2014:
+            f2 = f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{fut_sim}/WIND/wind10_{fut_sim.lower()}_{iyear+1}{{01,02}}_se.nc'
         else:
-            filenames_wind = braced_glob(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/WIND/wind10_{sim.lower()}_{iyear}*_se.nc')
-        f2 = f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/WIND/wind10_{sim.lower()}_{iyear+1}{{01,02}}_se.nc'
+            f2 = f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/WIND/wind10_{sim.lower()}_{iyear+1}{{01,02}}_se.nc'
         filenames_wind.extend(braced_glob(f2))
 
     ds_wind = xr.open_mfdataset(

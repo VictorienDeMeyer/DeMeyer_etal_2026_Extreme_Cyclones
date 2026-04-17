@@ -1,6 +1,5 @@
 import xarray as xr
 import pickle
-from tqdm import tqdm
 import sys
 import time
 import argparse
@@ -58,10 +57,13 @@ def calcul_contribution(sim, variables, add_file):
 
         if sim in ['ERA5', 'UBB', 'UBD', 'UBE', 'UBF']:
             start_year = 1980
-            end_year = 2004
+            # end_year = 2004
+            end_year = 2014
         else:
-            start_year = 2058
-            end_year = 2082
+            # start_year = 2058
+            # end_year = 2082
+            start_year = 2063
+            end_year = 2097
 
         for var in variables:
 
@@ -113,18 +115,6 @@ def calcul_contribution(sim, variables, add_file):
             count_ETCs_seasonal = count_ETCs[name_var].groupby('season').sum(dim='year', skipna=True)
             count_ETCs_total = count_ETCs[name_var].sum(dim=['year', 'season'], skipna=True)
 
-            files = [f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/total_{file_var}_{sim.lower()}_1005hPa_1000km_extreme_storm_{season}_{iyear}{add_file}.nc'
-            for iyear in range(start_year, end_year + 1) for season in ['DJF', 'MAM', 'JJA', 'SON']]
-            total_EETCs = xr.open_mfdataset(files)
-            total_EETCs_seasonal = total_EETCs[name_var].groupby('season').sum(dim='year', skipna=True)
-            total_EETCs_total = total_EETCs[name_var].sum(dim=['year', 'season'], skipna=True)
-
-            files = [f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/count_{file_var}_{sim.lower()}_1005hPa_1000km_extreme_storm_{season}_{iyear}{add_file}.nc'
-            for iyear in range(start_year, end_year + 1) for season in ['DJF', 'MAM', 'JJA', 'SON']]
-            count_EETCs = xr.open_mfdataset(files)
-            count_EETCs_seasonal = count_EETCs[name_var].groupby('season').sum(dim='year', skipna=True)
-            count_EETCs_total = count_EETCs[name_var].sum(dim=['year', 'season'], skipna=True)
-
             files = [f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/total_{file_var}_ext_{sim.lower()}_1005hPa_1000km_extreme_storm_{season}_{iyear}{add_file}.nc'
             for iyear in range(start_year, end_year + 1) for season in ['DJF', 'MAM', 'JJA', 'SON']]
             total_ext_EETCs = xr.open_mfdataset(files)
@@ -150,10 +140,6 @@ def calcul_contribution(sim, variables, add_file):
                 'total_ETCs_total': total_ETCs_total.rename("total_ETCs_total").compute(),
                 'count_ETCs_seasonal': count_ETCs_seasonal.rename("count_ETCs_seasonal").compute(),
                 'count_ETCs_total': count_ETCs_total.rename("count_ETCs_total").compute(),
-                'total_EETCs_seasonal': total_EETCs_seasonal.rename("total_EETCs_seasonal").compute(),
-                'total_EETCs_total': total_EETCs_total.rename("total_EETCs_total").compute(),
-                'count_EETCs_seasonal': count_EETCs_seasonal.rename("count_EETCs_seasonal").compute(),
-                'count_EETCs_total': count_EETCs_total.rename("count_EETCs_total").compute(),
                 'total_ext_EETCs_seasonal': total_ext_EETCs_seasonal.rename("total_ext_EETCs_seasonal").compute(),
                 'total_ext_EETCs_total': total_ext_EETCs_total.rename("total_ext_EETCs_total").compute(),
                 'count_ext_EETCs_seasonal': count_ext_EETCs_seasonal.rename("count_ext_EETCs_seasonal").compute(),

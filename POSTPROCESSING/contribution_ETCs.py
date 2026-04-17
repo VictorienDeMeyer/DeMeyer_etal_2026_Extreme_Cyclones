@@ -47,15 +47,14 @@ def selection_percentile(sim, future_hist_sim, variable, wetdays=True, future=Tr
     else:
         base_sim = sim if future else future_hist_sim.get(sim, sim)
         wetdays_str = '_wetdays' if (wetdays and variable == 'pr') else ''
-        # period = (
-        #     '2063-2097' if sim == 'UBI' and future
-        #     else '2066-2100' if future and sim in future_hist_sim
-        #     else '1980-2014'
-        # )
         period = (
-            '2058-2082' if future and sim in future_hist_sim
-            else '1980-2004'
+            '2063-2097' if future and sim in future_hist_sim
+            else '1980-2014'
         )
+        # period = (
+        #     '2058-2082' if future and sim in future_hist_sim
+        #     else '1980-2004'
+        # )
         filename = f"{prefix}_{base_sim.lower()}_percentile_{period}{wetdays_str}.nc"
 
     file_path = f"{base_dir}{base_sim}/{var_dir}/{filename}"
@@ -133,14 +132,10 @@ def main(year, sim, var, wetdays, future, original_selection, add_file):
             if sim in hist_future_map and year == 2100:
                 ds_var = ds_var.isel(time=slice(0, -1)) #There is one hour of data on 2100-12-31T00:00:00.000000000 that does not exist in the precipitation file
     ds_var = ds_var.chunk({var_lat: -1, var_lon: -1, 'time': 100})
-    
-    filenames_ETCs = braced_glob(f"/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/{file_var}_{sim.lower()}_{year}*_1000km_1005hPa_storm.nc")
+        
+    filenames_ETCs = braced_glob(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/STORM_ID_1000KM/storm_id_{sim.lower()}_{year}*_1000km_1005hPa.nc')
     ds_ETCs = xr.open_mfdataset(filenames_ETCs)
     ds_ETCs = ds_ETCs.chunk({var_lat: -1, var_lon: -1, 'time': 100})
-
-    filenames_EETCs = braced_glob(f"/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/{file_var}_{sim.lower()}_{year}*_1000km_1005hPa_extreme_storm{add_file}.nc") 
-    ds_EETCs = xr.open_mfdataset(filenames_EETCs)
-    ds_EETCs = ds_EETCs.chunk({var_lat: -1, var_lon: -1, 'time': 100, 'quantile': 1})
 
     percentile = selection_percentile(sim, hist_future_map, var, wetdays=wetdays, future=future, original_selection=original_selection)
     
@@ -149,10 +144,13 @@ def main(year, sim, var, wetdays, future, original_selection, add_file):
     mask_var_ext['season'] = mask_var_ext['time'].dt.season
     ds_var['season'] = ds_var['time'].dt.season
 
-    mask_ETCs_ext = ds_ETCs.where(ds_ETCs >= percentile)
+    # Précip/vent extrême (>= centile) ET à moins de 1000km d'un ETC
+    mask_ETCs_ext = ds_var[[name_var]].where(ds_ETCs['storm_id'].notnull() & (ds_var[name_var] >= percentile[name_var]))
     mask_ETCs_ext['season'] = mask_ETCs_ext['time'].dt.season
-    ds_ETCs['season'] = ds_ETCs['time'].dt.season
-    ds_EETCs['season'] = ds_EETCs['time'].dt.season
+
+    # Précip/vent à moins de 1000km d'un ETC
+    mask_ETCs = ds_var[[name_var]].where(ds_ETCs['storm_id'].notnull())
+    mask_ETCs['season'] = mask_ETCs['time'].dt.season
 
     for season in ['DJF', 'MAM', 'JJA', 'SON']:
         start_time = time.time()
@@ -204,9 +202,9 @@ def main(year, sim, var, wetdays, future, original_selection, add_file):
         print('Third two files saved in {:.2f} seconds'.format(fourth_time - three_time))
 
         #Total rainfall/wind within 1000km of an ETC
-        ds_ETCs_season = ds_ETCs.where(ds_ETCs['season'] == season, drop=True)
-        sum = ds_ETCs_season[name_var].sum(dim='time', skipna=True)
-        count = ds_ETCs_season.where(ds_ETCs_season[name_var] > 0.)[name_var].count(dim='time')
+        mask_ETCs_season = mask_ETCs.where(mask_ETCs['season'] == season, drop=True)
+        sum = mask_ETCs_season[name_var].sum(dim='time', skipna=True)
+        count = mask_ETCs_season.where(mask_ETCs_season[name_var] > 0.)[name_var].count(dim='time')
         sum = sum.expand_dims({'season': [season], 'year': [year]})
         count = count.expand_dims({'season': [season], 'year': [year]})
         if sim == 'ERA5':
@@ -217,21 +215,6 @@ def main(year, sim, var, wetdays, future, original_selection, add_file):
         
         fifth_time = time.time()
         print('Fourth two files saved in {:.2f} seconds'.format(fifth_time - fourth_time))
-
-        #Total rainfall/wind within 1000km of a Quebec EETC
-        ds_EETCs_season = ds_EETCs.where(ds_EETCs['season'] == season, drop=True)
-        sum = ds_EETCs_season[name_var].sum(dim='time', skipna=True)
-        count = ds_EETCs_season.where(ds_EETCs_season[name_var] > 0.)[name_var].count(dim='time')
-        sum = sum.expand_dims({'season': [season], 'year': [year]})
-        count = count.expand_dims({'season': [season], 'year': [year]})
-        if sim == 'ERA5':
-            sum = sum.where(mask, drop=True)
-            count = count.where(mask, drop=True)
-        sum.to_netcdf(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/total_{file_var}_{sim.lower()}_1005hPa_1000km_extreme_storm_{season}_{year}{add_file}.nc')
-        count.to_netcdf(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/count_{file_var}_{sim.lower()}_1005hPa_1000km_extreme_storm_{season}_{year}{add_file}.nc')
-        
-        sixth_time = time.time()        
-        print('Fifth two files saved in {:.2f} seconds'.format(sixth_time - fifth_time))
 
         end_time = time.time()
         print(f"Time taken for {season}: {end_time - start_time:.2f} seconds")
