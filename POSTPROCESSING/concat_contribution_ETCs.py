@@ -24,12 +24,12 @@ def load_and_merge_all_pkl(wetdays, future):
     variables = ['pr', 'ws']
     data = {}
     merged_all = {}
-    output_file = f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/CONTRIB/contribution_ETCs_1005hPa{add_file}.pkl'
+    output_file = f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/CONTRIB/contribution_ETCs_1000hPa{add_file}.pkl'
 
     for sim in simulations:
         for var in variables:
             add_file = build_add_file(sim, wetdays, future)
-            file_path = f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/CONTRIB/contribution_ETCs_1005hPa_{sim}_{var}{add_file}.pkl'
+            file_path = f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/CONTRIB/contribution_ETCs_1000hPa_{sim}_{var}{add_file}.pkl'
             with open(file_path, 'rb') as file:
                 data_key = f"{var}_{sim}"
                 data[data_key] = pickle.load(file)
@@ -79,49 +79,49 @@ def calcul_contribution(sim, variables, add_file):
                     folder_var = 'WIND'
                 file_var = 'wind10'
 
-            files = [f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/total_{file_var}_{sim.lower()}_1005hPa_{season}_{iyear}.nc'
+            files = [f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/total_{file_var}_{sim.lower()}_1000hPa_{season}_{iyear}.nc'
             for iyear in range(start_year, end_year + 1) for season in ['DJF', 'MAM', 'JJA', 'SON']]
             total = xr.open_mfdataset(files)
             total_seasonal = total[name_var].groupby('season').sum(dim='year', skipna=True)
             total_total = total[name_var].sum(dim=['year', 'season'], skipna=True)
 
-            files = [f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/count_{file_var}_{sim.lower()}_1005hPa_{season}_{iyear}.nc'
+            files = [f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/count_{file_var}_{sim.lower()}_1000hPa_{season}_{iyear}.nc'
             for iyear in range(start_year, end_year + 1) for season in ['DJF', 'MAM', 'JJA', 'SON']]
             count = xr.open_mfdataset(files)
             count_seasonal = count[name_var].groupby('season').sum(dim='year', skipna=True)
             count_total = count[name_var].sum(dim=['year', 'season'], skipna=True)
 
-            files = [f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/total_{file_var}_ext_{sim.lower()}_1005hPa_{season}_{iyear}{add_file}.nc'
+            files = [f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/total_{file_var}_ext_{sim.lower()}_1000hPa_{season}_{iyear}{add_file}.nc'
             for iyear in range(start_year, end_year + 1) for season in ['DJF', 'MAM', 'JJA', 'SON']]
             total_ext = xr.open_mfdataset(files)
             total_ext_seasonal = total_ext[name_var].groupby('season').sum(dim='year', skipna=True)
             total_ext_total = total_ext[name_var].sum(dim=['year', 'season'], skipna=True)
 
-            files = [f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/count_{file_var}_ext_{sim.lower()}_1005hPa_{season}_{iyear}{add_file}.nc'
+            files = [f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/count_{file_var}_ext_{sim.lower()}_1000hPa_{season}_{iyear}{add_file}.nc'
             for iyear in range(start_year, end_year + 1) for season in ['DJF', 'MAM', 'JJA', 'SON']]
             count_ext = xr.open_mfdataset(files)
             count_ext_seasonal = count_ext[name_var].groupby('season').sum(dim='year', skipna=True)
             count_ext_total = count_ext[name_var].sum(dim=['year', 'season'], skipna=True)
 
-            files = [f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/total_{file_var}_{sim.lower()}_1005hPa_1000km_storm_{season}_{iyear}.nc' 
+            files = [f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/total_{file_var}_{sim.lower()}_1000hPa_1000km_storm_{season}_{iyear}.nc' 
             for iyear in range(start_year, end_year + 1) for season in ['DJF', 'MAM', 'JJA', 'SON']]
             total_ETCs = xr.open_mfdataset(files)
             total_ETCs_seasonal = total_ETCs[name_var].groupby('season').sum(dim='year', skipna=True)
             total_ETCs_total = total_ETCs[name_var].sum(dim=['year', 'season'], skipna=True)
 
-            files = [f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/count_{file_var}_{sim.lower()}_1005hPa_1000km_storm_{season}_{iyear}.nc'
+            files = [f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/count_{file_var}_{sim.lower()}_1000hPa_1000km_storm_{season}_{iyear}.nc'
             for iyear in range(start_year, end_year + 1) for season in ['DJF', 'MAM', 'JJA', 'SON']]
             count_ETCs = xr.open_mfdataset(files)
             count_ETCs_seasonal = count_ETCs[name_var].groupby('season').sum(dim='year', skipna=True)
             count_ETCs_total = count_ETCs[name_var].sum(dim=['year', 'season'], skipna=True)
 
-            files = [f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/total_{file_var}_ext_{sim.lower()}_1005hPa_1000km_extreme_storm_{season}_{iyear}{add_file}.nc'
+            files = [f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/total_{file_var}_ext_{sim.lower()}_1000hPa_1000km_extreme_storm_{season}_{iyear}{add_file}.nc'
             for iyear in range(start_year, end_year + 1) for season in ['DJF', 'MAM', 'JJA', 'SON']]
             total_ext_EETCs = xr.open_mfdataset(files)
             total_ext_EETCs_seasonal = total_ext_EETCs[name_var].groupby('season').sum(dim='year', skipna=True)
             total_ext_EETCs_total = total_ext_EETCs[name_var].sum(dim=['year', 'season'], skipna=True)
 
-            files = [f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/count_{file_var}_ext_{sim.lower()}_1005hPa_1000km_extreme_storm_{season}_{iyear}{add_file}.nc'
+            files = [f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/count_{file_var}_ext_{sim.lower()}_1000hPa_1000km_extreme_storm_{season}_{iyear}{add_file}.nc'
             for iyear in range(start_year, end_year + 1) for season in ['DJF', 'MAM', 'JJA', 'SON']]
             count_ext_EETCs = xr.open_mfdataset(files)
             count_ext_EETCs_seasonal = count_ext_EETCs[name_var].groupby('season').sum(dim='year', skipna=True)
@@ -146,7 +146,7 @@ def calcul_contribution(sim, variables, add_file):
                 'count_ext_EETCs_total': count_ext_EETCs_total.rename("count_ext_EETCs_total").compute(),
             }
             
-            output_file = f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/CONTRIB/contribution_ETCs_1005hPa_{sim}_{var}{add_file}.pkl'
+            output_file = f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/CONTRIB/contribution_ETCs_1000hPa_{sim}_{var}{add_file}.pkl'
             with open(output_file, 'wb') as f:
                 pickle.dump(data_to_save, f)
 

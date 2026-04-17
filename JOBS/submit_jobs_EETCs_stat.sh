@@ -23,9 +23,9 @@ for sim in "${sims[@]}"; do
 
       output_dir="/home/vdemeyer/projects/rrg-gachon/vdemeyer/TRACKING/KATJA/OUTPUTS/EETC/${sim}/${iyear}"
       ## output_file="${output_dir}/EETC_cum_${sim}_Quebec_${iyear}_compound_8hrs_quantile_SSI_ref_ERA5.pkl"
-      # output_file="${output_dir}/EETC_cum_${sim}_Quebec_1005hPa_${iyear}_compound_8hrs_quantile_SSI.pkl"
-      # output_file="${output_dir}/EETC_cum_${sim}_Quebec_1005hPa_${iyear}_compound_8hrs_quantile_SSI_wetdays.pkl"
-      # output_file="${output_dir}/EETC_cum_${sim}_Quebec_1005hPa_${iyear}_compound_8hrs_quantile_SSI_ratio.pkl"
+      # output_file="${output_dir}/EETC_cum_${sim}_Quebec_1000hPa_${iyear}_compound_8hrs_quantile_SSI.pkl"
+      # output_file="${output_dir}/EETC_cum_${sim}_Quebec_1000hPa_${iyear}_compound_8hrs_quantile_SSI_wetdays.pkl"
+      # output_file="${output_dir}/EETC_cum_${sim}_Quebec_1000hPa_${iyear}_compound_8hrs_quantile_SSI_ratio.pkl"
       output_file="${output_dir}/dummy.pkl"
       
       if [ ! -f "$output_file" ]; then

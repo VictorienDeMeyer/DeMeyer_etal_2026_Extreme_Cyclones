@@ -37,11 +37,11 @@ def main(sim, output_file, endyear):
     if sim in hist_future_map:
         hist_sim = hist_future_map[sim]
 
-    df = pd.read_csv(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/TRACKING/KATJA/OUTPUTS/{sim}_psl_smooth_400km_12h_1005hPa.txt',
+    df = pd.read_csv(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/TRACKING/KATJA/OUTPUTS/{sim}_psl_smooth_400km_12h_1000hPa.txt',
                         sep=r' ', header=0, engine='python', names=['storm','point','i','j','date','lat','lon','pressure'])
     df['date'] = pd.to_datetime(df['date'])
 
-    with open(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/TRACKING/KATJA/OUTPUTS/EETC/EETC_cum_{sim}_Quebec_1005hPa_1979-{endyear}_compound_8hrs_quantile_SSI.pkl', 'rb') as pickle_file:
+    with open(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/TRACKING/KATJA/OUTPUTS/EETC/EETC_cum_{sim}_Quebec_1000hPa_1979-{endyear}_compound_8hrs_quantile_SSI.pkl', 'rb') as pickle_file:
         EETC_dict = pickle.load(pickle_file)
 
     if sim in hist_future_map:

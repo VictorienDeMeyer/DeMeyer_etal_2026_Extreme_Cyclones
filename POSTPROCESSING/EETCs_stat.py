@@ -134,7 +134,7 @@ def main(iyear, sim, metric, wetdays, future, original_selection, output_file):
 
 
     # Load storm tracking data
-    df = pd.read_csv(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/TRACKING/KATJA/OUTPUTS/{sim}_psl_smooth_400km_12h_1005hPa.txt',
+    df = pd.read_csv(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/TRACKING/KATJA/OUTPUTS/{sim}_psl_smooth_400km_12h_1000hPa.txt',
                     sep=r' ', header=0, engine='python', names=['storm','point','i','j','date','lat','lon','pressure'])
     df['date'] = pd.to_datetime(df['date'])
 
@@ -459,7 +459,7 @@ if __name__ == "__main__":
     os.makedirs(output_dir, exist_ok=True)
 
     
-    output_file = f'{output_dir}/EETC_cum_{sim}_Quebec_1005hPa_{iyear}_compound_8hrs_quantile_SSI'
+    output_file = f'{output_dir}/EETC_cum_{sim}_Quebec_1000hPa_{iyear}_compound_8hrs_quantile_SSI'
 
     if original_selection and (wetdays or future or metric=='ratio'):
         raise ValueError("original_selection cannot be combined with wetdays, future or ratio metric")

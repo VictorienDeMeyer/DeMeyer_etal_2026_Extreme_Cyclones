@@ -24,7 +24,7 @@ def open_files(sim, metric='diff', wetdays=False, future=True, original_selectio
     file_prefix = '/home/vdemeyer/projects/rrg-gachon/vdemeyer/TRACKING/KATJA/OUTPUTS/'
         
     # Load storm tracking data   
-    storm_data_file = f'{file_prefix}{sim}_psl_smooth_400km_12h_1005hPa.txt'
+    storm_data_file = f'{file_prefix}{sim}_psl_smooth_400km_12h_1000hPa.txt'
     df = pd.read_csv(
         storm_data_file,
         sep=r' ',
@@ -53,7 +53,7 @@ def open_files(sim, metric='diff', wetdays=False, future=True, original_selectio
         add_file += f'_{metric}.pkl'
 
     eet_dict_file = (
-        f'{file_prefix}EETC/EETC_cum_{sim}_Quebec_1005hPa_1979-{end_year}_compound_8hrs_quantile_SSI{add_file}'
+        f'{file_prefix}EETC/EETC_cum_{sim}_Quebec_1000hPa_1979-{end_year}_compound_8hrs_quantile_SSI{add_file}'
     )
 
     print(f"Loading data from: {eet_dict_file} with {period_filtering} period filtering")

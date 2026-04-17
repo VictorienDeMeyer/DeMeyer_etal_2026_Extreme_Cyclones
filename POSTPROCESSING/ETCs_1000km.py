@@ -146,7 +146,7 @@ def main(iyear, sim):
         output_dir = f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/STORM_ID_1000KM/'
         os.makedirs(output_dir, exist_ok=True)
         encoding = {'storm_id': {'zlib': True, 'complevel': 9, 'dtype': 'float32'}}
-        ds_out.to_netcdf(f'{output_dir}/storm_id_{sim.lower()}_{iyear}{imonth}_1000km_1005hPa.nc', encoding=encoding)
+        ds_out.to_netcdf(f'{output_dir}/storm_id_{sim.lower()}_{iyear}{imonth}_1000km_1000hPa.nc', encoding=encoding)
 
         print(f"  Saved storm IDs for {iyear}-{imonth}")
 

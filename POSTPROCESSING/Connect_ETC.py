@@ -30,14 +30,14 @@ for sim in simulations:
         #When historical sim will be run year by year
         for year in range(1979, 2015):
             df = pd.read_csv(
-            f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/TRACKING/KATJA/OUTPUTS/{hist_sim}_psl_smoothed_400km_12h_1005hPa_{year}_1month.txt',
+            f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/TRACKING/KATJA/OUTPUTS/{hist_sim}_psl_smoothed_400km_12h_1000hPa_{year}_1month.txt',
             sep=r'\s+', header=14, engine='python',
             names=['storm','point','i','j','date','lat','lon','pressure']
             )
         # hist_periods = ['1979-1979', '1980-1989', '1990-1999', '2000-2009', '2010-2014']
         # for period in hist_periods:
         #     df = pd.read_csv(
-        #     f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/TRACKING/KATJA/OUTPUTS/{hist_sim}_psl_smoothed_400km_12h_1005hPa_{period}_1month.txt',
+        #     f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/TRACKING/KATJA/OUTPUTS/{hist_sim}_psl_smoothed_400km_12h_1000hPa_{period}_1month.txt',
         #     sep=r'\s+', header=14, engine='python',
         #     names=['storm','point','i','j','date','lat','lon','pressure']
         #     )
@@ -46,7 +46,7 @@ for sim in simulations:
 
     for year in range(start_year, end_year + 1):
         df = pd.read_csv(
-        f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/TRACKING/KATJA/OUTPUTS/{sim}_psl_smoothed_400km_12h_1005hPa_{year}_1month.txt',
+        f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/TRACKING/KATJA/OUTPUTS/{sim}_psl_smoothed_400km_12h_1000hPa_{year}_1month.txt',
         sep=r'\s+', header=14, engine='python',
         names=['storm','point','i','j','date','lat','lon','pressure']
         )
@@ -90,5 +90,5 @@ for sim in simulations:
     
     if sim in hist_future_map: merged_df_final = merged_df_final[merged_df_final['date'] != pd.Timestamp('2100-12-31 00:00:00')]
 
-    merged_df_final.to_csv(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/TRACKING/KATJA/OUTPUTS/{sim}_psl_smooth_400km_12h_1005hPa.txt', sep=' ', index=False)
+    merged_df_final.to_csv(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/TRACKING/KATJA/OUTPUTS/{sim}_psl_smooth_400km_12h_1000hPa.txt', sep=' ', index=False)
     print(f"Finished processing simulation: {sim}")

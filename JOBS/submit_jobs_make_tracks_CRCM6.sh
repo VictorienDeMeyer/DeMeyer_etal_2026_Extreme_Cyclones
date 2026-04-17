@@ -23,7 +23,7 @@ for sim in "${sims[@]}"; do
   fi
 
   for year in $(seq $start_year $end_year); do
-    sbatch --job-name=${sim}_psl_smooth_400km_12h_1005hPa_${year} -o "/home/vdemeyer/TRACKING/KATJA/JOBS/OUTPUTS/${sim}_psl_smooth_400km_12h_1005hPa_${year}.out" /home/vdemeyer/TRACKING/KATJA/JOBS/make_tracks_CRCM6.sh $year $sim
+    sbatch --job-name=${sim}_psl_smooth_400km_12h_1000hPa_${year} -o "/home/vdemeyer/TRACKING/KATJA/JOBS/OUTPUTS/${sim}_psl_smooth_400km_12h_1000hPa_${year}.out" /home/vdemeyer/TRACKING/KATJA/JOBS/make_tracks_CRCM6.sh $year $sim
   done
 
 done

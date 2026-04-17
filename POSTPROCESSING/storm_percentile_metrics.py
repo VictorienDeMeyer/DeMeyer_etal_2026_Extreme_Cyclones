@@ -172,7 +172,7 @@ def main(iyear, sim, wetdays, future):
         ds_wind = ds_wind.compute()
 
         ### STORMS
-        id_file = f'{base}/{sim}/STORM_ID_1000KM/storm_id_{sim.lower()}_{iyear}{imonth}_1000km_1005hPa.nc'
+        id_file = f'{base}/{sim}/STORM_ID_1000KM/storm_id_{sim.lower()}_{iyear}{imonth}_1000km_1000hPa.nc'
         ds_id = xr.open_dataset(id_file)
 
         # Compute exceedance above 99th percentile

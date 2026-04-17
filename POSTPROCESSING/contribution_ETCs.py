@@ -133,7 +133,7 @@ def main(year, sim, var, wetdays, future, original_selection, add_file):
                 ds_var = ds_var.isel(time=slice(0, -1)) #There is one hour of data on 2100-12-31T00:00:00.000000000 that does not exist in the precipitation file
     ds_var = ds_var.chunk({var_lat: -1, var_lon: -1, 'time': 100})
         
-    filenames_ETCs = braced_glob(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/STORM_ID_1000KM/storm_id_{sim.lower()}_{year}*_1000km_1005hPa.nc')
+    filenames_ETCs = braced_glob(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/STORM_ID_1000KM/storm_id_{sim.lower()}_{year}*_1000km_1000hPa.nc')
     ds_ETCs = xr.open_mfdataset(filenames_ETCs)
     ds_ETCs = ds_ETCs.chunk({var_lat: -1, var_lon: -1, 'time': 100})
 
@@ -165,8 +165,8 @@ def main(year, sim, var, wetdays, future, original_selection, add_file):
         if sim == 'ERA5':
             sum = sum.where(mask, drop=True)
             count = count.where(mask, drop=True)
-        sum.to_netcdf(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/total_{file_var}_ext_{sim.lower()}_1005hPa_{season}_{year}{add_file}.nc')
-        count.to_netcdf(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/count_{file_var}_ext_{sim.lower()}_1005hPa_{season}_{year}{add_file}.nc')
+        sum.to_netcdf(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/total_{file_var}_ext_{sim.lower()}_1000hPa_{season}_{year}{add_file}.nc')
+        count.to_netcdf(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/count_{file_var}_ext_{sim.lower()}_1000hPa_{season}_{year}{add_file}.nc')
         
         two_time = time.time()
         print('First two files saved in {:.2f} seconds'.format(two_time - start_time))
@@ -180,8 +180,8 @@ def main(year, sim, var, wetdays, future, original_selection, add_file):
         if sim == 'ERA5':
             sum = sum.where(mask, drop=True)
             count = count.where(mask, drop=True)
-        sum.to_netcdf(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/total_{file_var}_{sim.lower()}_1005hPa_{season}_{year}.nc')
-        count.to_netcdf(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/count_{file_var}_{sim.lower()}_1005hPa_{season}_{year}.nc')
+        sum.to_netcdf(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/total_{file_var}_{sim.lower()}_1000hPa_{season}_{year}.nc')
+        count.to_netcdf(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/count_{file_var}_{sim.lower()}_1000hPa_{season}_{year}.nc')
         
         three_time = time.time()
         print('Second two files saved in {:.2f} seconds'.format(three_time - two_time))
@@ -195,8 +195,8 @@ def main(year, sim, var, wetdays, future, original_selection, add_file):
         if sim == 'ERA5':
             sum = sum.where(mask, drop=True)
             count = count.where(mask, drop=True)
-        sum.to_netcdf(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/total_{file_var}_ext_{sim.lower()}_1005hPa_1000km_extreme_storm_{season}_{year}{add_file}.nc')
-        count.to_netcdf(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/count_{file_var}_ext_{sim.lower()}_1005hPa_1000km_extreme_storm_{season}_{year}{add_file}.nc')
+        sum.to_netcdf(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/total_{file_var}_ext_{sim.lower()}_1000hPa_1000km_extreme_storm_{season}_{year}{add_file}.nc')
+        count.to_netcdf(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/count_{file_var}_ext_{sim.lower()}_1000hPa_1000km_extreme_storm_{season}_{year}{add_file}.nc')
         
         fourth_time = time.time()
         print('Third two files saved in {:.2f} seconds'.format(fourth_time - three_time))
@@ -210,8 +210,8 @@ def main(year, sim, var, wetdays, future, original_selection, add_file):
         if sim == 'ERA5':
             sum = sum.where(mask, drop=True)
             count = count.where(mask, drop=True)
-        sum.to_netcdf(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/total_{file_var}_{sim.lower()}_1005hPa_1000km_storm_{season}_{year}.nc')
-        count.to_netcdf(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/count_{file_var}_{sim.lower()}_1005hPa_1000km_storm_{season}_{year}.nc')
+        sum.to_netcdf(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/total_{file_var}_{sim.lower()}_1000hPa_1000km_storm_{season}_{year}.nc')
+        count.to_netcdf(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/count_{file_var}_{sim.lower()}_1000hPa_1000km_storm_{season}_{year}.nc')
         
         fifth_time = time.time()
         print('Fourth two files saved in {:.2f} seconds'.format(fifth_time - fourth_time))
