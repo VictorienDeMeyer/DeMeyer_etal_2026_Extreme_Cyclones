@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --time=07:00:00
+#SBATCH --time=20:00:00
 #SBATCH --account=rrg-gachon
 #SBATCH --ntasks=1
 

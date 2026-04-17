@@ -32,18 +32,26 @@ def calculate_percentile(output_file, ds_variable, filenames, sim, start_year, e
             print(*args, **kwargs, file=f)
 
     try:
-        if sim == 'ERA5':
-            # ds = xr.open_zarr(filenames)
-            mask = xr.open_dataarray('/home/vdemeyer/projects/rrg-gachon/vdemeyer/MASK/mask_CRCM6_grid_for_ERA5.nc')
-            ds = xr.open_mfdataset(filenames, combine='by_coords')
-        else:
-            ds = xr.open_mfdataset(filenames, combine='by_coords')
+        is_era5 = sim == 'ERA5'
+        mask = xr.open_dataarray('/home/vdemeyer/projects/rrg-gachon/vdemeyer/MASK/mask_CRCM6_grid_for_ERA5.nc') if is_era5 else None
+        
+        dim_spec = ("latitude", "longitude") if is_era5 else ("rlat", "rlon")
+        chunks = {dim: 128 for dim in dim_spec}
+        chunks["time"] = 720
+        
+        ds = xr.open_mfdataset(
+            filenames,
+            combine="nested",
+            concat_dim="time",
+            chunks=chunks,
+            data_vars="minimal",
+            coords="minimal",
+            compat="override",
+            parallel=True
+        )
+        ds = ds.sel(time=slice(f'{start_year}-01-01', f'{end_year}-12-31')).chunk(chunks)
 
-        ds = ds.sel(time=slice(f'{start_year}-01-01', f'{end_year}-12-31'))
-
-        # Rechunk après la sélection temporelle pour optimiser la mémoire
         if sim != 'ERA5':
-            ds = ds.chunk({'time': 655, 'rlat': 655, 'rlon': 655})
             if variable == 'PR':
                 ds[ds_variable] = ds[ds_variable] * 3600  # Convertir en mm/h
                 ds['time'] = ds['time'].dt.floor('h')
