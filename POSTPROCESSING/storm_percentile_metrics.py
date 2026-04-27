@@ -13,18 +13,43 @@ This script computes per-storm exceedance metrics above the 99th percentile
 for precipitation and wind, for a single year (iyear).
 
 For each storm present in the year, it computes:
-  - cum_excess_pr / cum_excess_wind: cumulative exceedance above the 99th percentile
-      (sum over land grid-point-hours where pr/wind > 99th percentile within 1000km of the storm)
-  - count_exceed_pr / count_exceed_wind: number of land grid-point-hours exceeding the threshold
+  - cum_excess_pr / cum_excess_wind: cumulative exceedance above the percentile
+      (sum over masked grid-point-hours where pr/wind > percentile within 1000km of the storm)
+  - count_exceed_pr / count_exceed_wind: number of masked grid-point-hours exceeding the threshold
 
 Storms crossing year boundaries (e.g. Dec 30 to Jan 12) will appear in BOTH years' outputs
 with partial cum/count values that can be summed in post-processing.
 Storms are attributed to grid points via the closest-storm assignment.
-Only grid points with land fraction > 0% (sftlf > 0) are included.
+
+The spatial mask is selectable via --mask:
+  - land  : CRCM6 land-sea mask (sftlf > 0) -- any cell with > 0% land.
+  - urban : DEGURBA-based populated-land mask -- any cell where
+            frac_L1_urban_cluster + frac_L1_urban_centre > 0
+            (i.e. any non-zero urban cluster or urban centre presence,
+             corresponds to DEGURBA Level-2 classes >= 21 combined).
+            The SAME E2025 SMOD mask is used for all simulations (both
+            historical and future) so that occurrence / cumul metrics are
+            not inflated in the future merely by urban expansion. The
+            E2025 mask is produced by degurba_regrid_to_crcm6.py
+            --epoch E2025.
+
+In addition, regardless of --mask choice, cells south of LAT_MIN_NORTH
+(default 30 N, geographic latitude) are discarded to avoid over-representing
+tropical / subtropical cyclones in the extratropical-storm statistics.
 
 Author: Dr Victorien De Meyer
 Year: 2026
 """
+
+# Minimum geographic latitude (deg N) kept by the spatial mask. Cells south of
+# this are discarded regardless of the land/urban choice, to avoid tropical /
+# subtropical cyclones contaminating the extratropical-storm statistics.
+LAT_MIN_NORTH = 30.0
+
+# CRCM6 reference file providing the 2D geographic latitude `lat(rlat, rlon)`.
+# Any CRCM6 sim works since they all share the same rotated-pole grid.
+CRCM6_REF_NC = '/home/vdemeyer/projects/rrg-gachon/vdemeyer/UBD/PR/pr_ubd_197909_se.nc'
+
 
 def braced_glob(path):
     l = []
@@ -32,7 +57,7 @@ def braced_glob(path):
         l.extend(glob(x))          
     return l
 
-def selection_percentile(sim, future_hist_sim, variable, wetdays=True, future=True):
+def selection_percentile(sim, future_hist_sim, variable, wetdays=True, future=False):
     """
     Return an xarray Dataset for the requested percentile file.
     Copied from EETCs_stat.py (without original_selection).
@@ -58,27 +83,84 @@ def selection_percentile(sim, future_hist_sim, variable, wetdays=True, future=Tr
     percentile = xr.open_dataset(file_path)
     return percentile
 
-def main(iyear, sim, wetdays, future):
+def load_spatial_mask(mask_kind, sim, future_hist_sim, base):
+    """
+    Load the 2D boolean mask (rlat, rlon) to apply before counting exceedances.
+
+    Parameters
+    ----------
+    mask_kind : {'land', 'urban'}
+        'land'  -> CRCM6 land-sea mask: True where sftlf > 0 (any land fraction).
+        'urban' -> DEGURBA-based populated-land mask: True where
+                   frac_L1_urban_cluster + frac_L1_urban_centre > 0.
+                   Picks E2025 for both historical and future sims.
+    sim, future_hist_sim, base : as in main().
+
+    Returns
+    -------
+    mask : np.ndarray of bool, shape (rlat, rlon)
+    mask_tag : str
+        Short tag used in the output filename to make the mask choice traceable
+        (e.g. 'landonly', 'urbanonly_DEGURBAE1995').
+    """
+    if mask_kind == 'land':
+        ds_lsm = xr.open_dataset(f'{base}/ALL/MASK/CRCM6_lsmsk.nc4')
+        mask = (ds_lsm.sftlf.squeeze() > 0).values
+        tag = 'landonly'
+    elif mask_kind == 'urban':
+        # Single, fixed E2025 urban mask for BOTH historical and future sims.
+        # Rationale: using different masks for hist (E1995) and fut (E2085) would
+        # inflate occurrence and cumul in the future just because the future
+        # urban footprint has more grid points. Holding the mask fixed isolates
+        # the climate-driven change from the urban-expansion signal.
+        mask_path = f'{base}/ALL/MASK/GHS_SMOD_E2025_GLOBE_R2023A_54009_1000_V2_0_CRCM6grid.nc'
+        print(f"Loading DEGURBA urban mask (E2025, fixed for all sims) from: {mask_path}")
+        ds = xr.open_dataset(mask_path)
+        pop_frac = ds['frac_L1_urban_cluster'] + ds['frac_L1_urban_centre']
+        mask = (pop_frac > 0).values
+        tag = 'urbanonly'
+    else:
+        raise ValueError(f"Unknown mask_kind: {mask_kind!r}")
+
+    print(f"{mask_kind} mask before lat filter: {int(mask.sum())} / {mask.size} cells "
+          f"({100*mask.sum()/mask.size:.2f}%)")
+
+    # Apply the >= LAT_MIN_NORTH latitude filter using the CRCM6 geographic lat.
+    lat2d = xr.open_dataset(CRCM6_REF_NC)['lat'].values
+    if lat2d.shape != mask.shape:
+        raise ValueError(f"lat2d shape {lat2d.shape} != mask shape {mask.shape}")
+    mask = mask & (lat2d > LAT_MIN_NORTH)
+    print(f"{mask_kind} mask after lat > {LAT_MIN_NORTH} deg filter: "
+          f"{int(mask.sum())} / {mask.size} cells "
+          f"({100*mask.sum()/mask.size:.2f}%)")
+    return mask, tag
+
+
+def main(iyear, sim, wetdays, future, quantile, mask_kind):
 
     base = '/home/vdemeyer/projects/rrg-gachon/vdemeyer'
 
     future_hist_sim = {'UBG': 'UBD', 'UBH': 'UBE', 'UBI': 'UBF'}
 
+    quantile_value = quantile / 100.0
+    quantile_tag = {99.0: '99', 99.9: '999'}[quantile]
+
     # Load percentile thresholds (once)
     percentile_pr = selection_percentile(sim, future_hist_sim, 'pr', wetdays=wetdays, future=future)
     percentile_wind = selection_percentile(sim, future_hist_sim, 'ws', wetdays=wetdays, future=future)
 
-    threshold_pr = percentile_pr.pr.sel(quantile=0.999)
-    threshold_wind = percentile_wind.surf_wind.sel(quantile=0.999)
+    # Use method='nearest' to avoid floating-point mismatches (e.g. 99.9/100 = 0.9990000000000001)
+    threshold_pr = percentile_pr.pr.sel(quantile=quantile_value, method='nearest')
+    threshold_wind = percentile_wind.surf_wind.sel(quantile=quantile_value, method='nearest')
 
-    # Load land-sea mask: only keep grid points with > 0% land
+    # Load the spatial mask. Both the land mask and the DEGURBA urban mask are
+    # only defined on the CRCM6 rotated-pole grid, so sim='ERA5' is not supported.
     if sim == 'ERA5':
         raise RuntimeError(
-            "No land mask is available for ERA5. Processing cannot continue for sim='ERA5'."
+            f"No '{mask_kind}' mask is available for ERA5. "
+            f"Processing cannot continue for sim='ERA5'."
         )
-    else:
-        ds_lsm = xr.open_dataset(f'{base}/LAND_SEA_MASK/CRCM6_lsmsk.nc4')
-        land_mask = (ds_lsm.sftlf.squeeze() > 0).values  # 2D boolean (rlat, rlon)
+    land_mask, mask_tag = load_spatial_mask(mask_kind, sim, future_hist_sim, base)
 
     # Accumulation dictionaries
     storm_cum_pr = {}
@@ -117,7 +199,7 @@ def main(iyear, sim, wetdays, future):
             ds_precip = ds_precip.sel(time=slice(f'{iyear}-{imonth}-01', f'{iyear}-{imonth}-{last_day}'))
             ds_precip = ds_precip.assign_coords({'longitude': (((ds_precip['longitude'] + 180) % 360) - 180)})
             ds_precip = ds_precip.sortby(ds_precip['longitude'])
-            mask = xr.open_dataarray('/home/vdemeyer/projects/rrg-gachon/vdemeyer/MASK/mask_CRCM6_grid_for_ERA5.nc')
+            mask = xr.open_dataarray('/home/vdemeyer/projects/rrg-gachon/vdemeyer/ALL/MASK/mask_CRCM6_grid_for_ERA5.nc')
             ds_precip = ds_precip.where(mask, drop=True)
             ds_precip = ds_precip.rename({'tp': 'pr'})
             ds_precip['pr'] = ds_precip.pr * 1000.
@@ -172,7 +254,7 @@ def main(iyear, sim, wetdays, future):
         ds_wind = ds_wind.compute()
 
         ### STORMS
-        id_file = f'{base}/{sim}/STORM_ID_1000KM/storm_id_{sim.lower()}_{iyear}{imonth}_1000km_1000hPa.nc'
+        id_file = f'{base}/{sim}/STORM_RELATED/ID_1000KM/storm_id_{sim.lower()}_{iyear}{imonth}_1000km_1000hPa.nc'
         ds_id = xr.open_dataset(id_file)
 
         # Compute exceedance above 99th percentile
@@ -232,22 +314,30 @@ def main(iyear, sim, wetdays, future):
     if future and sim in future_hist_sim:
         add_file += '_future_percentile'
 
-    output_dir = f'{base}/TRACKING/KATJA/OUTPUTS/{sim}/STORM_METRICS/'
+    # Filename carries the `mask_tag` (e.g. 'landonly' or 'urbanonly_DEGURBAE1995')
+    # so the mask choice -- and, for urban, the DEGURBA epoch -- is traceable.
+    output_dir = f'{base}/{sim}/STORM_RELATED/STORM_METRICS/'
     os.makedirs(output_dir, exist_ok=True)
-    output_file = f'{output_dir}/storm_exceed_999_metrics_landonly_{sim}_{iyear}{add_file}.pkl'
+    output_file = f'{output_dir}/storm_exceed_{quantile_tag}_metrics_{mask_tag}_{sim}_{iyear}{add_file}.pkl'
     df.to_pickle(output_file)
     print(f"\nSaved {len(df)} storms to {output_file}")
     print(df)
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Per-storm exceedance metrics above the 99th percentile')
+    parser = argparse.ArgumentParser(description='Per-storm exceedance metrics above a given percentile')
     parser.add_argument('iyear', type=int, help='The year for which to process')
     parser.add_argument('--sim', type=str, required=True, help='Name of the simulation')
+    parser.add_argument('--quantile', type=float, required=True, choices=[99.0, 99.9], help='Percentile threshold: 99 or 99.9')
     parser.add_argument('--wetdays', action='store_true', help='Use percentile calculated on wet days only for precipitation')
     parser.add_argument('--future', action='store_true', help='Use percentile calculated on future period for future simulations')
+    parser.add_argument('--mask', type=str, required=True, choices=['land', 'urban'],
+                        help="Spatial mask to apply before counting exceedances: "
+                             "'land' = CRCM6 sftlf>0, 'urban' = DEGURBA populated-land "
+                             "(urban cluster + urban centre fraction > 0).")
 
     args = parser.parse_args()
-    main(args.iyear, args.sim, args.wetdays, args.future)
+    main(args.iyear, args.sim, args.wetdays, args.future, args.quantile, args.mask)
 
-# run /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/storm_percentile_metrics.py 1985 --sim UBD --future
+# run /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/storm_percentile_metrics.py 1985 --sim UBD --quantile 99.9 --mask land
+# run /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/storm_percentile_metrics.py 1985 --sim UBD --quantile 99.9 --mask urban
