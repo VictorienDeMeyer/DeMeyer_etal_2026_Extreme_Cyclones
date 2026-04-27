@@ -54,7 +54,7 @@ def save_density(dens_abs, sim, season, for_coord, grid_lat, grid_lon, output_di
     
     ds = da.to_dataset()
     if sim == 'ERA5':
-        mask = xr.open_dataarray('/home/vdemeyer/projects/rrg-gachon/vdemeyer/MASK/mask_CRCM6_grid_for_ERA5.nc')
+        mask = xr.open_dataarray('/home/vdemeyer/projects/rrg-gachon/vdemeyer/ALL/MASK/mask_CRCM6_grid_for_ERA5.nc')
         ds = ds.where(mask, drop=True)
     output_path = output_dir / f"density_ETCs_center_{sim.lower()}_{season}.nc"
     ds.to_netcdf(output_path)
@@ -62,8 +62,8 @@ def save_density(dens_abs, sim, season, for_coord, grid_lat, grid_lon, output_di
 
 def main(sim, season):
     # 1. Chargement des données
-    from ETC_tools import open_files
-    tracks, _ = open_files(sim, period_filtering=True)
+    from ETC_tools import open_df
+    tracks = open_df(sim, period_filtering=True)
 
     coord_path = (
         '/home/vdemeyer/projects/rrg-gachon/vdemeyer/ERA5/PR_Percentile/pr_era5_percentile_1980-2014.nc'
@@ -111,7 +111,7 @@ def main(sim, season):
     dens_abs = (dens_tracks_m2 * 1e6) / n_months
     
     # 6. Sauvegarde
-    output_dir = Path(f"/project/rrg-gachon/vdemeyer/{sim}/DENSITY")
+    output_dir = Path(f"/project/rrg-gachon/vdemeyer/{sim}/STORM_RELATED/DENSITY")
     output_dir.mkdir(parents=True, exist_ok=True)
     save_density(dens_abs, sim, season, for_coord, grid_lat, grid_lon, output_dir)
 

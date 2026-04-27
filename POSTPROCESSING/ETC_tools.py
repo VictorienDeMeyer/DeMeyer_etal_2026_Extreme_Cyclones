@@ -3,28 +3,25 @@ import numpy as np
 import pickle
 import xarray as xr
 
-def open_files(sim, metric='diff', wetdays=False, future=True, original_selection=False, period_filtering=True):
+_FILE_PREFIX = '/home/vdemeyer/projects/rrg-gachon/vdemeyer/'
+
+
+def _valid_storms(df, sim):
+    storm_bounds = df.groupby('storm')['date'].agg(['min', 'max'])
+    if sim in ['UBG', 'UBH', 'UBI']:
+        return storm_bounds.query('min.dt.year >= 2063 and max.dt.year <= 2097').index
+    return storm_bounds.query('min.dt.year >= 1980 and max.dt.year <= 2014').index
+
+
+def open_df(sim, period_filtering=True):
     """
-    Open and load the necessary files based on the input parameters.
+    Load the storm tracking DataFrame.
 
     :param sim: Simulation name (e.g., 'UBB', 'ERA5').
-    :param metric: Metric type ('ratio' or 'diff').
-    :param wetdays: Boolean indicating if wetdays are considered for percentile calculation.
-    :param future: Boolean indicating if percentiles are calculated on future period.
-    :param original_selection: Boolean indicating if the original selection is used.
     :param period_filtering: Boolean indicating if we keep only storms within a 35 years frame.
-    :return: A tuple containing the DataFrame of storm data and the EETC dictionary.
+    :return: DataFrame of storm data.
     """
-    
-    if original_selection and (wetdays or future or metric=='ratio'):
-        raise ValueError("original_selection cannot be combined with wetdays, future or ratio metric")
-    if wetdays and future:
-        raise ValueError("wetdays and future cannot be combined")
-    
-    file_prefix = '/home/vdemeyer/projects/rrg-gachon/vdemeyer/TRACKING/KATJA/OUTPUTS/'
-        
-    # Load storm tracking data   
-    storm_data_file = f'{file_prefix}{sim}_psl_smooth_400km_12h_1000hPa.txt'
+    storm_data_file = f'{_FILE_PREFIX}{sim}/STORM_RELATED/TRACK/{sim}_psl_smooth_400km_24h_1000hPa.txt'
     df = pd.read_csv(
         storm_data_file,
         sep=r' ',
@@ -34,7 +31,29 @@ def open_files(sim, metric='diff', wetdays=False, future=True, original_selectio
     )
     df['date'] = pd.to_datetime(df['date'])
 
-    #Load EETC pickle file
+    if period_filtering:
+        df = df[df['storm'].isin(_valid_storms(df, sim))]
+
+    return df
+
+
+def open_eetc(sim, metric='diff', wetdays=False, future=True, original_selection=False, period_filtering=True):
+    """
+    Load the EETC pickle dictionary.
+
+    :param sim: Simulation name (e.g., 'UBB', 'ERA5').
+    :param metric: Metric type ('ratio' or 'diff').
+    :param wetdays: Boolean indicating if wetdays are considered for percentile calculation.
+    :param future: Boolean indicating if percentiles are calculated on future period.
+    :param original_selection: Boolean indicating if the original selection is used.
+    :param period_filtering: Boolean indicating if we keep only storms within a 35 years frame.
+    :return: EETC dictionary.
+    """
+    if original_selection and (wetdays or future or metric == 'ratio'):
+        raise ValueError("original_selection cannot be combined with wetdays, future or ratio metric")
+    if wetdays and future:
+        raise ValueError("wetdays and future cannot be combined")
+
     if sim in ['UBB', 'ERA5']:
         end_year = 2023
     elif sim in ['UBG', 'UBH']:
@@ -43,7 +62,7 @@ def open_files(sim, metric='diff', wetdays=False, future=True, original_selectio
         end_year = 2098
     else:
         end_year = 2014
-    
+
     add_file = ''
     if not original_selection:
         if wetdays:
@@ -53,31 +72,20 @@ def open_files(sim, metric='diff', wetdays=False, future=True, original_selectio
         add_file += f'_{metric}.pkl'
 
     eet_dict_file = (
-        f'{file_prefix}EETC/EETC_cum_{sim}_Quebec_1000hPa_1979-{end_year}_compound_8hrs_quantile_SSI{add_file}'
+        f'{_FILE_PREFIX}{sim}/STORM_RELATED/EETC/EETC_cum_{sim}_Quebec_1000hPa_1979-{end_year}_compound_8hrs_quantile_SSI{add_file}'
     )
 
     print(f"Loading data from: {eet_dict_file} with {period_filtering} period filtering")
-    
+
     with open(eet_dict_file, 'rb') as pickle_file:
         EETC_dict = pickle.load(pickle_file)
 
     if period_filtering:
-        # Filter storms so we only keep those within the desired time period of 35 years
-        storm_bounds = df.groupby('storm')['date'].agg(['min', 'max'])
-        if sim in ['UBG', 'UBH', 'UBI']:
-            # Conserver uniquement les storms dont la première date est >= 2058 et <= 2082
-            # valid_storms = storm_bounds.query('min.dt.year >= 2058 and max.dt.year <= 2082').index
-            valid_storms = storm_bounds.query('min.dt.year >= 2063 and max.dt.year <= 2097').index
-            df = df[df['storm'].isin(valid_storms)]
-            EETC_dict = {k: v for k, v in EETC_dict.items() if k in valid_storms}
-        else:
-            # Conserver uniquement les storms dont la première date est >= 1980 et <= 2004
-            # valid_storms = storm_bounds.query('min.dt.year >= 1980 and max.dt.year <= 2004').index
-            valid_storms = storm_bounds.query('min.dt.year >= 1980 and max.dt.year <= 2014').index
-            df = df[df['storm'].isin(valid_storms)]
-            EETC_dict = {k: v for k, v in EETC_dict.items() if k in valid_storms}
+        valid = _valid_storms(open_df(sim, period_filtering=False), sim)
+        EETC_dict = {k: v for k, v in EETC_dict.items() if k in valid}
 
-    return df, EETC_dict
+    return EETC_dict
+
 
 def normalize_EETC_dict(EETC_dict, quantile):
     """
@@ -132,7 +140,7 @@ def calculate_ranking(sim, quantile, future=True):
     :return: Sorted ranks for different metrics.
     """
 
-    _, EETC_dict = open_files(sim, future)
+    EETC_dict = open_eetc(sim, future=future)
     EETC_dict_norm = normalize_EETC_dict(EETC_dict, quantile)
 
     def compute_combined_scores(metric1, metric2):
@@ -142,8 +150,8 @@ def calculate_ranking(sim, quantile, future=True):
             for storm in metric1 if storm in metric2 and not (
                 metric1[storm].sel(quantile=quantile) == 0 and metric2[storm].sel(quantile=quantile) == 0
             )
-        }     
-    
+        }
+
     # Compute combined scores
     combined_scores = compute_combined_scores(
         {storm: EETC_dict_norm[storm]['cum_precip'] for storm in EETC_dict_norm},
@@ -166,9 +174,9 @@ def calculate_ranking(sim, quantile, future=True):
     sorted_EETC_cum_rank = sorted(combined_scores, key=combined_scores.get, reverse=True)
     sorted_EETC_cum_avg_rank = sorted(combined_avg_scores, key=combined_avg_scores.get, reverse=True)
     sorted_EETC_cum_SSI_rank = sorted(combined_SSI_scores, key=combined_SSI_scores.get, reverse=True)
-    sorted_EETC_cum_avg_SSI_rank = sorted(combined_SSI_avg_scores, key=combined_SSI_avg_scores.get, reverse=True)        
+    sorted_EETC_cum_avg_SSI_rank = sorted(combined_SSI_avg_scores, key=combined_SSI_avg_scores.get, reverse=True)
 
-    
+
     return (
         sorted_EETC_cum_rank,
         sorted_EETC_cum_avg_rank,

@@ -99,7 +99,7 @@ def main(year, sim, var, wetdays, future, original_selection, add_file):
 
     ### Chargement des données
     if sim == 'ERA5':
-        mask = xr.open_dataarray('/home/vdemeyer/projects/rrg-gachon/vdemeyer/MASK/mask_CRCM6_grid_for_ERA5.nc')
+        mask = xr.open_dataarray('/home/vdemeyer/projects/rrg-gachon/vdemeyer/ALL/MASK/mask_CRCM6_grid_for_ERA5.nc')
         if var == 'pr':
             input_dir = '/home/vdemeyer/projects/rrg-gachon/vdemeyer/ERA5/PR'
             filenames_var = sorted(glob(f'{input_dir}/{year}/*/*.nc4'))
@@ -133,7 +133,7 @@ def main(year, sim, var, wetdays, future, original_selection, add_file):
                 ds_var = ds_var.isel(time=slice(0, -1)) #There is one hour of data on 2100-12-31T00:00:00.000000000 that does not exist in the precipitation file
     ds_var = ds_var.chunk({var_lat: -1, var_lon: -1, 'time': 100})
         
-    filenames_ETCs = braced_glob(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/STORM_ID_1000KM/storm_id_{sim.lower()}_{year}*_1000km_1000hPa.nc')
+    filenames_ETCs = braced_glob(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/STORM_RELATED/ID_1000KM/storm_id_{sim.lower()}_{year}*_1000km_1000hPa.nc')
     ds_ETCs = xr.open_mfdataset(filenames_ETCs)
     ds_ETCs = ds_ETCs.chunk({var_lat: -1, var_lon: -1, 'time': 100})
 

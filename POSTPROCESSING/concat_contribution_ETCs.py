@@ -24,12 +24,12 @@ def load_and_merge_all_pkl(wetdays, future):
     variables = ['pr', 'ws']
     data = {}
     merged_all = {}
-    output_file = f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/CONTRIB/contribution_ETCs_1000hPa{add_file}.pkl'
+    output_file = f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/ALL/CONTRIB/contribution_ETCs_1000hPa{add_file}.pkl'
 
     for sim in simulations:
         for var in variables:
             add_file = build_add_file(sim, wetdays, future)
-            file_path = f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/CONTRIB/contribution_ETCs_1000hPa_{sim}_{var}{add_file}.pkl'
+            file_path = f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/ALL/CONTRIB/contribution_ETCs_1000hPa_{sim}_{var}{add_file}.pkl'
             with open(file_path, 'rb') as file:
                 data_key = f"{var}_{sim}"
                 data[data_key] = pickle.load(file)
@@ -146,7 +146,7 @@ def calcul_contribution(sim, variables, add_file):
                 'count_ext_EETCs_total': count_ext_EETCs_total.rename("count_ext_EETCs_total").compute(),
             }
             
-            output_file = f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/CONTRIB/contribution_ETCs_1000hPa_{sim}_{var}{add_file}.pkl'
+            output_file = f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/ALL/CONTRIB/contribution_ETCs_1000hPa_{sim}_{var}{add_file}.pkl'
             with open(output_file, 'wb') as f:
                 pickle.dump(data_to_save, f)
 

@@ -7,7 +7,7 @@ import os
 import argparse
 import gc
 import calendar
-from ETC_tools import open_files
+from ETC_tools import open_df
 
 """
 This script generates a NetCDF file of storm IDs within 1000 km of storm trajectories.
@@ -40,7 +40,7 @@ def haversine(lon1, lat1, lon2, lat2):
 
 def main(iyear, sim):
 
-    df, _ = open_files(sim, period_filtering=False)
+    df = open_df(sim, period_filtering=False)
     df = df[df['date'].dt.year == iyear]
 
     for imonth in [f"{month:02d}" for month in range(1, 13)]:
@@ -75,7 +75,7 @@ def main(iyear, sim):
             ds_ref = xr.open_dataset(filenames[0])
             ds_ref = ds_ref.assign_coords({'longitude': (((ds_ref['longitude'] + 180) % 360) - 180)})
             ds_ref = ds_ref.sortby(ds_ref['longitude'])
-            mask = xr.open_dataarray('/home/vdemeyer/projects/rrg-gachon/vdemeyer/MASK/mask_CRCM6_grid_for_ERA5.nc')
+            mask = xr.open_dataarray('/home/vdemeyer/projects/rrg-gachon/vdemeyer/ALL/MASK/mask_CRCM6_grid_for_ERA5.nc')
             ds_ref = ds_ref.where(mask, drop=True)
             lon_2d, lat_2d = np.meshgrid(ds_ref['longitude'].values, ds_ref['latitude'].values)
             spatial_dims = ['latitude', 'longitude']
@@ -143,7 +143,7 @@ def main(iyear, sim):
             ds_out["rotated_pole"] = rotated_pole
             ds_out.attrs.update(rotated_pole_attrs)
 
-        output_dir = f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/STORM_ID_1000KM/'
+        output_dir = f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/STORM_RELATED/ID_1000KM/'
         os.makedirs(output_dir, exist_ok=True)
         encoding = {'storm_id': {'zlib': True, 'complevel': 9, 'dtype': 'float32'}}
         ds_out.to_netcdf(f'{output_dir}/storm_id_{sim.lower()}_{iyear}{imonth}_1000km_1000hPa.nc', encoding=encoding)
