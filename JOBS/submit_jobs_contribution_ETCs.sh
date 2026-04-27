@@ -1,43 +1,41 @@
 #!/bin/bash
+#SBATCH --account=rrg-gachon
+#SBATCH --time=01:15:00
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=40G
+#SBATCH --array=0-559%100
+#SBATCH --job-name=contrib_ETCs
+#SBATCH --output=/home/vdemeyer/TRACKING/KATJA/JOBS/OUTPUTS/contrib_ETCs_%A_%a.out
 
-# sims=("ERA5" "UBB" "UBD" "UBE" "UBF" "UBG" "UBH" "UBI")
-sims=("ERA5" "UBB" "UBD" "UBE" "UBF" )
-vars=("pr" "ws")
+# 560 tasks total:
+#   8 sims x 2 vars x 35 years = 560
+#   ERA5/UBB/UBD/UBE/UBF: 1980-2014
+#   UBG/UBH/UBI: 2063-2097
 
-# Loop through each simulation
-for sim in "${sims[@]}"; do
+module load python/3.11 mpi4py/4.0.3 scipy-stack/2024a geos proj
+source /home/vdemeyer/py3/bin/activate
 
-  case "$sim" in
-    ERA5|UBB|UBD|UBE|UBF)
-      start_year=1980
-      end_year=2014
-      ;;
-
-    UBG|UBH|UBI)
-      start_year=2063
-      end_year=2097
-      ;;
-  esac
-
-  for var in "${vars[@]}"; do
-    for iyear in $(seq $start_year $end_year); do
-
-      sbatch --export=iyear=$iyear,sim=$sim,var=$var --job-name=${sim}_${iyear}_${var}_ETCs_contrib -o "/home/vdemeyer/TRACKING/KATJA/JOBS/OUTPUTS/${sim}_${iyear}_${var}_ETCs_contrib.out" /home/vdemeyer/TRACKING/KATJA/JOBS/contribution_ETCs.sh
-
+tasks=()
+for sim in ERA5 UBB UBD UBE UBF; do
+  for var in pr ws; do
+    for year in $(seq 1980 2014); do
+      tasks+=("$sim $var $year")
+    done
+  done
+done
+for sim in UBG UBH UBI; do
+  for var in pr ws; do
+    for year in $(seq 2063 2097); do
+      tasks+=("$sim $var $year")
     done
   done
 done
 
-# sims=("UBH")
-# vars=("ws")
-# single_year=2066  # Specify the year you want to submit
-# # Loop through each simulation
-# for sim in "${sims[@]}"; do
-#   # Submit a job for the specified year
-#   for var in "${vars[@]}"; do
-#     sbatch --export=iyear=$single_year,sim=$sim,var=$var --job-name=${sim}_${single_year}_${var}_ETCs_contrib -o "/home/vdemeyer/TRACKING/KATJA/JOBS/OUTPUTS/${sim}_${single_year}_${var}_ETCs_contrib.out" /home/vdemeyer/TRACKING/KATJA/JOBS/contribution_ETCs.sh
-#   done
-# done
+read sim var year <<< "${tasks[$SLURM_ARRAY_TASK_ID]}"
 
+echo "Array task $SLURM_ARRAY_TASK_ID : sim=$sim var=$var year=$year"
 
-# . /home/vdemeyer/TRACKING/KATJA/JOBS/submit_jobs_contribution_ETCs.sh
+python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/contribution_ETCs.py "$year" --sim "$sim" --var "$var"
+
+# Submit: sbatch /home/vdemeyer/TRACKING/KATJA/JOBS/submit_jobs_contribution_ETCs.sh
+# Resubmit a subset: sbatch --array=12,45,67 /home/vdemeyer/TRACKING/KATJA/JOBS/submit_jobs_contribution_ETCs.sh

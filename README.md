@@ -20,16 +20,20 @@ The project steps are divided as follows:
 - Launching the tracking of extratropical cyclones by decade (`/JOBS/make_tracks_ERA5.sh` or `/JOBS/make_tracks_CRCM6.sh` depending on the input data).
 
 ### Post-processing
-- Connecting extratropical cyclones from each file into a single text file covering the entire period (`/POSTPROCESSING/Connect_ETC.py`).
+- Connecting extratropical cyclones from each file into a single text file covering the entire period (`/POSTPROCESSING/connect_ETCs.py`).
 - Calculation of extratropical cyclones track density (`/POSTPROCESSING/calculate_kde.py`).
 - Merging all track density files into a single NetCDF file (`/POSTPROCESSING/merge_density_all_sims_seasons.ipynb`).
-- Calculation of metrics for each extratropical cyclone year by year (`/POSTPROCESSING/EETCs_stat.py`).
-- Merging all yearly pickle files into a single pickle file covering the entire period (`/POSTPROCESSING/append_pickle_EETCs_stat.ipynb`).
-- Selection of the extratropical cyclones in order to run 2.5km simulations from CRCM6-GEM5 (`/POSTPROCESSING/EETCs_selection_for_2p5_sim.py`).
 - Creation of NetCDF masks within a 1000 km radius around each extratropical cyclone (`/POSTPROCESSING/ETCs_1000km.py`).
+- Calculation of extreme metrics associated to individual extratropical cyclones (`/POSTPROCESSING/storm_percentile_metrics.py`).
+- Merging all individual files of extreme metrics of individual extratropical cyclones in a single pickle file (`/POSTPROCESSING/aggregate_storm_percentile_metrics.py`).
 - Calculation of the contribution of precipitation and surface wind associated with extratropical cyclones year by year (`/POSTPROCESSING/contribution_ETCs.py`).
 - Calculation of extratropical cyclones contribution over the entire period and concatenation in a single pickle file (`/POSTPROCESSING/concat_contributions_ETCs.py`).
 - Regridding of each DataArray within the single pickle file over the ERA5 grid (`/POSTPROCESSING/regrid_over_ERA5_grid.ipynb`).
+
+### Supplementary: Selection of storms for the ARRIME project
+- Calculation of metrics for each extratropical cyclone year by year (`/POSTPROCESSING/ARRIME/EETCs_stat.py`).
+- Merging all yearly pickle files into a single pickle file covering the entire period (`/POSTPROCESSING/ARRIME/append_pickle_EETCs_stat.ipynb`).
+- Selection of the extratropical cyclones in order to run 2.5km simulations from CRCM6-GEM5 (`/POSTPROCESSING/ARRIME/EETCs_selection_for_2p5_sim.py`).
 
 ### Plotting
 Numerous scripts are available at ./PLOT to plot the distribution of extreme extratropical cyclones according to the metric, contribution maps of extratropical cyclones, cyclone density, exceedance maps of different variables for certain extratropical cyclones, etc.
