@@ -24,8 +24,9 @@ The project steps are divided as follows:
 - Calculation of extratropical cyclones track density (`/POSTPROCESSING/calculate_kde.py`).
 - Merging all track density files into a single NetCDF file (`/POSTPROCESSING/merge_density_all_sims_seasons.ipynb`).
 - Creation of NetCDF masks within a 1000 km radius around each extratropical cyclone (`/POSTPROCESSING/ETCs_1000km.py`).
-- Calculation of extreme metrics associated to individual extratropical cyclones (`/POSTPROCESSING/storm_percentile_metrics.py`).
-- Merging all individual files of extreme metrics of individual extratropical cyclones in a single pickle file (`/POSTPROCESSING/aggregate_storm_percentile_metrics.py`).
+- Regridding of the GHS-SMOD DEGURBA raster onto the CRCM6 rotated-pole grid to produce per-class fraction-of-coverage fields used as the urban mask (`/POSTPROCESSING/degurba_regrid_to_crcm6.py`).
+- Calculation of extreme metrics associated to individual extratropical cyclones over urban areas (`/POSTPROCESSING/storm_percentile_metrics.py`).
+- Merging all individual files of extreme metrics of individual extratropical cyclones over urban areas in a single pickle file (`/POSTPROCESSING/aggregate_storm_percentile_metrics.ipynb`).
 - Calculation of the contribution of precipitation and surface wind associated with extratropical cyclones year by year (`/POSTPROCESSING/contribution_ETCs.py`).
 - Calculation of extratropical cyclones contribution over the entire period and concatenation in a single pickle file (`/POSTPROCESSING/concat_contributions_ETCs.py`).
 - Regridding of each DataArray within the single pickle file over the ERA5 grid (`/POSTPROCESSING/regrid_over_ERA5_grid.ipynb`).
