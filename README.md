@@ -17,7 +17,7 @@ The project steps are divided as follows:
 <!-- - For CRCM6 only: combine the smoothed mean sea level pressure yearly NetCDF files into decadal files (`slice_decade_preprocess.py`). -->
 
 ### Tracking
-- Launching the tracking of extratropical cyclones by decade (`/JOBS/make_tracks_ERA5.sh` or `/JOBS/make_tracks_CRCM6.sh` depending on the input data).
+- Running the tracking of extratropical cyclones year by year (`/JOBS/make_tracks_ERA5.sh` or `/JOBS/make_tracks_CRCM6.sh` depending on the input data).
 
 ### Post-processing
 - Connecting extratropical cyclones from each file into a single text file covering the entire period (`/POSTPROCESSING/connect_ETCs.py`).
