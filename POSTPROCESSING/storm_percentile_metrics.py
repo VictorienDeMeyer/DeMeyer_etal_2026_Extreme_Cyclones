@@ -36,6 +36,14 @@ The spatial mask is selectable via --mask:
 In addition, regardless of --mask choice, cells south of LAT_MIN_NORTH
 (default 30 N, geographic latitude) are discarded to avoid over-representing
 tropical / subtropical cyclones in the extratropical-storm statistics.
+This latitude filter is only applied when no --region is selected; when
+a region is given, its lat/lon bounding box supersedes it.
+
+An optional --region argument further restricts the spatial mask to a
+predefined geographic bounding box. Currently supported:
+  - NNA : Northeastern North America (lon in [-90, -66], lat in [38, 48]).
+The region is composed with the --mask choice (land or urban), so e.g.
+--mask land --region NNA keeps only land cells within the NNA box.
 
 Author: Dr Victorien De Meyer
 Year: 2026
@@ -49,6 +57,14 @@ LAT_MIN_NORTH = 30.0
 # CRCM6 reference file providing the 2D geographic latitude `lat(rlat, rlon)`.
 # Any CRCM6 sim works since they all share the same rotated-pole grid.
 CRCM6_REF_NC = '/home/vdemeyer/projects/rrg-gachon/vdemeyer/UBD/PR/pr_ubd_197909_se.nc'
+
+# Predefined region bounding boxes (west_lon, east_lon, south_lat, north_lat),
+# in geographic degrees. Add new regions here to make them available via --region.
+REGION_BOXES = {
+    'NNA' : {'west_lon': -90.0, 'east_lon': -66.0, 'south_lat': 38.0, 'north_lat': 48.0},
+    'QC'  : {'west_lon': -80.0, 'east_lon': -66.0, 'south_lat': 44.0, 'north_lat': 55.0},
+    'NNA2': {'west_lon': -90.0, 'east_lon': -60.0, 'south_lat': 40.0, 'north_lat': 50.0},
+}
 
 
 def braced_glob(path):
@@ -83,7 +99,7 @@ def selection_percentile(sim, future_hist_sim, variable, wetdays=True, future=Fa
     percentile = xr.open_dataset(file_path)
     return percentile
 
-def load_spatial_mask(mask_kind, sim, future_hist_sim, base):
+def load_spatial_mask(mask_kind, sim, future_hist_sim, base, region=None):
     """
     Load the 2D boolean mask (rlat, rlon) to apply before counting exceedances.
 
@@ -122,21 +138,40 @@ def load_spatial_mask(mask_kind, sim, future_hist_sim, base):
     else:
         raise ValueError(f"Unknown mask_kind: {mask_kind!r}")
 
-    print(f"{mask_kind} mask before lat filter: {int(mask.sum())} / {mask.size} cells "
+    print(f"{mask_kind} mask before lat/region filter: {int(mask.sum())} / {mask.size} cells "
           f"({100*mask.sum()/mask.size:.2f}%)")
 
-    # Apply the >= LAT_MIN_NORTH latitude filter using the CRCM6 geographic lat.
-    lat2d = xr.open_dataset(CRCM6_REF_NC)['lat'].values
+    ref = xr.open_dataset(CRCM6_REF_NC)
+    lat2d = ref['lat'].values
     if lat2d.shape != mask.shape:
         raise ValueError(f"lat2d shape {lat2d.shape} != mask shape {mask.shape}")
-    mask = mask & (lat2d > LAT_MIN_NORTH)
-    print(f"{mask_kind} mask after lat > {LAT_MIN_NORTH} deg filter: "
-          f"{int(mask.sum())} / {mask.size} cells "
-          f"({100*mask.sum()/mask.size:.2f}%)")
+
+    if region is None:
+        # No region selected: apply the >= LAT_MIN_NORTH latitude filter.
+        mask = mask & (lat2d > LAT_MIN_NORTH)
+        print(f"{mask_kind} mask after lat > {LAT_MIN_NORTH} deg filter: "
+              f"{int(mask.sum())} / {mask.size} cells "
+              f"({100*mask.sum()/mask.size:.2f}%)")
+    else:
+        # Region selected: its bounding box supersedes the LAT_MIN_NORTH filter.
+        box = REGION_BOXES[region]
+        lon2d = ref['lon'].values
+        if lon2d.shape != mask.shape:
+            raise ValueError(f"lon2d shape {lon2d.shape} != mask shape {mask.shape}")
+        region_mask = (
+            (lon2d >= box['west_lon']) & (lon2d <= box['east_lon']) &
+            (lat2d >= box['south_lat']) & (lat2d <= box['north_lat'])
+        )
+        mask = mask & region_mask
+        print(f"{mask_kind} mask after region {region} box "
+              f"(lon [{box['west_lon']}, {box['east_lon']}], "
+              f"lat [{box['south_lat']}, {box['north_lat']}]): "
+              f"{int(mask.sum())} / {mask.size} cells "
+              f"({100*mask.sum()/mask.size:.2f}%)")
     return mask, tag
 
 
-def main(iyear, sim, wetdays, future, quantile, mask_kind):
+def main(iyear, sim, wetdays, future, quantile, mask_kind, region):
 
     base = '/home/vdemeyer/projects/rrg-gachon/vdemeyer'
 
@@ -160,7 +195,8 @@ def main(iyear, sim, wetdays, future, quantile, mask_kind):
             f"No '{mask_kind}' mask is available for ERA5. "
             f"Processing cannot continue for sim='ERA5'."
         )
-    land_mask, mask_tag = load_spatial_mask(mask_kind, sim, future_hist_sim, base)
+    land_mask, mask_tag = load_spatial_mask(mask_kind, sim, future_hist_sim, base, region=region)
+    region_tag = f'_{region}' if region is not None else ''
 
     # Accumulation dictionaries
     storm_cum_pr = {}
@@ -318,7 +354,7 @@ def main(iyear, sim, wetdays, future, quantile, mask_kind):
     # so the mask choice -- and, for urban, the DEGURBA epoch -- is traceable.
     output_dir = f'{base}/{sim}/STORM_RELATED/STORM_METRICS/'
     os.makedirs(output_dir, exist_ok=True)
-    output_file = f'{output_dir}/storm_exceed_{quantile_tag}_metrics_{mask_tag}_{sim}_{iyear}{add_file}.pkl'
+    output_file = f'{output_dir}/storm_exceed_{quantile_tag}_metrics_{mask_tag}{region_tag}_{sim}_{iyear}{add_file}.pkl'
     df.to_pickle(output_file)
     print(f"\nSaved {len(df)} storms to {output_file}")
     print(df)
@@ -335,9 +371,14 @@ if __name__ == "__main__":
                         help="Spatial mask to apply before counting exceedances: "
                              "'land' = CRCM6 sftlf>0, 'urban' = DEGURBA populated-land "
                              "(urban cluster + urban centre fraction > 0).")
+    parser.add_argument('--region', type=str, default=None, choices=list(REGION_BOXES.keys()),
+                        help="Optional predefined region bounding box to further "
+                             "restrict the spatial mask. When set, supersedes the "
+                             f"LAT_MIN_NORTH={LAT_MIN_NORTH} filter. Currently: "
+                             f"{list(REGION_BOXES.keys())}.")
 
     args = parser.parse_args()
-    main(args.iyear, args.sim, args.wetdays, args.future, args.quantile, args.mask)
+    main(args.iyear, args.sim, args.wetdays, args.future, args.quantile, args.mask, args.region)
 
-# run /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/storm_percentile_metrics.py 1985 --sim UBD --quantile 99.9 --mask land
+# run /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/storm_percentile_metrics.py 1985 --sim UBD --quantile 99.9 --mask land --region NNA
 # run /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/storm_percentile_metrics.py 1985 --sim UBD --quantile 99.9 --mask urban
