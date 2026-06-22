@@ -31,14 +31,14 @@ for sim in simulations:
         for year in range(1979, 2015):
             df = pd.read_csv(
             f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/TRACKING/KATJA/OUTPUTS/{hist_sim}_psl_smoothed_400km_12h_1000hPa_{year}_1month.txt',
-            sep=r'\s+', header=14, engine='python',
+            sep=r'\\s+', header=14, engine='python',
             names=['storm','point','i','j','date','lat','lon','pressure']
             )
         # hist_periods = ['1979-1979', '1980-1989', '1990-1999', '2000-2009', '2010-2014']
         # for period in hist_periods:
         #     df = pd.read_csv(
         #     f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/TRACKING/KATJA/OUTPUTS/{hist_sim}_psl_smoothed_400km_12h_1000hPa_{period}_1month.txt',
-        #     sep=r'\s+', header=14, engine='python',
+        #     sep=r'\\s+', header=14, engine='python',
         #     names=['storm','point','i','j','date','lat','lon','pressure']
         #     )
             df['date'] = pd.to_datetime(df['date'].astype(str), format='%Y%m%d%H', errors='coerce')
@@ -47,7 +47,7 @@ for sim in simulations:
     for year in range(start_year, end_year + 1):
         df = pd.read_csv(
         f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/TRACKING/KATJA/OUTPUTS/{sim}_psl_smoothed_400km_12h_1000hPa_{year}_1month.txt',
-        sep=r'\s+', header=14, engine='python',
+        sep=r'\\s+', header=14, engine='python',
         names=['storm','point','i','j','date','lat','lon','pressure']
         )
         df['date'] = pd.to_datetime(df['date'].astype(str), format='%Y%m%d%H', errors='coerce')

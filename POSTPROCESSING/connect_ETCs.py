@@ -20,7 +20,7 @@ for sim in simulations:
     for year in range(start_year, end_year + 1):
         df = pd.read_csv(
         f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/STORM_RELATED/TRACK/{sim}_psl_smoothed_400km_24h_1000hPa_{year}_1month.txt',
-        sep=r'\s+', header=14, engine='python',
+        sep=r'\\s+', header=14, engine='python',
         names=['storm','point','i','j','date','lat','lon','pressure']
         )
         df['date'] = pd.to_datetime(df['date'].astype(str), format='%Y%m%d%H', errors='coerce')
