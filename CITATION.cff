@@ -1,0 +1,61 @@
+cff-version: 1.2.0
+title: >-
+  DeMeyer_etal_2026_Extreme_Cyclones: analysis code for
+  extratropical-cyclone-associated precipitation and near-surface
+  wind extremes over North America
+message: >-
+  If you use this software, please cite both the software itself
+  and the associated journal article.
+type: software
+abstract: >-
+  Python analysis code accumulating precipitation and near-surface
+  wind exceedances above the 99th all-hour percentile within 1000 km
+  of extratropical cyclone centres over North America, decomposed
+  into exceedance frequency and mean intensity. Applied to hourly
+  ERA5 and CRCM6-GEM5 output over a 35-year period.
+
+authors:
+  # TODO: verify the spelling of your family name ("De Meyer" vs "DeMeyer")
+  #       and add your ORCID; add every co-author, in manuscript order.
+  - family-names: "De Meyer"
+    given-names: "Victorien"
+    orcid: "https://orcid.org/0000-0001-6566-2716"
+    affiliation: >-
+      Centre pour l'Étude et la Simulation du Climat à l'Échelle Régionale
+      (ESCER), Université du Québec à Montréal, Montréal, Québec, Canada
+  # - family-names: "COAUTHOR-FAMILY-NAME"
+  #   given-names: "COAUTHOR-GIVEN-NAME"
+  #   orcid: "https://orcid.org/0000-0000-0000-0000"
+  #   affiliation: "AFFILIATION"
+
+version: "1.0.0"
+date-released: "2026-08-13"
+license: MIT
+repository-code: "https://github.com/VictorienDeMeyer/DeMeyer_etal_2026_Extreme_Cyclones"
+# Add the Zenodo version DOI here after the first GitHub release:
+# doi: "10.5281/zenodo.XXXXXXX"
+
+keywords:
+  - extratropical cyclones
+  - extreme precipitation
+  - wind extremes
+  - regional climate modelling
+  - CRCM6-GEM5
+  - ERA5
+  - North America
+
+# GitHub displays this article citation in the "Cite this repository" box.
+# Fill in the journal, volume, pages and DOI once accepted; delete this
+# whole block if you would rather have readers cite the software directly.
+preferred-citation:
+  type: article
+  title: "FUTURE PROJECTIONS OF EXTREME WIND AND PRECIPITATION ASSOCIATED WITH EXTRATROPICAL CYCLONES OVER NORTH AMERICA USING REGIONAL CLIMATE SIMULATIONS"
+  authors:
+    - family-names: "De Meyer"
+      given-names: "Victorien"
+      orcid: "https://orcid.org/0000-0001-6566-2716"
+    # - family-names: "COAUTHOR-FAMILY-NAME"
+    #   given-names: "COAUTHOR-GIVEN-NAME"
+  journal: "WEATHER AND CLIMATE DYNAMICS"
+  year: 2026
+  doi: "10.XXXX/XXXXXX"
