@@ -87,6 +87,11 @@ def main(sim):
     print(table)
     print('\nSame, in % of each row')
     print(pct.round(1))
+    # With tc_filter='phase', the TC and TRANSITION time steps are removed and the ETC ones kept
+    excluded_ts = table.loc['TS', ['TC', 'TRANSITION']].sum() / max(table.loc['TS'].sum(), 1) * 100
+    kept_et = table.loc['ET', 'ETC'] / max(table.loc['ET'].sum(), 1) * 100
+    print(f'\nIBTrACS tropical (TS) points excluded by the phase filter (TC + TRANSITION): {excluded_ts:.1f}%')
+    print(f'IBTrACS extratropical (ET) points kept by the phase filter (ETC)           : {kept_et:.1f}%')
 
     # Storm-level evaluation
     ts_sids = set(m.loc[m['NATURE'] == 'TS', 'SID'])
