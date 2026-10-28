@@ -66,54 +66,102 @@ def map_axes(fig, position):
 # ----------------------------------------------------------------------------------------
 
 def find_storm(storms, name, year):
+    """Tracked storm id and IBTrACS SID of a named storm (validation_ibtracs_storms_*.csv)."""
     sel = storms[storms['name'].fillna('').str.contains(name) & (pd.to_datetime(storms['start']).dt.year == year)]
     if sel.empty:
         raise ValueError(f'{name} {year} not found among the tracked storms paired with IBTrACS')
-    return int(sel.index[0])
+    return int(sel.index[0]), sel['sid'].iloc[0].split(',')[0]
 
 
-def plot_cps(track, examples, name='fig_ERA5_cps_examples.png'):
+# Names of the quadrants of the phase space (Hart 2003)
+QUADRANTS = {
+    'B': {(1, 0): 'Symmetric warm core\n(tropical)', (1, 1): 'Asymmetric warm core\n(hybrid, transition)',
+          (0, 1): 'Asymmetric cold core\n(frontal extratropical)', (0, 0): 'Symmetric cold core\n(occluded extratropical)'},
+    'minus_VTU': {(1, 1): 'Deep warm core\n(tropical)', (1, 0): 'Shallow warm core\n(warm seclusion)',
+                  (0, 0): 'Deep cold core\n(extratropical)'},
+}
+
+
+def plot_cps(track, examples, ibtracs=None, name='fig_ERA5_cps_examples.png'):
     """
+    Track and cyclone phase space trajectory of named storms.
+
     :param track: phase DataFrame (classify_cyclone_phase.py output).
-    :param examples: list of (title, storm id).
+    :param examples: list of (title, tracked storm id, IBTrACS SID or None).
+    :param ibtracs: IBTrACS DataFrame (validate_phase_ibtracs.load_ibtracs) to draw the best track
+        and the time from which IBTrACS considers the storm extratropical.
     """
-    fig = plt.figure(figsize=(11, 3.4 * len(examples)))
-    for row, (title, storm) in enumerate(examples):
+    fig = plt.figure(figsize=(15, 4.6 * len(examples)))
+    for row, (title, storm, sid) in enumerate(examples):
         g = track[track['storm'] == storm].sort_values('date')
         g6 = g[g['date'].dt.hour % 6 == 0]
+        dated = g6[(g6['date'].dt.hour == 0) & (g6['date'].dt.day % 2 == 1)]   # date labels every 2 days
+        best = ibtracs[ibtracs['SID'] == sid].sort_values('date') if ibtracs is not None and sid else None
+        et_time = None
+        if best is not None and (best['NATURE'] == 'ET').any():
+            et_time = best.loc[best['NATURE'] == 'ET', 'date'].iloc[0]
+            # Our point closest in time to the IBTrACS extratropical declaration
+            et_point = g6.iloc[int(np.argmin(np.abs((g6['date'] - et_time).dt.total_seconds().values)))]
 
+        # Map
         ax = map_axes(fig, (len(examples), 3, 3 * row + 1))
-        ax.plot(g['lon'], g['lat'], color='0.7', linewidth=1, transform=ccrs.PlateCarree())
+        if best is not None:
+            ax.plot(best['LON'], best['LAT'], color='k', linewidth=1, linestyle='--', marker='.', markersize=3,
+                    transform=ccrs.PlateCarree(), zorder=2)
+        ax.plot(g['lon'], g['lat'], color='0.7', linewidth=1, transform=ccrs.PlateCarree(), zorder=2)
         for phase, color in PHASE_COLORS.items():
             p = g6[g6['phase'] == phase]
-            ax.scatter(p['lon'], p['lat'], s=14, color=color, edgecolor='white', linewidth=0.4,
-                       transform=ccrs.PlateCarree(), label=PHASE_LABELS[phase], zorder=3)
-        pad = 8.
-        ax.set_extent([g['lon'].min() - pad, g['lon'].max() + pad, g['lat'].min() - pad / 2, g['lat'].max() + pad / 2],
-                      crs=ccrs.PlateCarree())
+            ax.scatter(p['lon'], p['lat'], s=16, color=color, edgecolor='white', linewidth=0.4,
+                       transform=ccrs.PlateCarree(), zorder=3)
+        if et_time is not None:
+            e = best[best['date'] == et_time].iloc[0]
+            ax.scatter(e['LON'], e['LAT'], marker='*', s=140, color='k', transform=ccrs.PlateCarree(), zorder=4)
+        for _, d in dated.iterrows():
+            ax.annotate(d['date'].strftime('%d %b'), xy=(d['lon'], d['lat']), xycoords=ccrs.PlateCarree()._as_mpl_transform(ax),
+                        xytext=(5, 0), textcoords='offset points', fontsize=7, color='0.25', va='center')
+        lon_all = pd.concat([g['lon'], best['LON']]) if best is not None else g['lon']
+        lat_all = pd.concat([g['lat'], best['LAT']]) if best is not None else g['lat']
+        ax.set_extent([lon_all.min() - 8, lon_all.max() + 8, lat_all.min() - 4, lat_all.max() + 4], crs=ccrs.PlateCarree())
         ax.set_title(f'{title}: track', loc='left')
 
-        for col, (x, y, xlabel, ylabel, xline, yline) in enumerate([
-                ('minus_VTL', 'B', r'$-V_T^L$ (900-600 hPa)', 'B (m)', 0., B_CRIT),
-                ('minus_VTL', 'minus_VTU', r'$-V_T^L$ (900-600 hPa)', r'$-V_T^U$ (600-300 hPa)', 0., 0.)]):
+        # Phase space
+        for col, (y, ylabel, yline) in enumerate([('B', 'B, thermal asymmetry (m)', B_CRIT),
+                                                  ('minus_VTU', r'$-V_T^U$, 600-300 hPa thermal wind (m)', 0.)]):
             ax = fig.add_subplot(len(examples), 3, 3 * row + 2 + col)
-            ax.axvline(xline, color='0.6', linewidth=0.8)
+            x = 'minus_VTL'
+            xmax = 1.15 * np.nanmax(np.abs(g6[x]))
+            if y == 'B':
+                ylim = (min(-10., 1.15 * np.nanmin(g6[y])), max(40., 1.4 * np.nanmax(g6[y])))
+            else:
+                ymax = 1.15 * np.nanmax(np.abs(g6[y]))
+                ylim = (-ymax, 1.45 * ymax)   # headroom for the quadrant names
+            ax.set_xlim(-xmax, xmax)
+            ax.set_ylim(*ylim)
+            ax.axvline(0., color='0.6', linewidth=0.8)
             ax.axhline(yline, color='0.6', linewidth=0.8)
+            for (right, top), text in QUADRANTS[y].items():
+                ax.text(0.97 if right else 0.03, 0.97 if top else 0.03, text, transform=ax.transAxes,
+                        ha='right' if right else 'left', va='top' if top else 'bottom', fontsize=7.5,
+                        color='0.45', style='italic')
             ax.plot(g6[x], g6[y], color='0.75', linewidth=1, zorder=1)
             for phase, color in PHASE_COLORS.items():
                 p = g6[g6['phase'] == phase]
-                ax.scatter(p[x], p[y], s=18, color=color, edgecolor='white', linewidth=0.4, zorder=2)
-            ax.annotate('start', (g6[x].iloc[0], g6[y].iloc[0]), xytext=(4, 4), textcoords='offset points',
-                        fontsize=7, color='0.3')
-            ax.annotate('end', (g6[x].iloc[-1], g6[y].iloc[-1]), xytext=(4, 4), textcoords='offset points',
-                        fontsize=7, color='0.3')
-            ax.set_xlabel(xlabel)
+                ax.scatter(p[x], p[y], s=20, color=color, edgecolor='white', linewidth=0.4, zorder=2)
+            if et_time is not None:
+                ax.scatter(et_point[x], et_point[y], marker='*', s=140, color='k', zorder=3)
+            for _, d in dated.iterrows():
+                ax.annotate(d['date'].strftime('%d %b'), (d[x], d[y]), xytext=(5, 3), textcoords='offset points',
+                            fontsize=7, color='0.25')
+            ax.set_xlabel(r'$-V_T^L$, 900-600 hPa thermal wind (m)')
             ax.set_ylabel(ylabel)
             ax.set_title(f'{title}: ' + ('thermal symmetry' if col == 0 else 'thermal wind'), loc='left')
-            if row == 0 and col == 0:
-                handles = [plt.Line2D([], [], marker='o', linestyle='', color=c, label=PHASE_LABELS[p])
-                           for p, c in PHASE_COLORS.items()]
-                ax.legend(handles=handles, loc='upper left', fontsize=7, frameon=False)
+
+    handles = [plt.Line2D([], [], marker='o', linestyle='', color=c, label=f'ERA5 track, {PHASE_LABELS[p].lower()}')
+               for p, c in PHASE_COLORS.items()]
+    handles += [plt.Line2D([], [], color='k', linestyle='--', marker='.', label='IBTrACS best track'),
+                plt.Line2D([], [], marker='*', linestyle='', markersize=10, color='k',
+                           label='IBTrACS: extratropical from this time')]
+    fig.legend(handles=handles, loc='lower center', ncol=5, frameon=False, bbox_to_anchor=(0.5, -0.04))
     fig.tight_layout()
     save(fig, name)
 
@@ -239,8 +287,9 @@ if __name__ == '__main__':
     if args.fig == 'cps':
         track = open_df(args.sim, period_filtering=True, tc_filter='phase', keep_non_etc=True)
         storms = pd.read_csv(f'{BASE}/{args.sim}/STORM_RELATED/CPS/validation_ibtracs_storms_{args.sim}.csv', index_col=0)
-        examples = [(f'{n.title()} {y}', find_storm(storms, n, y)) for n, y in [('SANDY', 2012), ('IGOR', 2010)]]
-        plot_cps(track, examples, name=f'fig_{args.sim}_cps_examples.png')
+        from validate_phase_ibtracs import load_ibtracs
+        examples = [(f'{n.title()} {y} ({args.sim})', *find_storm(storms, n, y)) for n, y in [('SANDY', 2012), ('IGOR', 2010)]]
+        plot_cps(track, examples, ibtracs=load_ibtracs(range(1980, 2015)), name=f'fig_{args.sim}_cps_examples.png')
     elif args.fig == 'validation':
         plot_validation(args.sim)
     elif args.fig == 'ee':
