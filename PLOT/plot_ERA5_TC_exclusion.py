@@ -94,8 +94,6 @@ def plot_cps(track, examples, name='fig_ERA5_cps_examples.png'):
         ax.set_extent([g['lon'].min() - pad, g['lon'].max() + pad, g['lat'].min() - pad / 2, g['lat'].max() + pad / 2],
                       crs=ccrs.PlateCarree())
         ax.set_title(f'{title}: track', loc='left')
-        if row == 0:
-            ax.legend(loc='lower right', fontsize=7, frameon=False)
 
         for col, (x, y, xlabel, ylabel, xline, yline) in enumerate([
                 ('minus_VTL', 'B', r'$-V_T^L$ (900-600 hPa)', 'B (m)', 0., B_CRIT),
@@ -114,6 +112,10 @@ def plot_cps(track, examples, name='fig_ERA5_cps_examples.png'):
             ax.set_xlabel(xlabel)
             ax.set_ylabel(ylabel)
             ax.set_title(f'{title}: ' + ('thermal symmetry' if col == 0 else 'thermal wind'), loc='left')
+            if row == 0 and col == 0:
+                handles = [plt.Line2D([], [], marker='o', linestyle='', color=c, label=PHASE_LABELS[p])
+                           for p, c in PHASE_COLORS.items()]
+                ax.legend(handles=handles, loc='upper left', fontsize=7, frameon=False)
     fig.tight_layout()
     save(fig, name)
 
