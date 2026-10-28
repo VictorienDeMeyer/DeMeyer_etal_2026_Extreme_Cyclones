@@ -9,7 +9,7 @@ REPO=/home/vdemeyer/TRACKING/KATJA
 ZG=/home/vdemeyer/projects/rrg-gachon/vdemeyer/ERA5/ZG
 BRANCH=feature/tc-phase-classification
 
-while pgrep -u "$USER" -f download_ERA5_geopotential.py > /dev/null; do
+while pgrep -u "$USER" -f "^python download_ERA5_geopotential.py" > /dev/null; do
   sleep 600
 done
 
