@@ -11,6 +11,6 @@
 module load python/3.11 mpi4py/4.0.3 esmf scipy-stack/2024a geos proj
 source /home/vdemeyer/py3/bin/activate
 
-for fig in validation cps contribution density; do
+for fig in validation cps ee density; do
   python /home/vdemeyer/TRACKING/KATJA/PLOT/plot_ERA5_TC_exclusion.py --fig $fig
 done

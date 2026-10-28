@@ -9,19 +9,19 @@ import xarray as xr
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import matplotlib.colors as mcolors
 import cartopy.crs as ccrs
 import cartopy.feature as cfeature
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'POSTPROCESSING'))
 from ETC_tools import open_df
+import plot_style as S
 
 """
 Figures of the ERA5 test of the tropical cyclone exclusion (cyclone phase space).
 
   python plot_ERA5_TC_exclusion.py --fig cps          # phase space trajectories of named storms
   python plot_ERA5_TC_exclusion.py --fig validation   # labels against the IBTrACS nature
-  python plot_ERA5_TC_exclusion.py --fig contribution # ETC contribution to extremes, with / without TCs
+  python plot_ERA5_TC_exclusion.py --fig ee           # EE_cum|ETC of precipitation and wind, with / without TCs
   python plot_ERA5_TC_exclusion.py --fig density      # ETC track density, with / without TCs
 
 Inputs: outputs of classify_cyclone_phase.py, validate_phase_ibtracs.py, concat_contribution_ETCs.py
@@ -41,8 +41,6 @@ PHASE_LABELS = {'TC': 'Tropical', 'TRANSITION': 'Transition', 'ETC': 'Extratropi
 
 # CRCM6 rotated pole, used as map projection
 MAP_PROJ = ccrs.RotatedPole(pole_longitude=83., pole_latitude=42.5)
-# CRCM6 NAM-12 domain in rotated coordinates (rlon_min, rlon_max, rlat_min, rlat_max)
-DOMAIN_EXTENT = [-31.85, 40.1, -34.6, 37.33]
 B_CRIT = 10.
 
 plt.rcParams.update({'font.size': 9, 'axes.spines.top': False, 'axes.spines.right': False})
@@ -151,76 +149,90 @@ def plot_validation(sim='ERA5'):
 
 
 # ----------------------------------------------------------------------------------------
-# Maps
+# Maps (same style as the paper figures, see plot_style.py)
 # ----------------------------------------------------------------------------------------
 
-def to_0_360(da):
-    """Contiguous longitudes over the CRCM6 domain (174E-357E) for pcolormesh."""
-    return da.assign_coords(longitude=da['longitude'] % 360).sortby('longitude')
+PANEL_TITLES = ['All tracked cyclones', 'Tropical cyclones excluded', 'Difference (b $-$ a)']
 
 
-def plot_triplet(fig, row, n_rows, fields, label, cmap, vmax, diff_max, diff_label):
-    """Three maps: all cyclones, TCs excluded, difference."""
-    titles = ['All tracked cyclones', 'Tropical cyclones excluded', 'Difference']
+def nice_symmetric_range(diff, n_steps=5):
+    """Symmetric colour range (1-2-2.5-5 x 10^k) covering the 99th percentile of |diff|."""
+    p = float(np.nanpercentile(np.abs(diff.values), 99))
+    if not np.isfinite(p) or p == 0:
+        return 1., 1. / n_steps
+    k = 10 ** np.floor(np.log10(p))
+    vmax = next(m * k for m in (1., 2., 2.5, 5., 10.) if m * k >= p)
+    return vmax, vmax / n_steps
+
+
+def plot_row(fields, vmin, vmax, step, label, diff_label, name, tick_size=14):
+    """Three maps: all cyclones (a), tropical cyclones excluded (b) and difference (c)."""
+    positions = [[0.02, 0.25, 0.31, 0.70], [0.345, 0.25, 0.31, 0.70], [0.67, 0.25, 0.31, 0.70]]
+    fig, axes, crs = S._setup_plot_axes(positions, figsize=(18, 8))
     data = [fields[0], fields[1], fields[1] - fields[0]]
-    if diff_max is None:
-        # Symmetric colour range from the data, so that small differences remain visible
-        diff_max = float(np.nanpercentile(np.abs(data[2].values), 99)) or 1e-6
-    for col in range(3):
-        ax = map_axes(fig, (n_rows, 3, 3 * row + col + 1))
-        ax.set_extent(DOMAIN_EXTENT, crs=MAP_PROJ)
-        da = to_0_360(data[col])
-        if col < 2:
-            mesh = ax.pcolormesh(da['longitude'], da['latitude'], da, cmap=cmap, vmin=0, vmax=vmax,
-                                 transform=ccrs.PlateCarree(), rasterized=True)
+    diff_max, diff_step = nice_symmetric_range(data[2])
+
+    for i, ax in enumerate(axes):
+        S._draw_map_features(ax)
+        if i < 2:
+            sc, levels = S._plot_data_on_ax(ax, data[i], crs, 'contourf', 'Spectral_r', vmin, vmax, step, 'max')
         else:
-            mesh = ax.pcolormesh(da['longitude'], da['latitude'], da, cmap='RdBu_r',
-                                 norm=mcolors.TwoSlopeNorm(0., -diff_max, diff_max),
-                                 transform=ccrs.PlateCarree(), rasterized=True)
-        ax.set_title(titles[col], loc='left')
-        cb = fig.colorbar(mesh, ax=ax, orientation='horizontal', shrink=0.85, pad=0.03,
-                          extend='max' if col < 2 else 'both')
-        cb.set_label(label if col < 2 else diff_label, fontsize=8)
+            sc_diff, levels_diff = S._plot_data_on_ax(ax, data[i], crs, 'contourf', 'coolwarm',
+                                                      -diff_max, diff_max, diff_step, 'both')
+        ax.text(0.02, 0.98, PANEL_TITLES[i], transform=ax.transAxes, fontsize=tick_size, fontweight='bold',
+                ha='left', va='top', bbox=dict(facecolor='white', alpha=0.7, edgecolor='none', boxstyle='round,pad=0.2'))
+        ax.text(0, 1.02, f"$\\mathbf{{{chr(97 + i)})}}$", transform=ax.transAxes, fontsize=tick_size + 1,
+                ha='left', va='bottom')
+
+    S._add_cbar(fig, sc, fig.add_axes([0.02, 0.17, 0.635, 0.03]), label, 'contourf', levels,
+                extend_opt='max', tick_size=tick_size)
+    S._add_cbar(fig, sc_diff, fig.add_axes([0.69, 0.17, 0.29, 0.03]), diff_label, 'contourf', levels_diff,
+                extend_opt='both', tick_size=tick_size)
+    save(fig, name)
 
 
-def plot_contribution(sim='ERA5', quantile=0.99, tc_tag='_noTC'):
-    rows = []
-    for var, name in [('pr', 'precipitation'), ('ws', 'surface wind')]:
-        fields = []
-        for tag in ['', tc_tag]:
-            with open(f'{BASE}/ALL/CONTRIB/contribution_ETCs_1000hPa_{sim}_{var}{tag}.pkl', 'rb') as f:
-                d = pickle.load(f)
-            num = d['total_ext_EETCs_total'].sel(quantile=quantile, method='nearest')
-            den = d['total_ext_total'].sel(quantile=quantile, method='nearest')
-            fields.append((num / den.where(den > 0)) * 100.)
-        rows.append((name, fields))
+def ee_cum(sim, var, quantile, tag):
+    """Accumulated exceedance above the percentile within 1000 km of an ETC (paper metric EE_cum|ETC)."""
+    with open(f'{BASE}/ALL/CONTRIB/contribution_ETCs_1000hPa_{sim}_{var}{tag}.pkl', 'rb') as f:
+        d = pickle.load(f)
+    name, folder, prefix = {'pr': ('pr', 'PR_Percentile', 'pr'),
+                            'ws': ('surf_wind', 'WIND_Percentile', 'surf_wind')}[var]
+    threshold = xr.open_dataset(f'{BASE}/{sim}/{folder}/{prefix}_{sim.lower()}_percentile_1980-2014.nc')[name]
+    threshold = threshold.sel(quantile=quantile, method='nearest')
+    total = d['total_ext_EETCs_total'].sel(quantile=quantile, method='nearest')
+    count = d['count_ext_EETCs_total'].sel(quantile=quantile, method='nearest')
+    return total - threshold * count
 
-    fig = plt.figure(figsize=(11, 4.4 * len(rows)))
-    for row, (name, fields) in enumerate(rows):
-        plot_triplet(fig, row, len(rows), fields, f'ETC contribution to p{quantile*100:g} {name} (%)',
-                     'Blues', 100, None, 'Difference (percentage points)')
-    fig.tight_layout()
-    save(fig, f'fig_{sim}_contribution_p{quantile*100:g}{tc_tag}.png')
+
+def plot_ee(sim='ERA5', quantile=0.99, tc_tag='_noTC'):
+    # Colour levels of the ERA5 panels of the paper (plot_map_ETCs_diff_w_ERA5.ipynb)
+    settings = {
+        'pr': (0, 2400, 300, r'$EE_{PR,cum|ETC}^{%s}(x)$ [mm]' % sim, '[mm]'),
+        'ws': (0, 4250, 425, r'$EE_{WS,cum|ETC}^{%s}(x)$ [m$\cdot$s$^{-1}$]' % sim, r'[m$\cdot$s$^{-1}$]'),
+    }
+    for var, (vmin, vmax, step, label, unit) in settings.items():
+        fields = [ee_cum(sim, var, quantile, tag) for tag in ['', tc_tag]]
+        plot_row(fields, vmin, vmax, step, label, f'Difference {unit}',
+                 f'fig_{sim}_EEcum_{var}_p{quantile * 100:g}{tc_tag}.png')
 
 
 def plot_density(sim='ERA5', seasons=('ALL', 'JJA', 'SON'), tc_tag='_noTC'):
-    rows = []
+    unit = r'[tracks per $50 000~\mathrm{km^2}$ per month]'
     for season in seasons:
         fields = [xr.open_dataset(f'{BASE}/{sim}/STORM_RELATED/DENSITY/density_ETCs_center_{sim.lower()}_{season}{tag}.nc')
-                  ['density_ETCs'] * 1e3 for tag in ['', tc_tag]]
-        rows.append((season, fields))
-    vmax = float(max(f[0].max() for _, f in rows))
-    fig = plt.figure(figsize=(11, 4.4 * len(rows)))
-    for row, (season, fields) in enumerate(rows):
-        plot_triplet(fig, row, len(rows), fields, f'{season} cyclone density (10$^{{-3}}$ km$^{{-2}}$ month$^{{-1}}$)',
-                     'Purples', vmax, None, 'Difference')
-    fig.tight_layout()
-    save(fig, f'fig_{sim}_density{tc_tag}.png')
+                  ['density_ETCs'] * 50000. for tag in ['', tc_tag]]
+        if season == 'ALL':
+            vmax, step = 5.5, 0.5   # levels of the paper figure
+        else:
+            vmax, _ = nice_symmetric_range(fields[0], n_steps=1)
+            step = vmax / 10
+        plot_row(fields, 0, vmax, step, f'{season} ETC trajectory density {unit}', f'Difference {unit}',
+                 f'fig_{sim}_density_{season}{tc_tag}.png')
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Figures of the ERA5 tropical cyclone exclusion')
-    parser.add_argument('--fig', type=str, required=True, choices=['cps', 'validation', 'contribution', 'density'])
+    parser.add_argument('--fig', type=str, required=True, choices=['cps', 'validation', 'ee', 'density'])
     parser.add_argument('--sim', type=str, default='ERA5')
     args = parser.parse_args()
 
@@ -231,8 +243,8 @@ if __name__ == '__main__':
         plot_cps(track, examples, name=f'fig_{args.sim}_cps_examples.png')
     elif args.fig == 'validation':
         plot_validation(args.sim)
-    elif args.fig == 'contribution':
-        plot_contribution(args.sim)
+    elif args.fig == 'ee':
+        plot_ee(args.sim)
     else:
         plot_density(args.sim)
 
