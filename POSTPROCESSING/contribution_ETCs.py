@@ -3,11 +3,18 @@ from glob import glob
 from braceexpand import braceexpand
 import argparse
 import time
+import os
+from ETC_tools import tc_filter_tag
 
 """
 Script to calculate the contribution of (E)ETCs to total (extreme) precipitation and wind. It doesn't take into account compound EETCs (see EETCs_1000km.py).
 It can be run in parallel for different years and simulations (see submit_contribution_ETCs.sh).
 It requires the concat_contribution_ETCs.py script to calculate the total contribution from all the yearly simulation files into a single file for the full period and all simulation.
+
+With --tc_filter ('phase' or 'storm'), the storm ID files without tropical cyclones are used
+(see ETCs_1000km.py) and the storm-related outputs ('1000km_storm' and '1000km_extreme_storm')
+carry the filter tag. The outputs that do not depend on the storms are only written if they
+do not exist yet, so that the files of the original analysis are never overwritten.
 
 Author: Dr Victorien De Meyer
 """
@@ -68,7 +75,14 @@ def selection_percentile(sim, future_hist_sim, variable, wetdays=True, future=Tr
 
     return percentile
 
-def main(year, sim, var, wetdays, future, original_selection, add_file):
+def main(year, sim, var, wetdays, future, original_selection, add_file, tc_filter=None):
+
+    tc_tag = tc_filter_tag(tc_filter)
+
+    def write(da, path):
+        # Storm-independent outputs are shared by all the tc_filter choices
+        if tc_filter is None or not os.path.exists(path):
+            da.to_netcdf(path)
 
 ########################### INITIALISATION #########################################
     hist_future_map = {'UBG': 'UBD', 'UBH': 'UBE', 'UBI': 'UBF'}
@@ -133,7 +147,7 @@ def main(year, sim, var, wetdays, future, original_selection, add_file):
                 ds_var = ds_var.isel(time=slice(0, -1)) #There is one hour of data on 2100-12-31T00:00:00.000000000 that does not exist in the precipitation file
     ds_var = ds_var.chunk({var_lat: -1, var_lon: -1, 'time': 100})
         
-    filenames_ETCs = braced_glob(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/STORM_RELATED/ID_1000KM/storm_id_{sim.lower()}_{year}*_1000km_1000hPa.nc')
+    filenames_ETCs = braced_glob(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/STORM_RELATED/ID_1000KM/storm_id_{sim.lower()}_{year}??_1000km_1000hPa{tc_tag}.nc')
     ds_ETCs = xr.open_mfdataset(filenames_ETCs)
     ds_ETCs = ds_ETCs.chunk({var_lat: -1, var_lon: -1, 'time': 100})
 
@@ -165,8 +179,8 @@ def main(year, sim, var, wetdays, future, original_selection, add_file):
         if sim == 'ERA5':
             sum = sum.where(mask, drop=True)
             count = count.where(mask, drop=True)
-        sum.to_netcdf(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/total_{file_var}_ext_{sim.lower()}_1000hPa_{season}_{year}{add_file}.nc')
-        count.to_netcdf(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/count_{file_var}_ext_{sim.lower()}_1000hPa_{season}_{year}{add_file}.nc')
+        write(sum, f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/total_{file_var}_ext_{sim.lower()}_1000hPa_{season}_{year}{add_file}.nc')
+        write(count, f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/count_{file_var}_ext_{sim.lower()}_1000hPa_{season}_{year}{add_file}.nc')
         
         two_time = time.time()
         print('First two files saved in {:.2f} seconds'.format(two_time - start_time))
@@ -180,8 +194,8 @@ def main(year, sim, var, wetdays, future, original_selection, add_file):
         if sim == 'ERA5':
             sum = sum.where(mask, drop=True)
             count = count.where(mask, drop=True)
-        sum.to_netcdf(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/total_{file_var}_{sim.lower()}_1000hPa_{season}_{year}.nc')
-        count.to_netcdf(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/count_{file_var}_{sim.lower()}_1000hPa_{season}_{year}.nc')
+        write(sum, f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/total_{file_var}_{sim.lower()}_1000hPa_{season}_{year}.nc')
+        write(count, f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/count_{file_var}_{sim.lower()}_1000hPa_{season}_{year}.nc')
         
         three_time = time.time()
         print('Second two files saved in {:.2f} seconds'.format(three_time - two_time))
@@ -195,8 +209,8 @@ def main(year, sim, var, wetdays, future, original_selection, add_file):
         if sim == 'ERA5':
             sum = sum.where(mask, drop=True)
             count = count.where(mask, drop=True)
-        sum.to_netcdf(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/total_{file_var}_ext_{sim.lower()}_1000hPa_1000km_extreme_storm_{season}_{year}{add_file}.nc')
-        count.to_netcdf(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/count_{file_var}_ext_{sim.lower()}_1000hPa_1000km_extreme_storm_{season}_{year}{add_file}.nc')
+        sum.to_netcdf(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/total_{file_var}_ext_{sim.lower()}_1000hPa_1000km_extreme_storm_{season}_{year}{add_file}{tc_tag}.nc')
+        count.to_netcdf(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/count_{file_var}_ext_{sim.lower()}_1000hPa_1000km_extreme_storm_{season}_{year}{add_file}{tc_tag}.nc')
         
         fourth_time = time.time()
         print('Third two files saved in {:.2f} seconds'.format(fourth_time - three_time))
@@ -210,8 +224,8 @@ def main(year, sim, var, wetdays, future, original_selection, add_file):
         if sim == 'ERA5':
             sum = sum.where(mask, drop=True)
             count = count.where(mask, drop=True)
-        sum.to_netcdf(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/total_{file_var}_{sim.lower()}_1000hPa_1000km_storm_{season}_{year}.nc')
-        count.to_netcdf(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/count_{file_var}_{sim.lower()}_1000hPa_1000km_storm_{season}_{year}.nc')
+        sum.to_netcdf(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/total_{file_var}_{sim.lower()}_1000hPa_1000km_storm_{season}_{year}{tc_tag}.nc')
+        count.to_netcdf(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/count_{file_var}_{sim.lower()}_1000hPa_1000km_storm_{season}_{year}{tc_tag}.nc')
         
         fifth_time = time.time()
         print('Fourth two files saved in {:.2f} seconds'.format(fifth_time - fourth_time))
@@ -231,6 +245,9 @@ if __name__ == "__main__":
     parser.add_argument('--wetdays', action='store_true', help='Computation done with percentile calculated on wet days only for precipitation')
     parser.add_argument('--future', action='store_true', help='Computation done with percentile calculated on future period for future simulations')
     parser.add_argument('--original_selection', action='store_true', help='Use original selection criteria, with percentiles calculated on the full historical period')
+    parser.add_argument('--tc_filter', type=str, default=None, choices=['phase', 'storm'],
+                        help="Use the storm ID files without tropical cyclones: 'phase' = only the "
+                             "extratropical time steps, 'storm' = only the cyclones without any tropical phase")
 
     args = parser.parse_args()
 
@@ -250,6 +267,6 @@ if __name__ == "__main__":
         if future and sim in ['UBG', 'UBH', 'UBI']:
             add_file += '_future_percentile'
 
-    main(year, sim, var, wetdays, future, original_selection, add_file)
+    main(year, sim, var, wetdays, future, original_selection, add_file, args.tc_filter)
 
 # run /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/contribution_ETCs.py 2019 --sim UBB --var pr --future

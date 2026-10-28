@@ -5,6 +5,32 @@ import xarray as xr
 
 _FILE_PREFIX = '/home/vdemeyer/projects/rrg-gachon/vdemeyer/'
 
+# Filename tags of the outputs produced with a tropical-cyclone filter (see open_df).
+# The empty tag (no filter) keeps every legacy filename unchanged.
+TC_FILTER_TAGS = {None: '', 'phase': '_noTC', 'storm': '_noTCstorm'}
+
+
+def tc_filter_tag(tc_filter):
+    """
+    Return the filename tag associated with a tropical-cyclone filter.
+
+    :param tc_filter: None, 'phase' or 'storm' (see open_df).
+    :return: '' for None, '_noTC' for 'phase', '_noTCstorm' for 'storm'.
+    """
+    if tc_filter not in TC_FILTER_TAGS:
+        raise ValueError(f"tc_filter must be one of {list(TC_FILTER_TAGS)}, got {tc_filter!r}")
+    return TC_FILTER_TAGS[tc_filter]
+
+
+def track_file(sim):
+    """Connected track file of a simulation (output of connect_ETCs.py)."""
+    return f'{_FILE_PREFIX}{sim}/STORM_RELATED/TRACK/{sim}_psl_smooth_400km_24h_1000hPa.txt'
+
+
+def phase_file(sim):
+    """Track file with the cyclone phase labels (output of classify_cyclone_phase.py)."""
+    return f'{_FILE_PREFIX}{sim}/STORM_RELATED/TRACK/{sim}_psl_smooth_400km_24h_1000hPa_phase.txt'
+
 
 def _valid_storms(df, sim):
     storm_bounds = df.groupby('storm')['date'].agg(['min', 'max'])
@@ -13,26 +39,50 @@ def _valid_storms(df, sim):
     return storm_bounds.query('min.dt.year >= 1980 and max.dt.year <= 2014').index
 
 
-def open_df(sim, period_filtering=True):
+def open_df(sim, period_filtering=True, tc_filter=None, keep_non_etc=False):
     """
     Load the storm tracking DataFrame.
 
     :param sim: Simulation name (e.g., 'UBB', 'ERA5').
     :param period_filtering: Boolean indicating if we keep only storms within a 35 years frame.
+    :param tc_filter: Tropical-cyclone filter based on the cyclone phase space labels
+        written by classify_cyclone_phase.py:
+          - None    : all tracked cyclones (original behaviour, original track file).
+          - 'phase' : keep only the time steps labelled 'ETC'. Tropical ('TC') and
+                      transition ('TRANSITION') time steps are removed, but the
+                      extratropical stage of a former tropical cyclone is kept.
+          - 'storm' : remove every cyclone that has a tropical phase at any time.
+        Period filtering is applied on the full tracks, before the phase filter.
+    :param keep_non_etc: Only used with tc_filter. If True, no time step is removed and a
+        boolean column 'is_etc' flags the time steps kept by the filter.
     :return: DataFrame of storm data.
     """
-    storm_data_file = f'{_FILE_PREFIX}{sim}/STORM_RELATED/TRACK/{sim}_psl_smooth_400km_24h_1000hPa.txt'
-    df = pd.read_csv(
-        storm_data_file,
-        sep=r' ',
-        header=0,
-        engine='python',
-        names=['storm','point','i','j','date','lat','lon','pressure']
-    )
+    tc_filter_tag(tc_filter)
+
+    if tc_filter is None:
+        df = pd.read_csv(
+            track_file(sim),
+            sep=r' ',
+            header=0,
+            engine='python',
+            names=['storm','point','i','j','date','lat','lon','pressure']
+        )
+    else:
+        df = pd.read_csv(phase_file(sim), sep=' ', header=0)
     df['date'] = pd.to_datetime(df['date'])
 
     if period_filtering:
         df = df[df['storm'].isin(_valid_storms(df, sim))]
+
+    if tc_filter is not None:
+        if tc_filter == 'phase':
+            is_etc = df['phase'] == 'ETC'
+        else:
+            is_etc = ~df['tc_storm'].astype(bool)
+        if keep_non_etc:
+            df = df.assign(is_etc=is_etc.values)
+        else:
+            df = df[is_etc]
 
     return df
 

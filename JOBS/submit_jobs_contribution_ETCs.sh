@@ -12,6 +12,18 @@
 #   ERA5/UBB/UBD/UBE/UBF: 1980-2014
 #   UBG/UBH/UBI: 2063-2097
 
+# Optional TC_FILTER env var ('phase' or 'storm'): exclude the tropical cyclones
+# (see POSTPROCESSING/ETC_tools.py). If unset/empty, all tracked cyclones are used.
+TC_FILTER="${TC_FILTER:-}"
+if [[ -n "$TC_FILTER" && "$TC_FILTER" != "phase" && "$TC_FILTER" != "storm" ]]; then
+  echo "ERROR: TC_FILTER must be empty or 'phase' or 'storm' (got '$TC_FILTER')" >&2
+  exit 1
+fi
+tc_arg=()
+if [[ -n "$TC_FILTER" ]]; then
+  tc_arg=(--tc_filter "$TC_FILTER")
+fi
+
 module load python/3.11 mpi4py/4.0.3 scipy-stack/2024a geos proj
 source /home/vdemeyer/py3/bin/activate
 
@@ -33,9 +45,10 @@ done
 
 read sim var year <<< "${tasks[$SLURM_ARRAY_TASK_ID]}"
 
-echo "Array task $SLURM_ARRAY_TASK_ID : sim=$sim var=$var year=$year"
+echo "Array task $SLURM_ARRAY_TASK_ID : sim=$sim var=$var year=$year tc_filter=${TC_FILTER:-<none>}"
 
-python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/contribution_ETCs.py "$year" --sim "$sim" --var "$var"
+python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/contribution_ETCs.py "$year" --sim "$sim" --var "$var" "${tc_arg[@]}"
 
 # Submit: sbatch /home/vdemeyer/TRACKING/KATJA/JOBS/submit_jobs_contribution_ETCs.sh
+# Submit without tropical cyclones: sbatch --export=ALL,TC_FILTER=phase /home/vdemeyer/TRACKING/KATJA/JOBS/submit_jobs_contribution_ETCs.sh
 # Resubmit a subset: sbatch --array=12,45,67 /home/vdemeyer/TRACKING/KATJA/JOBS/submit_jobs_contribution_ETCs.sh

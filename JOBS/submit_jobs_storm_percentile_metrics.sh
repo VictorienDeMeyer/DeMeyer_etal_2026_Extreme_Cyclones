@@ -33,6 +33,18 @@ if [[ -n "$REGION" ]]; then
   region_arg=(--region "$REGION")
 fi
 
+# Optional TC_FILTER env var ('phase' or 'storm'): exclude the tropical cyclones
+# (see POSTPROCESSING/ETC_tools.py). If unset/empty, all tracked cyclones are used.
+TC_FILTER="${TC_FILTER:-}"
+if [[ -n "$TC_FILTER" && "$TC_FILTER" != "phase" && "$TC_FILTER" != "storm" ]]; then
+  echo "ERROR: TC_FILTER must be empty or 'phase' or 'storm' (got '$TC_FILTER')" >&2
+  exit 1
+fi
+tc_arg=()
+if [[ -n "$TC_FILTER" ]]; then
+  tc_arg=(--tc_filter "$TC_FILTER")
+fi
+
 module load python/3.11 mpi4py/4.0.3 esmf scipy-stack/2024a geos proj
 source /home/vdemeyer/py3/bin/activate
 
@@ -56,13 +68,14 @@ done
 # Extract this task
 read sim year quantile <<< "${tasks[$SLURM_ARRAY_TASK_ID]}"
 
-echo "Array task $SLURM_ARRAY_TASK_ID : sim=$sim year=$year quantile=$quantile mask=$MASK region=${REGION:-<none>}"
+echo "Array task $SLURM_ARRAY_TASK_ID : sim=$sim year=$year quantile=$quantile mask=$MASK region=${REGION:-<none>} tc_filter=${TC_FILTER:-<none>}"
 
-python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/storm_percentile_metrics.py "$year" --sim "$sim" --quantile "$quantile" --mask "$MASK" "${region_arg[@]}"
+python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/storm_percentile_metrics.py "$year" --sim "$sim" --quantile "$quantile" --mask "$MASK" "${region_arg[@]}" "${tc_arg[@]}"
 
 # Submit land mask:           sbatch --export=ALL,MASK=land             /home/vdemeyer/TRACKING/KATJA/JOBS/submit_jobs_storm_percentile_metrics.sh
 # Submit urban mask:          sbatch --export=ALL,MASK=urban            /home/vdemeyer/TRACKING/KATJA/JOBS/submit_jobs_storm_percentile_metrics.sh
 # Submit land mask, QC box:  sbatch --export=ALL,MASK=land,REGION=QC  /home/vdemeyer/TRACKING/KATJA/JOBS/submit_jobs_storm_percentile_metrics.sh
 # Submit urban mask, NNA box: sbatch --export=ALL,MASK=urban,REGION=NNA /home/vdemeyer/TRACKING/KATJA/JOBS/submit_jobs_storm_percentile_metrics.sh
 # Submit land mask, NNA2 box: sbatch --export=ALL,MASK=land,REGION=NNA2 /home/vdemeyer/TRACKING/KATJA/JOBS/submit_jobs_storm_percentile_metrics.sh
+# Submit land mask, NNA2 box, no TC: sbatch --export=ALL,MASK=land,REGION=NNA2,TC_FILTER=phase /home/vdemeyer/TRACKING/KATJA/JOBS/submit_jobs_storm_percentile_metrics.sh
 # Resubmit a subset:          sbatch --export=ALL,MASK=urban --array=12,45,67 /home/vdemeyer/TRACKING/KATJA/JOBS/submit_jobs_storm_percentile_metrics.sh

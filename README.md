@@ -19,6 +19,23 @@ The project steps are divided as follows:
 ### Tracking
 - Running the tracking of extratropical cyclones year by year (`/JOBS/GLOST/make_tracks.sh`).
 
+### Cyclone phase classification (tropical / transition / extratropical)
+The tracking algorithm detects every low-pressure system, including tropical cyclones. Each time step of each tracked cyclone is therefore labelled `TC`, `TRANSITION` or `ETC` with the cyclone phase space (CPS) of Hart (2003), i.e. from its thermal structure (warm or cold core, thermal symmetry):
+- Calculation of the CPS parameters B (900-600 hPa thickness asymmetry), -VTL (900-600 hPa) and -VTU (600-300 hPa) within 500 km of each 6-hourly track point (`/POSTPROCESSING/cyclone_phase_space.py`, `/JOBS/submit_jobs_cyclone_phase_space.sh`). Run it after `connect_ETCs.py`.
+- 24-h running mean of the parameters and labelling of every hourly track point (`/POSTPROCESSING/classify_cyclone_phase.py`, `/JOBS/submit_classify_cyclone_phase.sh`). A tropical phase is a deep (-VTL > 0 and -VTU > 0), symmetric (B < 10 m) warm core lasting at least 24 h; the shallow warm core of warm-seclusion extratropical cyclones (-VTL > 0, -VTU < 0) is not tropical. Extratropical transition starts when the cyclone becomes asymmetric (B >= 10 m) or cold core (-VTL < 0) and is complete when both conditions are met (Evans and Hart 2003; Bieli et al. 2019; Garin et al. 2025). The output `{sim}_psl_smooth_400km_24h_1000hPa_phase.txt` contains the track, the smoothed parameters, the `phase` label and a `tc_storm` flag (storm with a tropical phase at any time).
+- Evaluation of the labels of ERA5 and UBB (driven by ERA5) against the IBTrACS best tracks (`/POSTPROCESSING/validate_phase_ibtracs.py`; the North Atlantic and eastern North Pacific IBTrACS csv files must be downloaded into `ALL/IBTRACS`).
+- Sanity checks of the diagnostics on synthetic fields: `python /TESTS/test_cyclone_phase.py` (a few seconds).
+
+Required input: geopotential height at 900, 850, 800, 700, 600, 500, 400 and 300 hPa, at 00, 06, 12 and 18 UTC, over 1980-2014 (ERA5, UBB, UBD, UBE, UBF) and 2063-2097 (UBG, UBH, UBI), stored as `{sim}/ZG/zg_{sim}_{YYYYMM}_se.nc` (variable `zg(time, plev, rlat, rlon)`, CRCM6 grid) and `ERA5/ZG/{YYYY}/{MM}/*.nc4` (variable `z`).
+
+The tropical cyclones are then excluded from the post-processing below with the `--tc_filter` option of `ETCs_1000km.py`, `storm_percentile_metrics.py`, `contribution_ETCs.py`, `concat_contribution_ETCs.py` and `calculate_kde.py` (`TC_FILTER` environment variable in the job scripts, `tc_filter` in `aggregate_storm_percentile_metrics.ipynb`, `ETC_tools.open_df(sim, tc_filter=...)` in Python):
+- `phase` (output tag `_noTC`): only the time steps labelled `ETC` are kept; the extratropical stage of a former tropical cyclone is kept.
+- `storm` (output tag `_noTCstorm`): every cyclone with a tropical phase is removed.
+
+In `ETCs_1000km.py`, each grid point is still attributed to the closest cyclone among all tracked cyclones, and is discarded if that cyclone is not extratropical, so that the precipitation and wind of a tropical cyclone are never attributed to a more distant extratropical cyclone. Without `--tc_filter`, all scripts behave and name their outputs exactly as before.
+
+Example: `sbatch --export=ALL,TC_FILTER=phase /home/vdemeyer/TRACKING/KATJA/JOBS/submit_jobs_ETCs_1000km.sh`, then the same `TC_FILTER` for the metrics, contribution and density jobs.
+
 ### Post-processing
 - Connecting extratropical cyclones from each file into a single text file covering the entire period (`/POSTPROCESSING/connect_ETCs.py`).
 - Calculation of extratropical cyclones track density (`/POSTPROCESSING/calculate_kde.py`).

@@ -13,6 +13,8 @@ This script calculates the density of extratropical cyclone (ETC) centers per km
 It processes cyclone track data, projects coordinates to a Lambert Azimuthal Equal Area projection, computes KDE on a grid,
 normalizes the density by the number of months, and saves the resulting density fields in NetCDF format.
 The script supports seasonal filtering and can handle different simulation datasets (e.g., ERA5, UBF).
+With --tc_filter ('phase' or 'storm'), the tropical cyclones are excluded (see ETC_tools.open_df) and the
+output filename carries the filter tag.
 """
 
 def prepare_grid(for_coord, sim, transformer):
@@ -30,7 +32,7 @@ def prepare_grid(for_coord, sim, transformer):
     grid_proj = np.vstack([gx, gy]).T
     return grid_lon, grid_lat, grid_shape, grid_proj
 
-def save_density(dens_abs, sim, season, for_coord, grid_lat, grid_lon, output_dir):
+def save_density(dens_abs, sim, season, for_coord, grid_lat, grid_lon, output_dir, tc_tag=''):
     """Sauvegarde la densité finale en NetCDF avec les bonnes dimensions."""
     if sim == 'ERA5':
         coords = {"latitude": for_coord['latitude'].values, "longitude": for_coord['longitude'].values}
@@ -56,14 +58,14 @@ def save_density(dens_abs, sim, season, for_coord, grid_lat, grid_lon, output_di
     if sim == 'ERA5':
         mask = xr.open_dataarray('/home/vdemeyer/projects/rrg-gachon/vdemeyer/ALL/MASK/mask_CRCM6_grid_for_ERA5.nc')
         ds = ds.where(mask, drop=True)
-    output_path = output_dir / f"density_ETCs_center_{sim.lower()}_{season}.nc"
+    output_path = output_dir / f"density_ETCs_center_{sim.lower()}_{season}{tc_tag}.nc"
     ds.to_netcdf(output_path)
     print(f"Fichier sauvegardé : {output_path}")
 
-def main(sim, season):
+def main(sim, season, tc_filter=None):
     # 1. Chargement des données
-    from ETC_tools import open_df
-    tracks = open_df(sim, period_filtering=True)
+    from ETC_tools import open_df, tc_filter_tag
+    tracks = open_df(sim, period_filtering=True, tc_filter=tc_filter)
 
     coord_path = (
         '/home/vdemeyer/projects/rrg-gachon/vdemeyer/ERA5/PR_Percentile/pr_era5_percentile_1980-2014.nc'
@@ -113,14 +115,17 @@ def main(sim, season):
     # 6. Sauvegarde
     output_dir = Path(f"/project/rrg-gachon/vdemeyer/{sim}/STORM_RELATED/DENSITY")
     output_dir.mkdir(parents=True, exist_ok=True)
-    save_density(dens_abs, sim, season, for_coord, grid_lat, grid_lon, output_dir)
+    save_density(dens_abs, sim, season, for_coord, grid_lat, grid_lon, output_dir, tc_filter_tag(tc_filter))
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('sim', type=str, default='ERA5')
     parser.add_argument('season', type=str, default='ALL')
+    parser.add_argument('--tc_filter', type=str, default=None, choices=['phase', 'storm'],
+                        help="Exclude tropical cyclones: 'phase' = only the extratropical time steps, "
+                             "'storm' = only the cyclones without any tropical phase")
     args = parser.parse_args()
-    main(args.sim, args.season)
+    main(args.sim, args.season, args.tc_filter)
 
     # run /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/calculate_kde.py UBF JJA
     # . /home/vdemeyer/TRACKING/KATJA/JOBS/submit_jobs_calculate_kde.sh

@@ -3,6 +3,7 @@ import pickle
 import sys
 import time
 import argparse
+from ETC_tools import tc_filter_tag
 
 def build_add_file(sim, wetdays, future):
     s = ''
@@ -12,7 +13,7 @@ def build_add_file(sim, wetdays, future):
         s += '_future_percentile'
     return s
 
-def load_and_merge_all_pkl(wetdays, future):
+def load_and_merge_all_pkl(wetdays, future, tc_tag=''):
     
     add_file = ''
     if wetdays:
@@ -24,12 +25,12 @@ def load_and_merge_all_pkl(wetdays, future):
     variables = ['pr', 'ws']
     data = {}
     merged_all = {}
-    output_file = f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/ALL/CONTRIB/contribution_ETCs_1000hPa{add_file}.pkl'
+    output_file = f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/ALL/CONTRIB/contribution_ETCs_1000hPa{add_file}{tc_tag}.pkl'
 
     for sim in simulations:
         for var in variables:
             add_file = build_add_file(sim, wetdays, future)
-            file_path = f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/ALL/CONTRIB/contribution_ETCs_1000hPa_{sim}_{var}{add_file}.pkl'
+            file_path = f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/ALL/CONTRIB/contribution_ETCs_1000hPa_{sim}_{var}{add_file}{tc_tag}.pkl'
             with open(file_path, 'rb') as file:
                 data_key = f"{var}_{sim}"
                 data[data_key] = pickle.load(file)
@@ -49,7 +50,7 @@ def load_and_merge_all_pkl(wetdays, future):
     print(f'Merged data saved to {output_file}')
 
 
-def calcul_contribution(sim, variables, add_file):
+def calcul_contribution(sim, variables, add_file, tc_tag=''):
         
         start_time = time.time()
 
@@ -103,25 +104,25 @@ def calcul_contribution(sim, variables, add_file):
             count_ext_seasonal = count_ext[name_var].groupby('season').sum(dim='year', skipna=True)
             count_ext_total = count_ext[name_var].sum(dim=['year', 'season'], skipna=True)
 
-            files = [f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/total_{file_var}_{sim.lower()}_1000hPa_1000km_storm_{season}_{iyear}.nc' 
+            files = [f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/total_{file_var}_{sim.lower()}_1000hPa_1000km_storm_{season}_{iyear}{tc_tag}.nc' 
             for iyear in range(start_year, end_year + 1) for season in ['DJF', 'MAM', 'JJA', 'SON']]
             total_ETCs = xr.open_mfdataset(files)
             total_ETCs_seasonal = total_ETCs[name_var].groupby('season').sum(dim='year', skipna=True)
             total_ETCs_total = total_ETCs[name_var].sum(dim=['year', 'season'], skipna=True)
 
-            files = [f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/count_{file_var}_{sim.lower()}_1000hPa_1000km_storm_{season}_{iyear}.nc'
+            files = [f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/count_{file_var}_{sim.lower()}_1000hPa_1000km_storm_{season}_{iyear}{tc_tag}.nc'
             for iyear in range(start_year, end_year + 1) for season in ['DJF', 'MAM', 'JJA', 'SON']]
             count_ETCs = xr.open_mfdataset(files)
             count_ETCs_seasonal = count_ETCs[name_var].groupby('season').sum(dim='year', skipna=True)
             count_ETCs_total = count_ETCs[name_var].sum(dim=['year', 'season'], skipna=True)
 
-            files = [f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/total_{file_var}_ext_{sim.lower()}_1000hPa_1000km_extreme_storm_{season}_{iyear}{add_file}.nc'
+            files = [f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/total_{file_var}_ext_{sim.lower()}_1000hPa_1000km_extreme_storm_{season}_{iyear}{add_file}{tc_tag}.nc'
             for iyear in range(start_year, end_year + 1) for season in ['DJF', 'MAM', 'JJA', 'SON']]
             total_ext_EETCs = xr.open_mfdataset(files)
             total_ext_EETCs_seasonal = total_ext_EETCs[name_var].groupby('season').sum(dim='year', skipna=True)
             total_ext_EETCs_total = total_ext_EETCs[name_var].sum(dim=['year', 'season'], skipna=True)
 
-            files = [f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/count_{file_var}_ext_{sim.lower()}_1000hPa_1000km_extreme_storm_{season}_{iyear}{add_file}.nc'
+            files = [f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/count_{file_var}_ext_{sim.lower()}_1000hPa_1000km_extreme_storm_{season}_{iyear}{add_file}{tc_tag}.nc'
             for iyear in range(start_year, end_year + 1) for season in ['DJF', 'MAM', 'JJA', 'SON']]
             count_ext_EETCs = xr.open_mfdataset(files)
             count_ext_EETCs_seasonal = count_ext_EETCs[name_var].groupby('season').sum(dim='year', skipna=True)
@@ -146,7 +147,7 @@ def calcul_contribution(sim, variables, add_file):
                 'count_ext_EETCs_total': count_ext_EETCs_total.rename("count_ext_EETCs_total").compute(),
             }
             
-            output_file = f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/ALL/CONTRIB/contribution_ETCs_1000hPa_{sim}_{var}{add_file}.pkl'
+            output_file = f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/ALL/CONTRIB/contribution_ETCs_1000hPa_{sim}_{var}{add_file}{tc_tag}.pkl'
             with open(output_file, 'wb') as f:
                 pickle.dump(data_to_save, f)
 
@@ -163,6 +164,9 @@ if __name__ == "__main__":
     parser.add_argument('--original_selection', action='store_true', help='Use original selection criteria, with percentiles calculated on the full historical period')
     parser.add_argument('--only-calc', action='store_true', help='Run only calcul_contribution (no merge)')
     parser.add_argument('--only-merge', action='store_true', help='Run only load_and_merge_all_pkl (skip calculations)')
+    parser.add_argument('--tc_filter', type=str, default=None, choices=['phase', 'storm'],
+                        help="Use the outputs of contribution_ETCs.py without tropical cyclones: 'phase' = only the "
+                             "extratropical time steps, 'storm' = only the cyclones without any tropical phase")
 
     # simulations = ['ERA5', 'UBB', 'UBD', 'UBE', 'UBF', 'UBG', 'UBH', 'UBI']
     variables = ['pr', 'ws']
@@ -174,6 +178,7 @@ if __name__ == "__main__":
     original_selection = args.original_selection
     only_calc = args.only_calc
     only_merge = args.only_merge
+    tc_tag = tc_filter_tag(args.tc_filter)
 
     add_file = ''
     if original_selection and (wetdays or future):
@@ -182,12 +187,12 @@ if __name__ == "__main__":
     add_file = build_add_file(sim, wetdays, future)
 
     if not only_merge:
-        sys.stdout = open(f"/home/vdemeyer/TRACKING/KATJA/JOBS/OUTPUTS/concat_contribution_ETCs_{sim}.txt", "w")
-        calcul_contribution(sim, variables, add_file)
+        sys.stdout = open(f"/home/vdemeyer/TRACKING/KATJA/JOBS/OUTPUTS/concat_contribution_ETCs_{sim}{tc_tag}.txt", "w")
+        calcul_contribution(sim, variables, add_file, tc_tag)
 
     if not only_calc:
-        sys.stdout = open("/home/vdemeyer/TRACKING/KATJA/JOBS/OUTPUTS/concat_contribution_ETCs.txt", "w")
-        load_and_merge_all_pkl(wetdays, future)
+        sys.stdout = open(f"/home/vdemeyer/TRACKING/KATJA/JOBS/OUTPUTS/concat_contribution_ETCs{tc_tag}.txt", "w")
+        load_and_merge_all_pkl(wetdays, future, tc_tag)
 
     sys.stdout.close()
 

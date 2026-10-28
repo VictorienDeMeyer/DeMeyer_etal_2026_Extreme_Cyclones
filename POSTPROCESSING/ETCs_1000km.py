@@ -7,11 +7,17 @@ import os
 import argparse
 import gc
 import calendar
-from ETC_tools import open_df
+from ETC_tools import open_df, tc_filter_tag
 
 """
 This script generates a NetCDF file of storm IDs within 1000 km of storm trajectories.
 For each grid point at each timestep, it records the closest storm ID.
+
+With --tc_filter (see ETC_tools.open_df), the closest storm is still searched among ALL
+the tracked cyclones, but grid points whose closest cyclone is not extratropical at that
+time ('phase') or has a tropical phase in its life cycle ('storm') are set to NaN. A
+tropical cyclone thus "shadows" its surroundings and its precipitation and wind are never
+attributed to a more distant extratropical cyclone. Output files get the filter tag.
 
 Author: Dr Victorien De Meyer
 Year: 2026
@@ -38,9 +44,13 @@ def haversine(lon1, lat1, lon2, lat2):
     return km
 
 
-def main(iyear, sim):
+def main(iyear, sim, tc_filter=None):
 
-    df = open_df(sim, period_filtering=False)
+    tag = tc_filter_tag(tc_filter)
+    if tc_filter is None:
+        df = open_df(sim, period_filtering=False)
+    else:
+        df = open_df(sim, period_filtering=False, tc_filter=tc_filter, keep_non_etc=True)
     df = df[df['date'].dt.year == iyear]
 
     for imonth in [f"{month:02d}" for month in range(1, 13)]:
@@ -109,6 +119,8 @@ def main(iyear, sim):
                 continue
 
             storm_ids = storms_at_time['storm'].values.astype(float)
+            if tc_filter is not None:
+                storm_ids[~storms_at_time['is_etc'].values] = np.nan
             n_storms = len(storm_ids)
 
             # Compute distance from each storm to each grid point
@@ -146,7 +158,7 @@ def main(iyear, sim):
         output_dir = f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/STORM_RELATED/ID_1000KM/'
         os.makedirs(output_dir, exist_ok=True)
         encoding = {'storm_id': {'zlib': True, 'complevel': 9, 'dtype': 'float32'}}
-        ds_out.to_netcdf(f'{output_dir}/storm_id_{sim.lower()}_{iyear}{imonth}_1000km_1000hPa.nc', encoding=encoding)
+        ds_out.to_netcdf(f'{output_dir}/storm_id_{sim.lower()}_{iyear}{imonth}_1000km_1000hPa{tag}.nc', encoding=encoding)
 
         print(f"  Saved storm IDs for {iyear}-{imonth}")
 
@@ -159,8 +171,11 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Storm IDs within 1000 km of storm trajectories')
     parser.add_argument('iyear', type=int, help='The year for which to process')
     parser.add_argument('--sim', type=str, required=True, help='Name of the simulation')
+    parser.add_argument('--tc_filter', type=str, default=None, choices=['phase', 'storm'],
+                        help="Exclude tropical cyclones: 'phase' = only the extratropical time steps, "
+                             "'storm' = only the cyclones without any tropical phase (see ETC_tools.open_df)")
 
     args = parser.parse_args()
-    main(args.iyear, args.sim)
+    main(args.iyear, args.sim, args.tc_filter)
 
 # run /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/storm_id_1000km.py 2082 --sim UBG

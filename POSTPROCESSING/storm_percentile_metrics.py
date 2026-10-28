@@ -7,6 +7,7 @@ from braceexpand import braceexpand
 import os
 import argparse
 import gc
+from ETC_tools import tc_filter_tag
 
 """
 This script computes per-storm exceedance metrics above the 99th percentile
@@ -38,6 +39,10 @@ In addition, regardless of --mask choice, cells south of LAT_MIN_NORTH
 tropical / subtropical cyclones in the extratropical-storm statistics.
 This latitude filter is only applied when no --region is selected; when
 a region is given, its lat/lon bounding box supersedes it.
+
+An optional --tc_filter argument ('phase' or 'storm') reads the storm ID files produced by
+ETCs_1000km.py with the same filter, i.e. without the tropical cyclones (see
+ETC_tools.open_df). The output filename then carries the filter tag.
 
 An optional --region argument further restricts the spatial mask to a
 predefined geographic bounding box. Currently supported:
@@ -171,7 +176,9 @@ def load_spatial_mask(mask_kind, sim, future_hist_sim, base, region=None):
     return mask, tag
 
 
-def main(iyear, sim, wetdays, future, quantile, mask_kind, region):
+def main(iyear, sim, wetdays, future, quantile, mask_kind, region, tc_filter=None):
+
+    tc_tag = tc_filter_tag(tc_filter)
 
     base = '/home/vdemeyer/projects/rrg-gachon/vdemeyer'
 
@@ -290,7 +297,7 @@ def main(iyear, sim, wetdays, future, quantile, mask_kind, region):
         ds_wind = ds_wind.compute()
 
         ### STORMS
-        id_file = f'{base}/{sim}/STORM_RELATED/ID_1000KM/storm_id_{sim.lower()}_{iyear}{imonth}_1000km_1000hPa.nc'
+        id_file = f'{base}/{sim}/STORM_RELATED/ID_1000KM/storm_id_{sim.lower()}_{iyear}{imonth}_1000km_1000hPa{tc_tag}.nc'
         ds_id = xr.open_dataset(id_file)
 
         # Compute exceedance above 99th percentile
@@ -354,7 +361,7 @@ def main(iyear, sim, wetdays, future, quantile, mask_kind, region):
     # so the mask choice -- and, for urban, the DEGURBA epoch -- is traceable.
     output_dir = f'{base}/{sim}/STORM_RELATED/STORM_METRICS/'
     os.makedirs(output_dir, exist_ok=True)
-    output_file = f'{output_dir}/storm_exceed_{quantile_tag}_metrics_{mask_tag}{region_tag}_{sim}_{iyear}{add_file}.pkl'
+    output_file = f'{output_dir}/storm_exceed_{quantile_tag}_metrics_{mask_tag}{region_tag}_{sim}_{iyear}{add_file}{tc_tag}.pkl'
     df.to_pickle(output_file)
     print(f"\nSaved {len(df)} storms to {output_file}")
     print(df)
@@ -376,9 +383,12 @@ if __name__ == "__main__":
                              "restrict the spatial mask. When set, supersedes the "
                              f"LAT_MIN_NORTH={LAT_MIN_NORTH} filter. Currently: "
                              f"{list(REGION_BOXES.keys())}.")
+    parser.add_argument('--tc_filter', type=str, default=None, choices=['phase', 'storm'],
+                        help="Use the storm ID files without tropical cyclones: 'phase' = only the "
+                             "extratropical time steps, 'storm' = only the cyclones without any tropical phase")
 
     args = parser.parse_args()
-    main(args.iyear, args.sim, args.wetdays, args.future, args.quantile, args.mask, args.region)
+    main(args.iyear, args.sim, args.wetdays, args.future, args.quantile, args.mask, args.region, args.tc_filter)
 
 # run /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/storm_percentile_metrics.py 1985 --sim UBD --quantile 99.9 --mask land --region NNA
 # run /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/storm_percentile_metrics.py 1985 --sim UBD --quantile 99.9 --mask urban
