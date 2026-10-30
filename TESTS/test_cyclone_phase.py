@@ -178,19 +178,32 @@ def test_open_zg():
                     'rlat': np.arange(3.), 'rlon': np.arange(5.),
                     'lat': (('rlat', 'rlon'), np.ones((3, 5)) * 40.), 'lon': (('rlat', 'rlon'), np.ones((3, 5)) * -60.)})
         crcm.to_netcdf(f'{tmp}/crcm.nc')
-        zg, lat2d, lon2d = open_zg([f'{tmp}/crcm.nc'], levels)
+        # No 400 hPa level in the CRCM6 files: the optional level is skipped
+        zg, lat2d, lon2d = open_zg([f'{tmp}/crcm.nc'], levels, optional_levels=[400])
         assert list(zg['plev'].values) == levels and zg.shape == (4, 3, 3, 5) and lat2d.shape == (3, 5)
         assert pd.DatetimeIndex(zg['time'].values).equals(time)
 
         era5 = xr.Dataset(
-            {'z': (('time', 'level', 'latitude', 'longitude'), np.ones((4, 3, 3, 5), 'f4') * 9806.65,
+            {'z': (('time', 'level', 'latitude', 'longitude'), np.ones((4, 4, 3, 5), 'f4') * 9806.65,
                    {'units': 'm**2 s**-2'})},
-            coords={'time': time, 'level': ('level', [300, 600, 900], {'units': 'millibars'}),
+            coords={'time': time, 'level': ('level', [300, 400, 600, 900], {'units': 'millibars'}),
                     'latitude': [45., 44.75, 44.5], 'longitude': np.arange(5.) * 0.25 + 280.})
         era5.to_netcdf(f'{tmp}/era5.nc')
         zg, lat2d, lon2d = open_zg([f'{tmp}/era5.nc'], levels)
         assert list(zg['plev'].values) == levels and np.allclose(zg.values, 1000.) and lat2d.shape == (3, 5)
+        zg, _, _ = open_zg([f'{tmp}/era5.nc'], levels, optional_levels=[400])
+        assert list(zg['plev'].values) == [900, 600, 400, 300]
     print('geopotential files: OK')
+
+
+def test_interpolate_level():
+    """Z is linear in ln(p) in an isothermal layer, where the interpolation is exact."""
+    from cyclone_phase_space import interpolate_level
+    T, Rd, g = 240., 287.05, 9.80665
+    levels = [500, 400, 300]
+    z = np.array([[5500. - Rd * T / g * np.log(p / 500.)] for p in levels])
+    assert np.isclose(interpolate_level(z, levels, 400, 500, 300)[0], z[1, 0])
+    print('interpolation of the 400 hPa level: OK')
 
 
 def test_phase_file_roundtrip():
@@ -216,6 +229,8 @@ def test_phase_file_roundtrip():
         cps.append(pd.DataFrame({'storm': storm, 'date': dates[sel], 'B': values[sel, 0],
                                  'minus_VTL': values[sel, 1], 'minus_VTU': values[sel, 2]}))
     labelled = classify(track, pd.concat(cps, ignore_index=True))
+    from classify_cyclone_phase import compare_labels
+    assert '100.00%' in compare_labels(labelled, labelled, 'minus_VTU')
 
     old_prefix = ETC_tools._FILE_PREFIX
     with tempfile.TemporaryDirectory() as tmp:
@@ -262,6 +277,7 @@ if __name__ == '__main__':
     test_labels()
     test_smoothing_interpolation()
     test_open_zg()
+    test_interpolate_level()
     test_phase_file_roundtrip()
     test_ibtracs_matching()
     print('\nAll tests passed')

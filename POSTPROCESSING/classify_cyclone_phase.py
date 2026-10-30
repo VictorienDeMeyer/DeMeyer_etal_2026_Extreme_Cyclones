@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 
 from ETC_tools import open_df, phase_file
+from cyclone_phase_space import CHECK_COLUMNS
 
 """
 Label every time step of every tracked cyclone as tropical ('TC'), in transition
@@ -40,7 +41,9 @@ Output: {BASE}/{sim}/STORM_RELATED/TRACK/{sim}_psl_smooth_400km_24h_1000hPa_phas
   interpolated), cps_valid, phase ('TC', 'TRANSITION', 'ETC') and tc_storm (True if the
   storm has a tropical phase at any time). Read it with ETC_tools.open_df(sim, tc_filter=...).
 
-A summary of the classification is printed and saved next to the CPS files.
+A summary of the classification is printed and saved next to the CPS files. When the
+CPS files have the control values of -VTU with the 400 hPa level (ERA5, see
+cyclone_phase_space.py), the summary also reports how the labels change with them.
 
 Author: Dr Victorien De Meyer
 Year: 2026
@@ -219,18 +222,40 @@ def summary(track, sim):
     return text
 
 
-def main(sim):
-    track = open_df(sim, period_filtering=False)
-    cps = load_cps(sim, years_of(sim))
-    print(f'{sim}: {len(track)} track points, {len(cps)} CPS points')
+def compare_labels(ref, alt, name):
+    """Print and return the differences between two classifications of the same track points."""
+    kept_ref, kept_alt = ref['phase'] == 'ETC', alt['phase'] == 'ETC'
+    storms_ref = ref.groupby('storm')['tc_storm'].first()
+    storms_alt = alt.groupby('storm')['tc_storm'].first()
+    lines = [
+        f'\nControl: labels with {name} instead of minus_VTU',
+        f'  track points with the same label             : {(ref["phase"] == alt["phase"]).mean()*100:.2f}%',
+        f'  track points kept (ETC) in only one of the two: {(kept_ref != kept_alt).sum()}'
+        f' ({(kept_ref != kept_alt).mean()*100:.3f}%)',
+        f'  storms with a tropical phase                  : {storms_alt.sum()} (reference: {storms_ref.sum()})',
+        f'  storms whose tropical flag changes            : {(storms_ref != storms_alt).sum()}',
+    ]
+    text = '\n'.join(lines)
+    print(text)
+    return text
 
-    track = classify(track, cps)
+
+def main(sim):
+    track_raw = open_df(sim, period_filtering=False)
+    cps = load_cps(sim, years_of(sim))
+    print(f'{sim}: {len(track_raw)} track points, {len(cps)} CPS points')
+
+    track = classify(track_raw, cps)
 
     output_file = phase_file(sim)
     track.to_csv(output_file, sep=' ', index=False, float_format='%.4f', date_format='%Y-%m-%d %H:%M:%S')
     print(f'Saved {output_file}\n')
 
     text = summary(track, sim)
+    # Effect of the missing 400 hPa level (control values only available for ERA5)
+    for col in CHECK_COLUMNS:
+        if col in cps.columns and cps[col].notna().any():
+            text += '\n' + compare_labels(track, classify(track_raw, cps.assign(minus_VTU=cps[col])), col)
     with open(f'{BASE}/{sim}/STORM_RELATED/CPS/classification_summary_{sim}.txt', 'w') as f:
         f.write(text + '\n')
 
