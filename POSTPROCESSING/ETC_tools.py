@@ -7,15 +7,15 @@ _FILE_PREFIX = '/home/vdemeyer/projects/rrg-gachon/vdemeyer/'
 
 # Filename tags of the outputs produced with a tropical-cyclone filter (see open_df).
 # The empty tag (no filter) keeps every legacy filename unchanged.
-TC_FILTER_TAGS = {None: '', 'phase': '_noTC', 'storm': '_noTCstorm'}
+TC_FILTER_TAGS = {None: '', 'phase': '_noTC', 'storm': '_noTCstorm', 'tc': '_TConly'}
 
 
 def tc_filter_tag(tc_filter):
     """
     Return the filename tag associated with a tropical-cyclone filter.
 
-    :param tc_filter: None, 'phase' or 'storm' (see open_df).
-    :return: '' for None, '_noTC' for 'phase', '_noTCstorm' for 'storm'.
+    :param tc_filter: None, 'phase', 'storm' or 'tc' (see open_df).
+    :return: '' for None, '_noTC' for 'phase', '_noTCstorm' for 'storm', '_TConly' for 'tc'.
     """
     if tc_filter not in TC_FILTER_TAGS:
         raise ValueError(f"tc_filter must be one of {list(TC_FILTER_TAGS)}, got {tc_filter!r}")
@@ -39,7 +39,7 @@ def _valid_storms(df, sim):
     return storm_bounds.query('min.dt.year >= 1980 and max.dt.year <= 2014').index
 
 
-def open_df(sim, period_filtering=True, tc_filter=None, keep_non_etc=False):
+def open_df(sim, period_filtering=True, tc_filter=None, flag_only=False):
     """
     Load the storm tracking DataFrame.
 
@@ -52,9 +52,12 @@ def open_df(sim, period_filtering=True, tc_filter=None, keep_non_etc=False):
                       transition ('TRANSITION') time steps are removed, but the
                       extratropical stage of a former tropical cyclone is kept.
           - 'storm' : remove every cyclone that has a tropical phase at any time.
+          - 'tc'    : keep only the time steps labelled 'TC'. With None and 'phase', it splits
+                      any cyclone-related quantity between the three phases
+                      (transition = all - ETC - TC).
         Period filtering is applied on the full tracks, before the phase filter.
-    :param keep_non_etc: Only used with tc_filter. If True, no time step is removed and a
-        boolean column 'is_etc' flags the time steps kept by the filter.
+    :param flag_only: Only used with tc_filter. If True, no time step is removed and a
+        boolean column 'kept' flags the time steps kept by the filter.
     :return: DataFrame of storm data.
     """
     tc_filter_tag(tc_filter)
@@ -76,13 +79,15 @@ def open_df(sim, period_filtering=True, tc_filter=None, keep_non_etc=False):
 
     if tc_filter is not None:
         if tc_filter == 'phase':
-            is_etc = df['phase'] == 'ETC'
+            kept = df['phase'] == 'ETC'
+        elif tc_filter == 'tc':
+            kept = df['phase'] == 'TC'
         else:
-            is_etc = ~df['tc_storm'].astype(bool)
-        if keep_non_etc:
-            df = df.assign(is_etc=is_etc.values)
+            kept = ~df['tc_storm'].astype(bool)
+        if flag_only:
+            df = df.assign(kept=kept.values)
         else:
-            df = df[is_etc]
+            df = df[kept]
 
     return df
 

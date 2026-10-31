@@ -121,9 +121,9 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('sim', type=str, default='ERA5')
     parser.add_argument('season', type=str, default='ALL')
-    parser.add_argument('--tc_filter', type=str, default=None, choices=['phase', 'storm'],
-                        help="Exclude tropical cyclones: 'phase' = only the extratropical time steps, "
-                             "'storm' = only the cyclones without any tropical phase")
+    parser.add_argument('--tc_filter', type=str, default=None, choices=['phase', 'storm', 'tc'],
+                        help="Filter by cyclone phase: 'phase' = only the extratropical time steps, "
+                             "'storm' = only the cyclones without any tropical phase, 'tc' = only the tropical time steps")
     args = parser.parse_args()
     main(args.sim, args.season, args.tc_filter)
 

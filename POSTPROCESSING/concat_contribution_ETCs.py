@@ -164,9 +164,9 @@ if __name__ == "__main__":
     parser.add_argument('--original_selection', action='store_true', help='Use original selection criteria, with percentiles calculated on the full historical period')
     parser.add_argument('--only-calc', action='store_true', help='Run only calcul_contribution (no merge)')
     parser.add_argument('--only-merge', action='store_true', help='Run only load_and_merge_all_pkl (skip calculations)')
-    parser.add_argument('--tc_filter', type=str, default=None, choices=['phase', 'storm'],
-                        help="Use the outputs of contribution_ETCs.py without tropical cyclones: 'phase' = only the "
-                             "extratropical time steps, 'storm' = only the cyclones without any tropical phase")
+    parser.add_argument('--tc_filter', type=str, default=None, choices=['phase', 'storm', 'tc'],
+                        help="Use the outputs of contribution_ETCs.py filtered by cyclone phase: 'phase' = only the "
+                             "extratropical time steps, 'storm' = only the cyclones without any tropical phase, 'tc' = only the tropical time steps")
 
     # simulations = ['ERA5', 'UBB', 'UBD', 'UBE', 'UBF', 'UBG', 'UBH', 'UBI']
     variables = ['pr', 'ws']

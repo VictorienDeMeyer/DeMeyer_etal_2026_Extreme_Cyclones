@@ -72,7 +72,7 @@ def match_points(track, ib):
 
 def main(sim):
     years = range(1980, 2015)
-    track = open_df(sim, period_filtering=True, tc_filter='phase', keep_non_etc=True)
+    track = open_df(sim, period_filtering=True, tc_filter='phase', flag_only=True)
     ib = load_ibtracs(years)
     print(f'{sim}: {track["storm"].nunique()} tracked storms, {ib["SID"].nunique()} IBTrACS storms (NA + EP)')
 

@@ -245,9 +245,9 @@ if __name__ == "__main__":
     parser.add_argument('--wetdays', action='store_true', help='Computation done with percentile calculated on wet days only for precipitation')
     parser.add_argument('--future', action='store_true', help='Computation done with percentile calculated on future period for future simulations')
     parser.add_argument('--original_selection', action='store_true', help='Use original selection criteria, with percentiles calculated on the full historical period')
-    parser.add_argument('--tc_filter', type=str, default=None, choices=['phase', 'storm'],
-                        help="Use the storm ID files without tropical cyclones: 'phase' = only the "
-                             "extratropical time steps, 'storm' = only the cyclones without any tropical phase")
+    parser.add_argument('--tc_filter', type=str, default=None, choices=['phase', 'storm', 'tc'],
+                        help="Use the storm ID files filtered by cyclone phase: 'phase' = only the "
+                             "extratropical time steps, 'storm' = only the cyclones without any tropical phase, 'tc' = only the tropical time steps")
 
     args = parser.parse_args()
 

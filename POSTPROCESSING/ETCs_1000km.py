@@ -17,7 +17,10 @@ With --tc_filter (see ETC_tools.open_df), the closest storm is still searched am
 the tracked cyclones, but grid points whose closest cyclone is not extratropical at that
 time ('phase') or has a tropical phase in its life cycle ('storm') are set to NaN. A
 tropical cyclone thus "shadows" its surroundings and its precipitation and wind are never
-attributed to a more distant extratropical cyclone. Output files get the filter tag.
+attributed to a more distant extratropical cyclone. With 'tc', only the grid points whose
+closest cyclone is tropical at that time are kept, so that the outputs of None, 'phase'
+and 'tc' split the attributed fields between the three phases. Output files get the
+filter tag.
 
 Author: Dr Victorien De Meyer
 Year: 2026
@@ -50,7 +53,7 @@ def main(iyear, sim, tc_filter=None):
     if tc_filter is None:
         df = open_df(sim, period_filtering=False)
     else:
-        df = open_df(sim, period_filtering=False, tc_filter=tc_filter, keep_non_etc=True)
+        df = open_df(sim, period_filtering=False, tc_filter=tc_filter, flag_only=True)
     df = df[df['date'].dt.year == iyear]
 
     for imonth in [f"{month:02d}" for month in range(1, 13)]:
@@ -120,7 +123,7 @@ def main(iyear, sim, tc_filter=None):
 
             storm_ids = storms_at_time['storm'].values.astype(float)
             if tc_filter is not None:
-                storm_ids[~storms_at_time['is_etc'].values] = np.nan
+                storm_ids[~storms_at_time['kept'].values] = np.nan
             n_storms = len(storm_ids)
 
             # Compute distance from each storm to each grid point
@@ -171,9 +174,9 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Storm IDs within 1000 km of storm trajectories')
     parser.add_argument('iyear', type=int, help='The year for which to process')
     parser.add_argument('--sim', type=str, required=True, help='Name of the simulation')
-    parser.add_argument('--tc_filter', type=str, default=None, choices=['phase', 'storm'],
-                        help="Exclude tropical cyclones: 'phase' = only the extratropical time steps, "
-                             "'storm' = only the cyclones without any tropical phase (see ETC_tools.open_df)")
+    parser.add_argument('--tc_filter', type=str, default=None, choices=['phase', 'storm', 'tc'],
+                        help="Filter by cyclone phase: 'phase' = only the extratropical time steps, "
+                             "'storm' = only the cyclones without any tropical phase, 'tc' = only the tropical time steps (see ETC_tools.open_df)")
 
     args = parser.parse_args()
     main(args.iyear, args.sim, args.tc_filter)
