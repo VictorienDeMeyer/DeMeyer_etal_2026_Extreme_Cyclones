@@ -243,8 +243,7 @@ def test_phase_file_roundtrip():
             all_points = ETC_tools.open_df('UBD', period_filtering=False)
             phase = ETC_tools.open_df('UBD', period_filtering=False, tc_filter='phase')
             storm = ETC_tools.open_df('UBD', period_filtering=False, tc_filter='storm')
-            flagged = ETC_tools.open_df('UBD', period_filtering=False, tc_filter='phase', flag_only=True)
-            tc_only = ETC_tools.open_df('UBD', period_filtering=False, tc_filter='tc')
+            flagged = ETC_tools.open_df('UBD', period_filtering=False, tc_filter='phase', keep_non_etc=True)
         finally:
             ETC_tools._FILE_PREFIX = old_prefix
 
@@ -253,10 +252,7 @@ def test_phase_file_roundtrip():
     s1 = phase[phase['storm'] == 1]
     assert 0 < len(s1) < 96 and s1['date'].min() > dates_tc[47]
     assert len(phase[phase['storm'] == 2]) == 48
-    assert flagged['kept'].sum() == len(phase) and phase['date'].dtype.kind == 'M'
-    # 'phase' and 'tc' keep disjoint time steps; the rest of the track is the transition
-    assert len(tc_only) > 0 and set(tc_only['phase']) == {'TC'} and set(tc_only['storm']) == {1}
-    assert len(phase) + len(tc_only) <= len(all_points)
+    assert flagged['is_etc'].sum() == len(phase) and phase['date'].dtype.kind == 'M'
     print(f'phase file round trip: OK (storm 1: {96 - len(s1)} non-ETC hours removed)')
 
 

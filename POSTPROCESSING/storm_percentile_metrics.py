@@ -383,9 +383,9 @@ if __name__ == "__main__":
                              "restrict the spatial mask. When set, supersedes the "
                              f"LAT_MIN_NORTH={LAT_MIN_NORTH} filter. Currently: "
                              f"{list(REGION_BOXES.keys())}.")
-    parser.add_argument('--tc_filter', type=str, default=None, choices=['phase', 'storm', 'tc'],
-                        help="Use the storm ID files filtered by cyclone phase: 'phase' = only the "
-                             "extratropical time steps, 'storm' = only the cyclones without any tropical phase, 'tc' = only the tropical time steps")
+    parser.add_argument('--tc_filter', type=str, default=None, choices=['phase', 'storm'],
+                        help="Use the storm ID files without tropical cyclones: 'phase' = only the "
+                             "extratropical time steps, 'storm' = only the cyclones without any tropical phase")
 
     args = parser.parse_args()
     main(args.iyear, args.sim, args.wetdays, args.future, args.quantile, args.mask, args.region, args.tc_filter)

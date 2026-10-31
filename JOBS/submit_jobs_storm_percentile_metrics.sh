@@ -33,11 +33,11 @@ if [[ -n "$REGION" ]]; then
   region_arg=(--region "$REGION")
 fi
 
-# Optional TC_FILTER env var ('phase', 'storm' or 'tc'): filter the cyclones by phase
+# Optional TC_FILTER env var ('phase' or 'storm'): exclude the tropical cyclones
 # (see POSTPROCESSING/ETC_tools.py). If unset/empty, all tracked cyclones are used.
 TC_FILTER="${TC_FILTER:-}"
-if [[ -n "$TC_FILTER" && "$TC_FILTER" != "phase" && "$TC_FILTER" != "storm" && "$TC_FILTER" != "tc" ]]; then
-  echo "ERROR: TC_FILTER must be empty or 'phase', 'storm' or 'tc' (got '$TC_FILTER')" >&2
+if [[ -n "$TC_FILTER" && "$TC_FILTER" != "phase" && "$TC_FILTER" != "storm" ]]; then
+  echo "ERROR: TC_FILTER must be empty or 'phase' or 'storm' (got '$TC_FILTER')" >&2
   exit 1
 fi
 tc_arg=()

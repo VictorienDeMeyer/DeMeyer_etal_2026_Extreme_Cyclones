@@ -285,7 +285,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     if args.fig == 'cps':
-        track = open_df(args.sim, period_filtering=True, tc_filter='phase', flag_only=True)
+        track = open_df(args.sim, period_filtering=True, tc_filter='phase', keep_non_etc=True)
         storms = pd.read_csv(f'{BASE}/{args.sim}/STORM_RELATED/CPS/validation_ibtracs_storms_{args.sim}.csv', index_col=0)
         from validate_phase_ibtracs import load_ibtracs
         examples = [(f'{n.title()} {y} ({args.sim})', *find_storm(storms, n, y)) for n, y in [('SANDY', 2012), ('IGOR', 2010)]]
