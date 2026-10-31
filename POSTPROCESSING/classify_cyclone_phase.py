@@ -17,9 +17,15 @@ Steps, for each storm:
      interpolation in time to all the (hourly) track points. Points farther than
      MAX_GAP_H from a valid CPS value stay undefined.
   2. Tropical phase: deep, symmetric warm core, i.e. B < B_CRIT and -VTL > 0 and
-     -VTU > 0, persisting for at least MIN_TC_HOURS. Requiring a deep warm core
-     (-VTU > 0) avoids labelling warm-seclusion extratropical cyclones, which only
-     have a shallow warm core (-VTL > 0, -VTU < 0), as tropical (Hart 2003).
+     -VTU > 0, persisting for at least MIN_TC_HOURS equatorward of TC_MAX_LAT.
+     Requiring a deep warm core (-VTU > 0) avoids labelling warm-seclusion
+     extratropical cyclones, which only have a shallow warm core (-VTL > 0,
+     -VTU < 0), as tropical (Hart 2003). The latitude limit removes the deep warm
+     cores diagnosed in mature high-latitude cyclones (Labrador Sea, south of
+     Greenland, Gulf of Alaska, mostly in winter): against IBTrACS (1980-2014), it
+     reduces the false alarm ratio from 42% to 1% for ERA5 and from 50% to 2% for UBB,
+     for one missed tropical storm out of about 100. A tropical cyclone that moves
+     poleward of TC_MAX_LAT keeps its 'TC' label until the transition criteria below.
   3. Storms without a tropical phase: every time step is 'ETC'.
   4. Storms with a tropical phase (tropical cyclones and their extratropical
      transition, ET):
@@ -55,7 +61,7 @@ B_CRIT = 10.          # Thermal asymmetry threshold [m] (Hart 2003; Evans and Ha
 SMOOTH_WINDOW_H = 24  # Running mean window of the CPS parameters [h] (Hart 2003)
 MAX_GAP_H = 12        # Maximum distance [h] to a valid CPS value for interpolation
 MIN_TC_HOURS = 24     # Minimum duration [h] of a deep symmetric warm core to be a tropical phase
-TC_MAX_LAT = None     # Optional: ignore deep symmetric warm cores poleward of this latitude [deg]
+TC_MAX_LAT = 40.      # Deep symmetric warm cores poleward of this latitude do not define a tropical phase [deg]
 
 PHASES = ['TC', 'TRANSITION', 'ETC']
 
