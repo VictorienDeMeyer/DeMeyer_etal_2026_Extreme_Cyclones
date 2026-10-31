@@ -1,8 +1,9 @@
 #!/bin/bash
 
-# Waits for the end of the ERA5 geopotential download, then submits the ERA5 chain
-# (run_ERA5_tc_exclusion.sh) if all 420 monthly files are present and the code is on the
-# feature branch. Run detached on a login node:
+# Waits for the end of the ERA5 geopotential download, then submits the first steps of the
+# ERA5 chain (run_ERA5_tc_exclusion.sh labels: phase space and labels) if all 420 monthly
+# files are present and the code is on the feature branch. The costly steps are submitted
+# by hand once the labels have been checked. Run detached on a login node:
 #   nohup setsid bash /home/vdemeyer/TRACKING/KATJA/JOBS/auto_submit_ERA5_tc_exclusion.sh > /home/vdemeyer/TRACKING/KATJA/JOBS/OUTPUTS/auto_submit_ERA5_tc_exclusion.log 2>&1 &
 
 REPO=/home/vdemeyer/TRACKING/KATJA
@@ -23,4 +24,4 @@ if [[ "$(git -C $REPO branch --show-current)" != "$BRANCH" ]]; then
   echo "The repository is not on $BRANCH: chain NOT submitted."
   exit 1
 fi
-bash $REPO/JOBS/run_ERA5_tc_exclusion.sh
+bash $REPO/JOBS/run_ERA5_tc_exclusion.sh labels
