@@ -27,8 +27,9 @@ for sim in "${sims[@]}"; do
 done
 pairs_str="${pairs[*]}"
 n=${#pairs[@]}
-sbatch --array=0-$((n-1)) \
-       --export=pairs_str="$pairs_str",TC_FILTER="${TC_FILTER:-}" \
+# pairs_str goes through the environment: --export would split it on its commas
+pairs_str="$pairs_str" TC_FILTER="${TC_FILTER:-}" sbatch --array=0-$((n-1)) \
+       --export=ALL \
        --job-name=calculate_kde \
        --time=01:00:00 \
        -o "/home/vdemeyer/TRACKING/KATJA/JOBS/OUTPUTS/%x_%a.out" \
