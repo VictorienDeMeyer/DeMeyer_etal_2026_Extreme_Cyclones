@@ -13,23 +13,22 @@ sys.path.insert(0, '/home/vdemeyer/TRACKING/KATJA/PLOT')
 import plot_style as S
 
 """
-Maps of the phase of the cyclones behind the cyclone-related extremes: which part of the
-extreme exceedance attributed to cyclones (contribution_ETCs.py, closest cyclone within
-1000 km) occurs while the cyclone is extratropical, in transition or tropical.
+Maps of the share of the cyclone-related extremes that is not due to extratropical cyclones:
+which part of the extreme exceedance attributed to cyclones (contribution_ETCs.py, closest
+cyclone within 1000 km) occurs while the cyclone is tropical or in transition.
 
 The attribution gives each grid-point hour to a single cyclone, whose phase at that hour is
-known (classify_cyclone_phase.py). The outputs without filter, with tc_filter='phase' (ETC)
-and with tc_filter='tc' (TC) therefore split the same field exactly:
-    all cyclones = ETC + transition + TC,   transition = all - ETC - TC.
+known (classify_cyclone_phase.py). The outputs without filter (all cyclones) and with
+tc_filter='phase' (_noTC, extratropical time steps only) therefore give exactly:
+    share of TC + transition = 1 - ETC / all cyclones.
+No new computation is needed: the script only reads the contribution files of the two runs.
 
 Figures (ALL/PLOT/TC_EXCLUSION/):
-  - phase_share_hist   : ERA5 and the historical CRCM6 simulations (end of section 2.1);
-  - phase_share_future : the future CRCM6 simulations (end of section 2.2).
-With --classes 2, the share of TC + transition is shown (no TC-only outputs needed). With
---classes 3, the colour also tells whether this share is mostly TC or mostly transition.
+  - phase_share_hist   : ERA5 and the historical CRCM6 simulations;
+  - phase_share_future : the future CRCM6 simulations.
 Domain-wide shares are printed for the text.
 
-Usage: python plot_cyclone_phase_share.py --classes 2 [--metric total|count] [--season ALL|DJF|MAM|JJA|SON]
+Usage: python plot_cyclone_phase_share.py [--metric total|count] [--season ALL|DJF|MAM|JJA|SON]
 
 Author: Dr Victorien De Meyer
 Year: 2026
@@ -38,7 +37,6 @@ Year: 2026
 CONTRIB = '/home/vdemeyer/projects/rrg-gachon/vdemeyer/ALL/CONTRIB'
 OUT_DIR = '/home/vdemeyer/projects/rrg-gachon/vdemeyer/ALL/PLOT/TC_EXCLUSION'
 QUANTILE = 0.99
-MIN_SHARE = 0.05    # below this share of TC + transition, the map shows the background only
 HIST = ['ERA5', 'UBB', 'UBD', 'UBE', 'UBF']
 FUTURE = ['UBG', 'UBH', 'UBI']
 VARIABLES = {'pr': 'Precipitation', 'ws': 'Wind'}
@@ -52,14 +50,8 @@ SIM_LABEL = {
     'UBF': r'CRCM6$_{\mathbf{MIROC6}}$',
     'UBI': r'CRCM6$_{\mathbf{MIROC6}}$'
 }
-PHASE_COLORS = {'TC': '#eb6834', 'TRANSITION': '#1baf7a'}
-
-# Two-class maps: share of TC + transition
+# Shares below the first level are not coloured, so that the background shows through
 SHARE_LEVELS = [5, 10, 20, 30, 40, 50, 60, 80, 100]
-# Three-class maps: share of TC + transition (intensity) x part of it that is TC (hue)
-NON_ETC_BINS = [5, 20, 40, 60, 100]
-TC_PART_BINS = [0, 1/3, 2/3, 1]
-TC_PART_LABELS = ['mostly\ntransition', 'mixed', 'mostly\nTC']
 
 
 def load_field(sim, var, tag, metric, season):
@@ -72,8 +64,8 @@ def load_field(sim, var, tag, metric, season):
     return da.load()
 
 
-def phase_shares(sim, var, metric, season, classes):
-    """Shares of the cyclone-related field occurring during the TC + transition phases and the TC phase."""
+def non_etc_share(sim, var, metric, season):
+    """Cyclone-related field and the share of it occurring during the TC and transition phases."""
     total = load_field(sim, var, '', metric, season)
     etc = load_field(sim, var, '_noTC', metric, season)
     valid = total > 0
@@ -81,12 +73,7 @@ def phase_shares(sim, var, metric, season, classes):
     excess = (etc > total * (1 + 1e-6) + 1e-6) & valid
     if int(excess.sum()):
         print(f'WARNING {sim} {var}: ETC > all cyclones at {int(excess.sum())} grid points')
-    non_etc = (1 - etc / total).where(valid).clip(0, 1)
-    tc = None
-    if classes == 3:
-        tc = (load_field(sim, var, '_TConly', metric, season) / total).where(valid).clip(0, 1)
-        tc = tc.where(tc <= non_etc, non_etc)
-    return total, non_etc, tc
+    return total, (1 - etc / total).where(valid).clip(0, 1)
 
 
 def map_coords(da):
@@ -107,61 +94,15 @@ def cell_weights(da):
     return xr.ones_like(da)
 
 
-def three_class_colors():
-    """Colour of each (TC + transition share, TC part) class: hue from the TC part, intensity from the share."""
-    green, orange = (mcolors.to_rgb(PHASE_COLORS[p]) for p in ['TRANSITION', 'TC'])
-    hues = [np.array(green), 0.5 * (np.array(green) + np.array(orange)), np.array(orange)]
-    strength = np.linspace(0.3, 1, len(NON_ETC_BINS) - 1)
-    return [[1 - s * (1 - h) for s in strength] for h in hues]
-
-
-def three_class_index(non_etc, tc):
-    """Class index (TC part bin * number of share bins + share bin), NaN below MIN_SHARE."""
-    n_bin = np.digitize(non_etc * 100, NON_ETC_BINS) - 1
-    part = np.where(non_etc > 0, tc / np.where(non_etc > 0, non_etc, 1), 0)
-    h_bin = np.clip(np.digitize(part, TC_PART_BINS) - 1, 0, len(TC_PART_BINS) - 2)
-    idx = (h_bin * (len(NON_ETC_BINS) - 1) + np.clip(n_bin, 0, len(NON_ETC_BINS) - 2)).astype(float)
-    idx[~(non_etc * 100 >= NON_ETC_BINS[0])] = np.nan
-    return idx
-
-
-def draw_share(ax, non_etc, tc, classes):
-    """Map of the share of TC + transition (and of its TC part with three classes)."""
-    x, y, values, crs = map_coords(non_etc * 100)
-    if classes == 2:
-        cmap = plt.get_cmap('YlOrRd')
-        norm = mcolors.BoundaryNorm(SHARE_LEVELS, cmap.N)
-        mesh = ax.pcolormesh(x, y, np.where(values >= SHARE_LEVELS[0], values, np.nan), cmap=cmap, norm=norm,
-                             transform=crs, shading='auto', zorder=1.5)
-    else:
-        idx = three_class_index(non_etc.values, tc.values)
-        if x.ndim == 1 and 'longitude' in non_etc.dims:
-            order = np.argsort(non_etc['longitude'].values % 360)
-            idx = idx[:, order]
-        colors = [c for hue in three_class_colors() for c in hue]
-        mesh = ax.pcolormesh(x, y, idx, cmap=mcolors.ListedColormap(colors),
-                             norm=mcolors.BoundaryNorm(np.arange(len(colors) + 1) - 0.5, len(colors)),
-                             transform=crs, shading='auto', zorder=1.5)
+def draw_share(ax, share):
+    """Map of the share of TC + transition, with its 50% contour."""
+    x, y, values, crs = map_coords(share * 100)
+    cmap = plt.get_cmap('YlOrRd')
+    norm = mcolors.BoundaryNorm(SHARE_LEVELS, cmap.N)
+    mesh = ax.pcolormesh(x, y, np.where(values >= SHARE_LEVELS[0], values, np.nan), cmap=cmap, norm=norm,
+                         transform=crs, shading='auto', zorder=1.5)
     ax.contour(x, y, values, levels=[50], colors='k', linewidths=0.8, transform=crs, zorder=2.5)
     return mesh
-
-
-def three_class_legend(fig, rect, label):
-    """Two-dimensional legend of the three-class maps."""
-    ax = fig.add_axes(rect)
-    colors = three_class_colors()
-    for j, hue in enumerate(colors):
-        for i, c in enumerate(hue):
-            ax.add_patch(plt.Rectangle((i, j), 1, 1, color=c, ec='white', lw=1))
-    n = len(NON_ETC_BINS) - 1
-    ax.set_xlim(0, n)
-    ax.set_ylim(0, len(colors))
-    ax.set_xticks(range(n + 1), [str(b) for b in NON_ETC_BINS])
-    ax.set_yticks(np.arange(len(colors)) + 0.5, TC_PART_LABELS)
-    ax.tick_params(length=0, labelsize=11)
-    for s in ax.spines.values():
-        s.set_visible(False)
-    ax.set_xlabel(label, fontsize=12)
 
 
 def make_grid(nrows, ncols, width=3.6, height=3.5):
@@ -195,60 +136,51 @@ def label_axes(fig, axes, sims, nrows):
             k += 1
 
 
-def share_figure(sims, shares, classes, name, title_note):
+def share_figure(sims, shares, name, title_note):
     fig, axes = make_grid(len(VARIABLES), len(sims))
     for r, var in enumerate(VARIABLES):
         for c, sim in enumerate(sims):
-            mesh = draw_share(axes[r, c], *shares[(sim, var)][1:], classes)
+            mesh = draw_share(axes[r, c], shares[(sim, var)][1])
     label_axes(fig, axes, sims, len(VARIABLES))
-    label = f'Share of the cyclone-related extreme exceedance occurring in tropical or transition phase (%){title_note}'
-    if classes == 2:
-        cax = fig.add_axes([0.25, 0.06, 0.5, 0.025])
-        cb = fig.colorbar(mesh, cax=cax, orientation='horizontal', ticks=SHARE_LEVELS)
-        cb.set_label(label, fontsize=12)
-        cb.ax.tick_params(labelsize=11)
-    else:
-        three_class_legend(fig, [0.3, 0.05, 0.4, 0.12], label)
+    cax = fig.add_axes([0.25, 0.06, 0.5, 0.025])
+    cb = fig.colorbar(mesh, cax=cax, orientation='horizontal', ticks=SHARE_LEVELS)
+    cb.set_label(f'Share of the cyclone-related extreme exceedance occurring in tropical or transition phase (%){title_note}',
+                 fontsize=12)
+    cb.ax.tick_params(labelsize=11)
     fig.savefig(f'{OUT_DIR}/{name}.png', dpi=200, bbox_inches='tight')
     plt.close(fig)
     print(f'Saved {OUT_DIR}/{name}.png')
 
 
-def print_domain_shares(shares, classes):
-    """Area-weighted shares over the whole domain and by latitude band, for the text."""
+def print_domain_shares(shares):
+    """Shares weighted by the exceedance and the cell area, over the domain and by latitude band, for the text."""
     bands = [(0, 30), (30, 40), (40, 50), (50, 90)]
-    print('\nShare of the cyclone-related extreme exceedance in TC + transition phase (%)'
-          + (' [of which TC]' if classes == 3 else ''))
-    print(f'{"":5s} {"var":3s} {"domain":>13s} ' + ' '.join(f'{f"{a}-{b}N":>13s}' for a, b in bands))
-    for (sim, var), (total, non_etc, tc) in shares.items():
+    print('\nShare of the cyclone-related extreme exceedance in TC + transition phase (%)')
+    print(f'{"":5s} {"var":3s} {"domain":>7s} ' + ' '.join(f'{f"{a}-{b}N":>7s}' for a, b in bands))
+    for (sim, var), (total, share) in shares.items():
         lat = total['lat'] if 'lat' in total.coords else total['latitude'] * xr.ones_like(total)
         w = cell_weights(total) * total.fillna(0)
         cells = []
         for a, b in [(-90, 90)] + bands:
-            sel = (lat >= a) & (lat < b) & np.isfinite(non_etc)
+            sel = (lat >= a) & (lat < b) & np.isfinite(share)
             ref = float((w * sel).sum())
-            s = 100 * float((w * non_etc.fillna(0) * sel).sum()) / ref if ref else np.nan
-            t = 100 * float((w * tc.fillna(0) * sel).sum()) / ref if (ref and tc is not None) else np.nan
-            cells.append(f'{s:5.1f}' + (f' [{t:4.1f}]' if tc is not None else '       '))
-        print(f'{sim:5s} {var:3s} ' + ' '.join(f'{c:>13s}' for c in cells))
+            cells.append(100 * float((w * share.fillna(0) * sel).sum()) / ref if ref else np.nan)
+        print(f'{sim:5s} {var:3s} ' + ' '.join(f'{c:7.1f}' for c in cells))
 
 
-def main(classes, metric, season):
-    shares = {(sim, var): phase_shares(sim, var, metric, season, classes)
-              for sim in HIST + FUTURE for var in VARIABLES}
-    print_domain_shares(shares, classes)
-    suffix = f'_{classes}classes' + ('' if metric == 'total' else f'_{metric}') + ('' if season == 'ALL' else f'_{season}')
+def main(metric, season):
+    shares = {(sim, var): non_etc_share(sim, var, metric, season) for sim in HIST + FUTURE for var in VARIABLES}
+    print_domain_shares(shares)
+    suffix = ('' if metric == 'total' else f'_{metric}') + ('' if season == 'ALL' else f'_{season}')
     note = '' if season == 'ALL' else f', {season}'
-    share_figure(HIST, shares, classes, f'phase_share_hist{suffix}', note)
-    share_figure(FUTURE, shares, classes, f'phase_share_future{suffix}', note)
+    share_figure(HIST, shares, f'phase_share_hist{suffix}', note)
+    share_figure(FUTURE, shares, f'phase_share_future{suffix}', note)
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Maps of the phase of the cyclones behind the cyclone-related extremes')
-    parser.add_argument('--classes', type=int, default=2, choices=[2, 3],
-                        help='2: ETC vs TC + transition; 3: also splits TC and transition (needs the _TConly outputs)')
+    parser = argparse.ArgumentParser(description='Maps of the share of the cyclone-related extremes not due to ETCs')
     parser.add_argument('--metric', type=str, default='total', choices=['total', 'count'],
                         help='total: accumulated exceedance; count: number of exceedance hours')
     parser.add_argument('--season', type=str, default='ALL', choices=['ALL', 'DJF', 'MAM', 'JJA', 'SON'])
     args = parser.parse_args()
-    main(args.classes, args.metric, args.season)
+    main(args.metric, args.season)
