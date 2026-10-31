@@ -44,8 +44,9 @@ j5=$(sbatch --parsable --array=0 --dependency=afterok:$j4 --export=sims_str=ERA5
             --job-name=concat_contrib_ERA5 $J/concat_contribution_ETCs_calc.sh)
 j6=$(sbatch --parsable --array=0 "${after_labels[@]}" --export=sims_str=ERA5,season=ALL,TC_FILTER=$TC_FILTER \
             --job-name=ALL_calculate_kde_ERA5 --time=04:00:00 -o "$OUT/%x_%a.out" $J/calculate_kde.sh)
-j7=$(sbatch --parsable --array=0-3 "${after_labels[@]}" \
-            --export=pairs_str="ERA5,DJF ERA5,MAM ERA5,JJA ERA5,SON",TC_FILTER=$TC_FILTER \
+# pairs_str goes through the environment: --export would split it on its commas
+j7=$(pairs_str="ERA5,DJF ERA5,MAM ERA5,JJA ERA5,SON" sbatch --parsable --array=0-3 "${after_labels[@]}" \
+            --export=ALL,TC_FILTER=$TC_FILTER \
             --job-name=calculate_kde_ERA5 --time=01:00:00 -o "$OUT/%x_%a.out" $J/calculate_kde.sh)
 j8=$(sbatch --parsable --dependency=afterok:$j5:$j6:$j7 $J/plot_ERA5_TC_exclusion.sh)
 

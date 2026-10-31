@@ -71,8 +71,9 @@ for sim in $SIMS; do
 done
 j8=$(sbatch --parsable --array=0-6 "${after_labels[@]}" --export=sims_str="$SIMS",season=ALL,TC_FILTER=$TC_FILTER \
             --job-name=ALL_calculate_kde --time=04:00:00 -o "$OUT/%x_%a.out" $J/calculate_kde.sh)
-j9=$(sbatch --parsable --array=0-$((${#pairs[@]}-1)) "${after_labels[@]}" \
-            --export=pairs_str="${pairs[*]}",TC_FILTER=$TC_FILTER \
+# pairs_str goes through the environment: --export would split it on its commas
+j9=$(pairs_str="${pairs[*]}" sbatch --parsable --array=0-$((${#pairs[@]}-1)) "${after_labels[@]}" \
+            --export=ALL,TC_FILTER=$TC_FILTER \
             --job-name=calculate_kde --time=01:00:00 -o "$OUT/%x_%a.out" $J/calculate_kde.sh)
 
 echo "Submitted: 1000km $j3 -> contribution $j4 -> concat $j6 -> merge $j7; storm metrics $j5; density $j8 $j9"
