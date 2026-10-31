@@ -24,8 +24,7 @@ and with tc_filter='tc' (TC) therefore split the same field exactly:
 
 Figures (ALL/PLOT/TC_EXCLUSION/):
   - phase_share_hist   : ERA5 and the historical CRCM6 simulations (end of section 2.1);
-  - phase_share_future : the future CRCM6 simulations (end of section 2.2);
-  - phase_share_change : future minus historical share of tropical and transition phases.
+  - phase_share_future : the future CRCM6 simulations (end of section 2.2).
 With --classes 2, the share of TC + transition is shown (no TC-only outputs needed). With
 --classes 3, the colour also tells whether this share is mostly TC or mostly transition.
 Domain-wide shares are printed for the text.
@@ -42,7 +41,6 @@ QUANTILE = 0.99
 MIN_SHARE = 0.05    # below this share of TC + transition, the map shows the background only
 HIST = ['ERA5', 'UBB', 'UBD', 'UBE', 'UBF']
 FUTURE = ['UBG', 'UBH', 'UBI']
-HIST_OF = {'UBG': 'UBD', 'UBH': 'UBE', 'UBI': 'UBF'}
 VARIABLES = {'pr': 'Precipitation', 'ws': 'Wind'}
 SIM_LABEL = {
     'ERA5': r'ERA5',
@@ -62,7 +60,6 @@ SHARE_LEVELS = [5, 10, 20, 30, 40, 50, 60, 80, 100]
 NON_ETC_BINS = [5, 20, 40, 60, 100]
 TC_PART_BINS = [0, 1/3, 2/3, 1]
 TC_PART_LABELS = ['mostly\ntransition', 'mixed', 'mostly\nTC']
-CHANGE_LEVELS = np.arange(-20, 21, 4)
 
 
 def load_field(sim, var, tag, metric, season):
@@ -149,19 +146,6 @@ def draw_share(ax, non_etc, tc, classes):
     return mesh
 
 
-def draw_change(ax, hist_share, future_share):
-    """Map of the change in the share of TC + transition (percentage points), where one of the shares is not small."""
-    change = (future_share - hist_share).where(np.maximum(hist_share, future_share) >= MIN_SHARE)
-    x, y, values, crs = map_coords(change * 100)
-    _, _, hist_values, _ = map_coords(hist_share * 100)
-    cmap = plt.get_cmap('coolwarm')
-    norm = mcolors.BoundaryNorm(CHANGE_LEVELS, cmap.N, extend='both')
-    mesh = ax.pcolormesh(x, y, values, cmap=cmap, norm=norm, transform=crs, shading='auto', zorder=1.5)
-    ax.contour(x, y, hist_values, levels=[20], colors='k', linewidths=0.8, linestyles='--',
-               transform=crs, zorder=2.5)
-    return mesh
-
-
 def three_class_legend(fig, rect, label):
     """Two-dimensional legend of the three-class maps."""
     ax = fig.add_axes(rect)
@@ -230,23 +214,6 @@ def share_figure(sims, shares, classes, name, title_note):
     print(f'Saved {OUT_DIR}/{name}.png')
 
 
-def change_figure(shares, name, title_note):
-    fig, axes = make_grid(len(VARIABLES), len(FUTURE))
-    for r, var in enumerate(VARIABLES):
-        for c, sim in enumerate(FUTURE):
-            mesh = draw_change(axes[r, c], shares[(HIST_OF[sim], var)][1], shares[(sim, var)][1])
-    label_axes(fig, axes, FUTURE, len(VARIABLES))
-    cax = fig.add_axes([0.25, 0.06, 0.5, 0.025])
-    cb = fig.colorbar(mesh, cax=cax, orientation='horizontal', ticks=CHANGE_LEVELS)
-    cb.set_label('Change in the share of the cyclone-related extreme exceedance occurring in tropical or '
-                 f'transition phase,\nfuture minus historical (percentage points){title_note}; '
-                 'dashed: historical share of 20%', fontsize=12)
-    cb.ax.tick_params(labelsize=11)
-    fig.savefig(f'{OUT_DIR}/{name}.png', dpi=200, bbox_inches='tight')
-    plt.close(fig)
-    print(f'Saved {OUT_DIR}/{name}.png')
-
-
 def print_domain_shares(shares, classes):
     """Area-weighted shares over the whole domain and by latitude band, for the text."""
     bands = [(0, 30), (30, 40), (40, 50), (50, 90)]
@@ -274,7 +241,6 @@ def main(classes, metric, season):
     note = '' if season == 'ALL' else f', {season}'
     share_figure(HIST, shares, classes, f'phase_share_hist{suffix}', note)
     share_figure(FUTURE, shares, classes, f'phase_share_future{suffix}', note)
-    change_figure(shares, f'phase_share_change{suffix}', note)
 
 
 if __name__ == '__main__':
