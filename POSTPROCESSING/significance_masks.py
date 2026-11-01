@@ -174,7 +174,10 @@ def save(masks, sims, path, grid_note):
                 'test': "two-sided Welch's t-test on the yearly (or seasonal) values",
                 'multiple_testing': f'false discovery rate controlled at {ALPHA_FDR} over each map (Wilks, 2016)',
                 'grid': grid_note}
-    ds.to_netcdf(path, encoding={v: {'zlib': True, 'dtype': 'int8'} for v in ds.data_vars})
+    # Written next to the target and then renamed, as a notebook may hold the previous file open
+    tmp = f'{path}.tmp'
+    ds.to_netcdf(tmp, encoding={v: {'zlib': True, 'dtype': 'int8'} for v in ds.data_vars})
+    os.replace(tmp, path)
     print(f'Saved {path}')
 
 
