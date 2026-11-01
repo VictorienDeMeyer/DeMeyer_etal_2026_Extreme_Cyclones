@@ -15,7 +15,13 @@ normalizes the density by the number of months, and saves the resulting density 
 The script supports seasonal filtering and can handle different simulation datasets (e.g., ERA5, UBF).
 With --tc_filter ('phase' or 'storm'), the tropical cyclones are excluded (see ETC_tools.open_df) and the
 output filename carries the filter tag.
+With season 'YEARLY', the density of each season of each year is computed with the same kernel and saved in a
+single file (density_ETCs_center_{sim}_yearly.nc), for the significance tests (significance_masks.py). As the
+bandwidth is fixed, the mean of these maps over the years equals the map of the full period.
 """
+
+BANDWIDTH_KM = 200
+SEASON_MONTHS = {'DJF': [12, 1, 2], 'MAM': [3, 4, 5], 'JJA': [6, 7, 8], 'SON': [9, 10, 11]}
 
 def prepare_grid(for_coord, sim, transformer):
     """Prépare la grille et gère les noms de variables selon la simulation."""
@@ -62,6 +68,44 @@ def save_density(dens_abs, sim, season, for_coord, grid_lat, grid_lon, output_di
     ds.to_netcdf(output_path)
     print(f"Fichier sauvegardé : {output_path}")
 
+def yearly_densities(points_proj, dates, grid_proj, grid_shape):
+    """Density of each season of each year [tracks / km² / month], with the kernel of the full-period maps."""
+    years = np.unique(dates.year)
+    dens = np.zeros((len(years), len(SEASON_MONTHS)) + grid_shape, dtype=np.float32)
+    n_months = np.zeros((len(years), len(SEASON_MONTHS)), dtype=np.int32)
+    for iy, year in enumerate(years):
+        for js, months in enumerate(SEASON_MONTHS.values()):
+            sel = np.asarray((dates.year == year) & dates.month.isin(months))
+            if not sel.any():
+                continue
+            kde = KernelDensity(bandwidth=BANDWIDTH_KM * 1000, kernel="gaussian").fit(points_proj[sel])
+            n_months[iy, js] = dates[sel].to_period("M").nunique()
+            dens[iy, js] = np.exp(kde.score_samples(grid_proj)).reshape(grid_shape) * sel.sum() * 1e6 / n_months[iy, js]
+        print(f"{year} done", flush=True)
+    return years, dens, n_months
+
+def save_yearly_densities(years, dens, n_months, sim, for_coord, grid_lat, grid_lon, output_dir, tc_tag=''):
+    """Saves the yearly seasonal densities and their number of months (to rebuild annual densities)."""
+    if sim == 'ERA5':
+        coords = {"latitude": for_coord['latitude'].values, "longitude": for_coord['longitude'].values}
+        dims = ("latitude", "longitude")
+    else:
+        coords = {"rlat": for_coord.rlat, "rlon": for_coord.rlon,
+                  "lat": (("rlat", "rlon"), grid_lat), "lon": (("rlat", "rlon"), grid_lon)}
+        dims = ("rlat", "rlon")
+    coords.update({"year": years, "season": list(SEASON_MONTHS)})
+    ds = xr.Dataset(
+        {"density_ETCs": (("year", "season") + dims, dens,
+                          {"units": "tracks / km² / month", "description": "KDE Cyclone Density of each season of each year"}),
+         "n_months": (("year", "season"), n_months)},
+        coords=coords)
+    if sim == 'ERA5':
+        mask = xr.open_dataarray('/home/vdemeyer/projects/rrg-gachon/vdemeyer/ALL/MASK/mask_CRCM6_grid_for_ERA5.nc')
+        ds = xr.Dataset({"density_ETCs": ds["density_ETCs"].where(mask, drop=True), "n_months": ds["n_months"]})
+    output_path = output_dir / f"density_ETCs_center_{sim.lower()}_yearly{tc_tag}.nc"
+    ds.to_netcdf(output_path, encoding={"density_ETCs": {"zlib": True, "complevel": 4}})
+    print(f"Fichier sauvegardé : {output_path}")
+
 def main(sim, season, tc_filter=None):
     # 1. Chargement des données
     from ETC_tools import open_df, tc_filter_tag
@@ -82,9 +126,17 @@ def main(sim, season, tc_filter=None):
     lon, lat = tracks["lon"].values, tracks["lat"].values
     dates = pd.to_datetime(tracks["date"].values)
 
+    if season == 'YEARLY':
+        x, y = transformer.transform(lon, lat)
+        grid_lon, grid_lat, grid_shape, grid_proj = prepare_grid(for_coord, sim, transformer)
+        years, dens, n_months = yearly_densities(np.vstack([x, y]).T, dates, grid_proj, grid_shape)
+        output_dir = Path(f"/project/rrg-gachon/vdemeyer/{sim}/STORM_RELATED/DENSITY")
+        save_yearly_densities(years, dens, n_months, sim, for_coord, grid_lat, grid_lon, output_dir,
+                              tc_filter_tag(tc_filter))
+        return
+
     if season != 'ALL':
-        months_dict = {'DJF': [12, 1, 2], 'MAM': [3, 4, 5], 'JJA': [6, 7, 8], 'SON': [9, 10, 11]}
-        s_mask = dates.month.isin(months_dict[season])
+        s_mask = dates.month.isin(SEASON_MONTHS[season])
         lon, lat, dates = lon[s_mask], lat[s_mask], dates[s_mask]
 
     n_months = dates.to_period("M").nunique()
@@ -97,8 +149,7 @@ def main(sim, season, tc_filter=None):
     # 4. Calcul KDE
     grid_lon, grid_lat, grid_shape, grid_proj = prepare_grid(for_coord, sim, transformer)
     
-    bandwidth_km = 200
-    kde = KernelDensity(bandwidth=bandwidth_km * 1000, kernel="gaussian")
+    kde = KernelDensity(bandwidth=BANDWIDTH_KM * 1000, kernel="gaussian")
     kde.fit(points_proj)
     
     # score_samples renvoie log(densité de probabilité). Intégrale de exp(log_dens) = 1
