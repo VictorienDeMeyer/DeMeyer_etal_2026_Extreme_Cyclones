@@ -39,6 +39,17 @@ for sim in UBG UBH UBI; do
   done
 done
 
+# Optional PERIOD and SIMS env vars (e.g. PERIOD=2001-2014 SIMS=IMERG with --array=0-13):
+# one task per sim and year of the period instead of the list above
+if [[ -n "${PERIOD:-}" ]]; then
+  tasks=()
+  for sim in ${SIMS:?SIMS is needed with PERIOD}; do
+    for year in $(seq ${PERIOD%-*} ${PERIOD#*-}); do
+      tasks+=("$sim $year")
+    done
+  done
+fi
+
 read sim year <<< "${tasks[$SLURM_ARRAY_TASK_ID]}"
 
 echo "Array task $SLURM_ARRAY_TASK_ID : sim=$sim year=$year tc_filter=${TC_FILTER:-<none>}"
@@ -48,3 +59,4 @@ python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ETCs_1000km.py "$year" --sim
 # Submit: sbatch /home/vdemeyer/TRACKING/KATJA/JOBS/submit_jobs_ETCs_1000km.sh
 # Submit without tropical cyclones: sbatch --export=ALL,TC_FILTER=phase /home/vdemeyer/TRACKING/KATJA/JOBS/submit_jobs_ETCs_1000km.sh
 # Resubmit a subset: sbatch --array=12,45,67 /home/vdemeyer/TRACKING/KATJA/JOBS/submit_jobs_ETCs_1000km.sh
+# IMERG (ERA5 tracks, IMERG grid): sbatch --array=0-13 --time=10:00:00 --mem=32G --export=ALL,TC_FILTER=phase,PERIOD=2001-2014,SIMS=IMERG /home/vdemeyer/TRACKING/KATJA/JOBS/submit_jobs_ETCs_1000km.sh

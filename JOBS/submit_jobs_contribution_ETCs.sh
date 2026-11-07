@@ -43,12 +43,26 @@ for sim in UBG UBH UBI; do
   done
 done
 
+# Optional PERIOD env var (e.g. 2001-2014): precipitation only, with the percentiles of that period, for the
+# sims of SIMS (default ERA5 UBB UBD UBE UBF IMERG) and the years of the period; outputs suffixed with the period
+period_arg=()
+if [[ -n "${PERIOD:-}" ]]; then
+  period_arg=(--period "$PERIOD")
+  tasks=()
+  for sim in ${SIMS:-ERA5 UBB UBD UBE UBF IMERG}; do
+    for year in $(seq ${PERIOD%-*} ${PERIOD#*-}); do
+      tasks+=("$sim pr $year")
+    done
+  done
+fi
+
 read sim var year <<< "${tasks[$SLURM_ARRAY_TASK_ID]}"
 
-echo "Array task $SLURM_ARRAY_TASK_ID : sim=$sim var=$var year=$year tc_filter=${TC_FILTER:-<none>}"
+echo "Array task $SLURM_ARRAY_TASK_ID : sim=$sim var=$var year=$year tc_filter=${TC_FILTER:-<none>} period=${PERIOD:-<default>}"
 
-python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/contribution_ETCs.py "$year" --sim "$sim" --var "$var" "${tc_arg[@]}"
+python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/contribution_ETCs.py "$year" --sim "$sim" --var "$var" "${tc_arg[@]}" "${period_arg[@]}"
 
 # Submit: sbatch /home/vdemeyer/TRACKING/KATJA/JOBS/submit_jobs_contribution_ETCs.sh
 # Submit without tropical cyclones: sbatch --export=ALL,TC_FILTER=phase /home/vdemeyer/TRACKING/KATJA/JOBS/submit_jobs_contribution_ETCs.sh
 # Resubmit a subset: sbatch --array=12,45,67 /home/vdemeyer/TRACKING/KATJA/JOBS/submit_jobs_contribution_ETCs.sh
+# 2001-2014 (section 8 of SUIVI): sbatch --array=0-83 --export=ALL,TC_FILTER=phase,PERIOD=2001-2014 /home/vdemeyer/TRACKING/KATJA/JOBS/submit_jobs_contribution_ETCs.sh

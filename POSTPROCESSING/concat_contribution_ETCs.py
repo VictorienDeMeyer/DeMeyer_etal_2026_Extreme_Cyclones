@@ -5,31 +5,41 @@ import time
 import argparse
 from ETC_tools import tc_filter_tag
 
-def build_add_file(sim, wetdays, future):
+# With --period (e.g. 2001-2014): precipitation only, years of the period, sims of PERIOD_SIMS (IMERG included),
+# outputs of contribution_ETCs.py --period, and the period in the names of the pickle files.
+PERIOD_SIMS = ['ERA5', 'UBB', 'UBD', 'UBE', 'UBF', 'IMERG']
+
+def build_add_file(sim, wetdays, future, period=None):
     s = ''
     if wetdays:
         s += '_wetdays'
     if future and sim in ['UBG', 'UBH', 'UBI']:
         s += '_future_percentile'
+    if period:
+        s += f'_{period}'
     return s
 
-def load_and_merge_all_pkl(wetdays, future, tc_tag=''):
+def load_and_merge_all_pkl(wetdays, future, tc_tag='', period=None):
     
     add_file = ''
     if wetdays:
         add_file += '_wetdays'
     if future:
         add_file += '_future_percentile'
+    if period:
+        add_file += f'_{period}'
 
     simulations = ['ERA5', 'UBB', 'UBD', 'UBE', 'UBF', 'UBG', 'UBH', 'UBI']
     variables = ['pr', 'ws']
+    if period:
+        simulations, variables = PERIOD_SIMS, ['pr']
     data = {}
     merged_all = {}
     output_file = f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/ALL/CONTRIB/contribution_ETCs_1000hPa{add_file}{tc_tag}.pkl'
 
     for sim in simulations:
         for var in variables:
-            add_file = build_add_file(sim, wetdays, future)
+            add_file = build_add_file(sim, wetdays, future, period)
             file_path = f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/ALL/CONTRIB/contribution_ETCs_1000hPa_{sim}_{var}{add_file}{tc_tag}.pkl'
             with open(file_path, 'rb') as file:
                 data_key = f"{var}_{sim}"
@@ -50,13 +60,15 @@ def load_and_merge_all_pkl(wetdays, future, tc_tag=''):
     print(f'Merged data saved to {output_file}')
 
 
-def calcul_contribution(sim, variables, add_file, tc_tag=''):
+def calcul_contribution(sim, variables, add_file, tc_tag='', period=None):
         
         start_time = time.time()
 
         print(f'Processing simulation: {sim}')
 
-        if sim in ['ERA5', 'UBB', 'UBD', 'UBE', 'UBF']:
+        if period:
+            start_year, end_year = map(int, period.split('-'))
+        elif sim in ['ERA5', 'UBB', 'UBD', 'UBE', 'UBF']:
             start_year = 1980
             # end_year = 2004
             end_year = 2014
@@ -164,6 +176,8 @@ if __name__ == "__main__":
     parser.add_argument('--original_selection', action='store_true', help='Use original selection criteria, with percentiles calculated on the full historical period')
     parser.add_argument('--only-calc', action='store_true', help='Run only calcul_contribution (no merge)')
     parser.add_argument('--only-merge', action='store_true', help='Run only load_and_merge_all_pkl (skip calculations)')
+    parser.add_argument('--period', type=str, default=None,
+                        help='Outputs of contribution_ETCs.py --period, e.g. 2001-2014 (precipitation only, IMERG included)')
     parser.add_argument('--tc_filter', type=str, default=None, choices=['phase', 'storm'],
                         help="Use the outputs of contribution_ETCs.py without tropical cyclones: 'phase' = only the "
                              "extratropical time steps, 'storm' = only the cyclones without any tropical phase")
@@ -179,20 +193,24 @@ if __name__ == "__main__":
     only_calc = args.only_calc
     only_merge = args.only_merge
     tc_tag = tc_filter_tag(args.tc_filter)
+    period = args.period
+    if period:
+        variables = ['pr']
+    log_tag = f'_{period}{tc_tag}' if period else tc_tag
 
     add_file = ''
     if original_selection and (wetdays or future):
         raise ValueError("original_selection cannot be combined with wetdays or future")
     
-    add_file = build_add_file(sim, wetdays, future)
+    add_file = build_add_file(sim, wetdays, future, period)
 
     if not only_merge:
-        sys.stdout = open(f"/home/vdemeyer/TRACKING/KATJA/JOBS/OUTPUTS/concat_contribution_ETCs_{sim}{tc_tag}.txt", "w")
-        calcul_contribution(sim, variables, add_file, tc_tag)
+        sys.stdout = open(f"/home/vdemeyer/TRACKING/KATJA/JOBS/OUTPUTS/concat_contribution_ETCs_{sim}{log_tag}.txt", "w")
+        calcul_contribution(sim, variables, add_file, tc_tag, period)
 
     if not only_calc:
-        sys.stdout = open(f"/home/vdemeyer/TRACKING/KATJA/JOBS/OUTPUTS/concat_contribution_ETCs{tc_tag}.txt", "w")
-        load_and_merge_all_pkl(wetdays, future, tc_tag)
+        sys.stdout = open(f"/home/vdemeyer/TRACKING/KATJA/JOBS/OUTPUTS/concat_contribution_ETCs{log_tag}.txt", "w")
+        load_and_merge_all_pkl(wetdays, future, tc_tag, period)
 
     sys.stdout.close()
 

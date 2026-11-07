@@ -21,7 +21,13 @@ fi
 module load python/3.11 mpi4py/4.0.3 scipy-stack/2024a geos proj
 source /home/vdemeyer/py3/bin/activate
 
+# Optional PERIOD env var (e.g. 2001-2014): outputs of contribution_ETCs.py --period (precipitation, IMERG included)
+period_arg=()
+if [[ -n "${PERIOD:-}" ]]; then
+  period_arg=(--period "$PERIOD")
+fi
+
 sims=($sims_str)
 sim=${sims[$SLURM_ARRAY_TASK_ID]}
 
-python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/concat_contribution_ETCs.py --sim $sim --only-calc "${tc_arg[@]}"
+python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/concat_contribution_ETCs.py --sim $sim --only-calc "${tc_arg[@]}" "${period_arg[@]}"

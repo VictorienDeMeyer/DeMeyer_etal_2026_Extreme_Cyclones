@@ -19,6 +19,9 @@ time ('phase') or has a tropical phase in its life cycle ('storm') are set to Na
 tropical cyclone thus "shadows" its surroundings and its precipitation and wind are never
 attributed to a more distant extratropical cyclone. Output files get the filter tag.
 
+IMERG (--sim IMERG) uses the ERA5 tracks, on the rows and columns of the IMERG grid that cover the CRCM6
+domain (ALL/MASK/mask_CRCM6_grid_for_IMERG.nc, see PREPROCESSING/preprocess_IMERG.py).
+
 Author: Dr Victorien De Meyer
 Year: 2026
 """
@@ -47,10 +50,11 @@ def haversine(lon1, lat1, lon2, lat2):
 def main(iyear, sim, tc_filter=None):
 
     tag = tc_filter_tag(tc_filter)
+    track_sim = 'ERA5' if sim == 'IMERG' else sim
     if tc_filter is None:
-        df = open_df(sim, period_filtering=False)
+        df = open_df(track_sim, period_filtering=False)
     else:
-        df = open_df(sim, period_filtering=False, tc_filter=tc_filter, keep_non_etc=True)
+        df = open_df(track_sim, period_filtering=False, tc_filter=tc_filter, keep_non_etc=True)
     df = df[df['date'].dt.year == iyear]
 
     for imonth in [f"{month:02d}" for month in range(1, 13)]:
@@ -92,6 +96,13 @@ def main(iyear, sim, tc_filter=None):
             spatial_shape = lon_2d.shape
             spatial_coords = {'latitude': ds_ref['latitude'].load(), 'longitude': ds_ref['longitude'].load()}
             ds_ref.close()
+        elif sim == 'IMERG':
+            mask = xr.open_dataarray('/home/vdemeyer/projects/rrg-gachon/vdemeyer/ALL/MASK/mask_CRCM6_grid_for_IMERG.nc')
+            ds_ref = mask.where(mask, drop=True)
+            lon_2d, lat_2d = np.meshgrid(ds_ref['longitude'].values, ds_ref['latitude'].values)
+            spatial_dims = ['latitude', 'longitude']
+            spatial_shape = lon_2d.shape
+            spatial_coords = {'latitude': ds_ref['latitude'].load(), 'longitude': ds_ref['longitude'].load()}
         else:
             filenames = braced_glob(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/PR/pr_{sim.lower()}_{iyear}{imonth}_se.nc')
             ds_ref = xr.open_dataset(filenames[0])
@@ -151,7 +162,7 @@ def main(iyear, sim, tc_filter=None):
             )
         })
 
-        if sim != 'ERA5':
+        if sim not in ['ERA5', 'IMERG']:
             ds_out["rotated_pole"] = rotated_pole
             ds_out.attrs.update(rotated_pole_attrs)
 

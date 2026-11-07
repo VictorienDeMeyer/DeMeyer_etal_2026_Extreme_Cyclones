@@ -16,6 +16,11 @@ With --tc_filter ('phase' or 'storm'), the storm ID files without tropical cyclo
 carry the filter tag. The outputs that do not depend on the storms are only written if they
 do not exist yet, so that the files of the original analysis are never overwritten.
 
+With --period (e.g. 2001-2014, precipitation only), the percentiles of that period are used and the outputs that
+depend on them carry the period in their name; the other outputs are only written if they do not exist yet.
+IMERG (--sim IMERG) uses the hourly files of PREPROCESSING/preprocess_IMERG.py and the storm IDs of
+ETCs_1000km.py --sim IMERG (ERA5 tracks), on the IMERG grid.
+
 Author: Dr Victorien De Meyer
 """
 
@@ -25,7 +30,7 @@ def braced_glob(path):
         files.extend(glob(expanded_path))
     return files
 
-def selection_percentile(sim, future_hist_sim, variable, wetdays=True, future=True, original_selection=False):
+def selection_percentile(sim, future_hist_sim, variable, wetdays=True, future=True, original_selection=False, period_override=None):
     """
     Return an xarray Dataset for the requested percentile file.
     Parameters:
@@ -35,6 +40,7 @@ def selection_percentile(sim, future_hist_sim, variable, wetdays=True, future=Tr
     - wetdays: bool, whether to consider wet days only (default True)
     - future: bool, whether to consider future period (default True)
     - original_selection: bool, whether to use original selection criteria (default False)
+    - period_override: str, period of the percentiles, e.g. '2001-2014' (default None: 1980-2014 or 2063-2097)
     """
     base_dir = '/home/vdemeyer/projects/rrg-gachon/vdemeyer/'
     settings = {
@@ -62,6 +68,8 @@ def selection_percentile(sim, future_hist_sim, variable, wetdays=True, future=Tr
         #     '2058-2082' if future and sim in future_hist_sim
         #     else '1980-2004'
         # )
+        if period_override:
+            period = period_override
         filename = f"{prefix}_{base_sim.lower()}_percentile_{period}{wetdays_str}.nc"
 
     file_path = f"{base_dir}{base_sim}/{var_dir}/{filename}"
@@ -75,13 +83,14 @@ def selection_percentile(sim, future_hist_sim, variable, wetdays=True, future=Tr
 
     return percentile
 
-def main(year, sim, var, wetdays, future, original_selection, add_file, tc_filter=None):
+def main(year, sim, var, wetdays, future, original_selection, add_file, tc_filter=None, period=None):
 
     tc_tag = tc_filter_tag(tc_filter)
 
-    def write(da, path):
-        # Storm-independent outputs are shared by all the tc_filter choices
-        if tc_filter is None or not os.path.exists(path):
+    def write(da, path, shared=True):
+        # Storm-independent outputs are shared by all the tc_filter choices, and with --period the outputs that
+        # do not depend on the percentile are shared with the full-period run: they are only written if absent
+        if not shared or (tc_filter is None and period is None) or not os.path.exists(path):
             da.to_netcdf(path)
 
 ########################### INITIALISATION #########################################
@@ -90,7 +99,7 @@ def main(year, sim, var, wetdays, future, original_selection, add_file, tc_filte
     if sim in hist_future_map:
         hist_sim = hist_future_map[sim]
 
-    if sim == 'ERA5':
+    if sim in ['ERA5', 'IMERG']:
         var_lat = 'latitude'
         var_lon = 'longitude'
     else:
@@ -128,6 +137,14 @@ def main(year, sim, var, wetdays, future, original_selection, add_file, tc_filte
         if var == 'pr':
             ds_var = ds_var.rename({'tp': 'pr'})
             ds_var['pr'] = ds_var.pr * 1000.
+    elif sim == 'IMERG':
+        if var != 'pr':
+            raise ValueError('IMERG: precipitation only')
+        mask = xr.open_dataarray('/home/vdemeyer/projects/rrg-gachon/vdemeyer/ALL/MASK/mask_CRCM6_grid_for_IMERG.nc')
+        filenames_var = sorted(glob(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/IMERG/PR_1h/{year}/*/imerg_pr_ll_{year}*_1h.nc4'))
+        ds_var = xr.open_mfdataset(filenames_var, combine='by_coords')
+        ds_var = ds_var.sel(time=slice(f'{year}-01-01', f'{year}-12-31'))
+        ds_var = ds_var.where(mask, drop=True)  # already in mm/h, longitudes in -180..180
     else:
         filenames_var = braced_glob(f"/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/{file_var}_{sim.lower()}_{year}*_se.nc") ############################
         ds_var = xr.open_mfdataset(
@@ -151,7 +168,8 @@ def main(year, sim, var, wetdays, future, original_selection, add_file, tc_filte
     ds_ETCs = xr.open_mfdataset(filenames_ETCs)
     ds_ETCs = ds_ETCs.chunk({var_lat: -1, var_lon: -1, 'time': 100})
 
-    percentile = selection_percentile(sim, hist_future_map, var, wetdays=wetdays, future=future, original_selection=original_selection)
+    percentile = selection_percentile(sim, hist_future_map, var, wetdays=wetdays, future=future, original_selection=original_selection, period_override=period)
+    os.makedirs(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm', exist_ok=True)
     
     ### Calcul
     mask_var_ext = ds_var[[name_var]].where(ds_var[name_var] >= percentile[name_var])
@@ -176,7 +194,7 @@ def main(year, sim, var, wetdays, future, original_selection, add_file, tc_filte
         count = mask_var_ext_season.where(mask_var_ext_season[name_var] > 0.)[name_var].count(dim='time')
         sum = sum.expand_dims({'season': [season], 'year': [year]})
         count = count.expand_dims({'season': [season], 'year': [year]})
-        if sim == 'ERA5':
+        if sim in ['ERA5', 'IMERG']:
             sum = sum.where(mask, drop=True)
             count = count.where(mask, drop=True)
         write(sum, f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/total_{file_var}_ext_{sim.lower()}_1000hPa_{season}_{year}{add_file}.nc')
@@ -191,7 +209,7 @@ def main(year, sim, var, wetdays, future, original_selection, add_file, tc_filte
         count = ds_var_season[name_var].where(ds_var_season[name_var] > 0).count(dim='time')
         sum = sum.expand_dims({'season': [season], 'year': [year]})
         count = count.expand_dims({'season': [season], 'year': [year]})
-        if sim == 'ERA5':
+        if sim in ['ERA5', 'IMERG']:
             sum = sum.where(mask, drop=True)
             count = count.where(mask, drop=True)
         write(sum, f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/total_{file_var}_{sim.lower()}_1000hPa_{season}_{year}.nc')
@@ -206,7 +224,7 @@ def main(year, sim, var, wetdays, future, original_selection, add_file, tc_filte
         count = mask_ETCs_ext_season.where(mask_ETCs_ext_season[name_var] > 0.)[name_var].count(dim='time')
         sum = sum.expand_dims({'season': [season], 'year': [year]})
         count = count.expand_dims({'season': [season], 'year': [year]})
-        if sim == 'ERA5':
+        if sim in ['ERA5', 'IMERG']:
             sum = sum.where(mask, drop=True)
             count = count.where(mask, drop=True)
         sum.to_netcdf(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/total_{file_var}_ext_{sim.lower()}_1000hPa_1000km_extreme_storm_{season}_{year}{add_file}{tc_tag}.nc')
@@ -221,11 +239,11 @@ def main(year, sim, var, wetdays, future, original_selection, add_file, tc_filte
         count = mask_ETCs_season.where(mask_ETCs_season[name_var] > 0.)[name_var].count(dim='time')
         sum = sum.expand_dims({'season': [season], 'year': [year]})
         count = count.expand_dims({'season': [season], 'year': [year]})
-        if sim == 'ERA5':
+        if sim in ['ERA5', 'IMERG']:
             sum = sum.where(mask, drop=True)
             count = count.where(mask, drop=True)
-        sum.to_netcdf(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/total_{file_var}_{sim.lower()}_1000hPa_1000km_storm_{season}_{year}{tc_tag}.nc')
-        count.to_netcdf(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/count_{file_var}_{sim.lower()}_1000hPa_1000km_storm_{season}_{year}{tc_tag}.nc')
+        write(sum, f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/total_{file_var}_{sim.lower()}_1000hPa_1000km_storm_{season}_{year}{tc_tag}.nc', shared=period is not None)
+        write(count, f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{folder_var}/1000km_storm/count_{file_var}_{sim.lower()}_1000hPa_1000km_storm_{season}_{year}{tc_tag}.nc', shared=period is not None)
         
         fifth_time = time.time()
         print('Fourth two files saved in {:.2f} seconds'.format(fifth_time - fourth_time))
@@ -248,6 +266,8 @@ if __name__ == "__main__":
     parser.add_argument('--tc_filter', type=str, default=None, choices=['phase', 'storm'],
                         help="Use the storm ID files without tropical cyclones: 'phase' = only the "
                              "extratropical time steps, 'storm' = only the cyclones without any tropical phase")
+    parser.add_argument('--period', type=str, default=None,
+                        help='Period of the percentiles, e.g. 2001-2014 (precipitation only); added to the output names')
 
     args = parser.parse_args()
 
@@ -266,7 +286,11 @@ if __name__ == "__main__":
             add_file += '_wetdays'
         if future and sim in ['UBG', 'UBH', 'UBI']:
             add_file += '_future_percentile'
+    if args.period:
+        if original_selection or var != 'pr':
+            raise ValueError('--period is only for precipitation, without original_selection')
+        add_file += f'_{args.period}'
 
-    main(year, sim, var, wetdays, future, original_selection, add_file, args.tc_filter)
+    main(year, sim, var, wetdays, future, original_selection, add_file, args.tc_filter, args.period)
 
 # run /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/contribution_ETCs.py 2019 --sim UBB --var pr --future

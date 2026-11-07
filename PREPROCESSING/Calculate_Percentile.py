@@ -7,7 +7,10 @@ import os
 """
 This script calculates percentiles for specified variables (Precipitation or Wind) from different simulations (e.g., UBB, UBF) or ERA5.
 To calculate the conditional precipitation percentile (only wet days), use the --cond flag.
+With --period (e.g. 2001-2014), the percentiles are computed over that period instead of the default one
+(1980-2014 for ERA5 and the historical simulations, 2063-2097 for the future ones); the period is in the file name.
 FYI, ERA5 precipitation is in m/h, while CRCM6 sim are in kg/m²/s. The returned percentiles are all in mm/h.
+IMERG (--sim IMERG, precipitation only, --period required) uses the hourly files of PREPROCESSING/preprocess_IMERG.py (mm/h).
 All wind variables are in m/s.
 """
 
@@ -19,10 +22,11 @@ def braced_glob(path):
 
 def calculate_percentile(output_file, ds_variable, filenames, sim, start_year, end_year):
 
+    period_str = f'_{args.period}' if args.period else ''
     if args.cond:
-        log_file = f'/home/vdemeyer/TRACKING/KATJA/JOBS/OUTPUTS/Percentile_{ds_variable}_{sim.lower()}_wetdays.txt'
+        log_file = f'/home/vdemeyer/TRACKING/KATJA/JOBS/OUTPUTS/Percentile_{ds_variable}_{sim.lower()}{period_str}_wetdays.txt'
     else:
-        log_file = f'/home/vdemeyer/TRACKING/KATJA/JOBS/OUTPUTS/Percentile_{ds_variable}_{sim.lower()}.txt'
+        log_file = f'/home/vdemeyer/TRACKING/KATJA/JOBS/OUTPUTS/Percentile_{ds_variable}_{sim.lower()}{period_str}.txt'
     
     if os.path.exists(log_file):
         os.remove(log_file)
@@ -33,9 +37,11 @@ def calculate_percentile(output_file, ds_variable, filenames, sim, start_year, e
 
     try:
         is_era5 = sim == 'ERA5'
-        mask = xr.open_dataarray('/home/vdemeyer/projects/rrg-gachon/vdemeyer/MASK/mask_CRCM6_grid_for_ERA5.nc') if is_era5 else None
+        mask = xr.open_dataarray('/home/vdemeyer/projects/rrg-gachon/vdemeyer/ALL/MASK/mask_CRCM6_grid_for_ERA5.nc') if is_era5 else None
+        if sim == 'IMERG':
+            mask = xr.open_dataarray('/home/vdemeyer/projects/rrg-gachon/vdemeyer/ALL/MASK/mask_CRCM6_grid_for_IMERG.nc')
         
-        dim_spec = ("latitude", "longitude") if is_era5 else ("rlat", "rlon")
+        dim_spec = ("latitude", "longitude") if sim in ['ERA5', 'IMERG'] else ("rlat", "rlon")
         chunks = {dim: 128 for dim in dim_spec}
         chunks["time"] = 720
         
@@ -51,7 +57,9 @@ def calculate_percentile(output_file, ds_variable, filenames, sim, start_year, e
         )
         ds = ds.sel(time=slice(f'{start_year}-01-01', f'{end_year}-12-31')).chunk(chunks)
 
-        if sim != 'ERA5':
+        if sim == 'IMERG':
+            ds = ds.where(mask, drop=True)  # already in mm/h, longitudes in -180..180
+        elif sim != 'ERA5':
             if variable == 'PR':
                 ds[ds_variable] = ds[ds_variable] * 3600  # Convertir en mm/h
                 ds['time'] = ds['time'].dt.floor('h')
@@ -71,10 +79,10 @@ def calculate_percentile(output_file, ds_variable, filenames, sim, start_year, e
         if args.cond and variable == 'PR':
             percentiles = ds[ds_variable].where((ds[ds_variable] > 0.1).compute(), drop=True).quantile([0.98, 0.99, 0.995, 0.999], method='lower', dim='time', skipna=True) #conditionnel
         else:
-            skipna_value = True if sim == 'UBB' else False
+            skipna_value = True if sim in ['UBB', 'IMERG'] else False
             percentiles = ds[ds_variable].quantile([0.98, 0.99, 0.995, 0.999], method='lower', dim='time', skipna=skipna_value)
         
-        if sim != 'ERA5':
+        if sim not in ['ERA5', 'IMERG']:
             for_pole = xr.open_dataset('/home/vdemeyer/projects/rrg-gachon/vdemeyer/UBB/PR/pr_ubb_202001_se.nc')
             percentiles["rotated_pole"] = for_pole["rotated_pole"]
             attrs_to_copy = [
@@ -114,6 +122,7 @@ if __name__ == "__main__":
     parser.add_argument('--variable', type=str, required=True, help='Variable to process (e.g., Precipitation, Wind)')
     parser.add_argument('--sim', type=str, required=True, help='Name of the simulation')
     parser.add_argument('--cond', action='store_true', help='Compute the conditional precipitation percentile (optional)')
+    parser.add_argument('--period', type=str, default=None, help='Period of the percentiles, e.g. 2001-2014 (optional)')
 
     args = parser.parse_args()
     
@@ -139,6 +148,10 @@ if __name__ == "__main__":
             filenames =  sorted(braced_glob('/home/vdemeyer/projects/rrg-gachon/vdemeyer/ERA5/WIND/Magnitude/*/*/era5_wind10_ll_*_1h.nc4'))
         else:
             raise ValueError(f"Variable {variable} not recognized for ERA5.")
+    elif sim == 'IMERG':
+        if variable != 'PR' or not args.period:
+            raise ValueError("IMERG: precipitation only, with --period")
+        filenames = sorted(braced_glob('/home/vdemeyer/projects/rrg-gachon/vdemeyer/IMERG/PR_1h/*/*/imerg_pr_ll_*_1h.nc4'))
     else:
         filenames = sorted(braced_glob(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/{variable}/{name_for_file}_{sim.lower()}_*_se.nc'))
 
@@ -155,7 +168,9 @@ if __name__ == "__main__":
     
     sim_hist_fut = {'UBD': 'UBG', 'UBE': 'UBH', 'UBF': 'UBI'}
 
-    if sim in sim_hist_fut or sim in ['ERA5', 'UBB']:
+    if args.period:
+        start_year, end_year = map(int, args.period.split('-'))
+    elif sim in sim_hist_fut or sim in ['ERA5', 'UBB']:
         start_year, end_year = 1980, 2014
         # start_year, end_year = 1980, 2004
     else:
