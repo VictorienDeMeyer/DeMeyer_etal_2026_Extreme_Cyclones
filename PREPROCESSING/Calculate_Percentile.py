@@ -44,7 +44,11 @@ def calculate_percentile(output_file, ds_variable, filenames, sim, start_year, e
         dim_spec = ("latitude", "longitude") if sim in ['ERA5', 'IMERG'] else ("rlat", "rlon")
         chunks = {dim: 128 for dim in dim_spec}
         chunks["time"] = 720
-        
+        if sim == 'IMERG':
+            # Whole time series in each 128 x 128 block, aligned with the chunks of the hourly files: each chunk of the
+            # files is then read once (with time chunks of 720 h, dask cuts 16 x 16 blocks and re-reads the files)
+            chunks["time"] = -1
+
         ds = xr.open_mfdataset(
             filenames,
             combine="nested",
