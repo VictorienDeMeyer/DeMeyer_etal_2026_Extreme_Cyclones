@@ -11,10 +11,16 @@ from ETC_tools import tc_filter_tag
 Significance of the biases (CRCM6 - ERA5) and of the projected changes (future - historical) shown in the
 maps of the paper, with respect to interannual variability.
 
-At each grid point, the 35 annual (or seasonal) values of the two datasets are compared with a two-sided
-Welch's t-test. The false discovery rate is controlled at ALPHA_FDR = 0.10 over the grid points of each map
-(Benjamini and Hochberg, 1995), which corresponds to a global significance level of about 5% for spatially
-correlated fields (Wilks, 2016, BAMS, doi:10.1175/BAMS-D-15-00267.1).
+At each grid point, the 35 annual (or seasonal) values of the two datasets are compared with a two-sided t-test:
+  - paired (on the yearly differences) for CRCM6-ERA5 (UBB) - ERA5: UBB is driven and nudged by ERA5 and follows
+    the same weather year by year, so that the two series are correlated; the years are matched (calendar years,
+    1980-2014) and the median lag-1 autocorrelation of the yearly differences is printed (the test assumes
+    independent years);
+  - Welch's test for the AOGCM-driven simulations (UBD, UBE, UBF) - ERA5, whose years do not correspond to the
+    observed years, and for the projected changes (future - historical).
+The false discovery rate is controlled at ALPHA_FDR = 0.10 over the grid points of each map (Benjamini and
+Hochberg, 1995), which corresponds to a global significance level of about 5% for spatially correlated fields
+(Wilks, 2016, BAMS, doi:10.1175/BAMS-D-15-00267.1).
 
 The tested quantities are those of the figure notebooks (plot_map_ETCs_diff_w_ERA5.ipynb and
 plot_map_ETCs_diff_hist_w_future.ipynb), computed for each year:
@@ -46,6 +52,7 @@ SEASONS = ['DJF', 'MAM', 'JJA', 'SON']
 HIST_SIMS = ['UBB', 'UBD', 'UBE', 'UBF']
 PAIRS = {'UBD': 'UBG', 'UBE': 'UBH', 'UBF': 'UBI'}
 HIST_OF = {fut: hist for hist, fut in PAIRS.items()}
+PAIRED = {'UBB'}    # driven by ERA5 (same years): paired test of the biases
 # folder, file name and variable name of each variable
 VARIABLES = {'pr': ('PR', 'pr', 'pr'), 'ws': ('WIND', 'wind10', 'surf_wind')}
 
@@ -117,10 +124,14 @@ def contribution_regridders(src, tgt):
     return conservative, nearest, mask
 
 
-def fdr_significant(a, b, valid):
-    """Welch's t-test along the first axis (years) and false discovery rate control over the valid points."""
+def fdr_significant(a, b, valid, paired=False):
+    """Paired or Welch's t-test along the first axis (years) and false discovery rate control over the valid
+    points."""
     with np.errstate(invalid='ignore', divide='ignore'):
-        p = stats.ttest_ind(a, b, axis=0, equal_var=False).pvalue
+        if paired:
+            p = stats.ttest_rel(a, b, axis=0).pvalue
+        else:
+            p = stats.ttest_ind(a, b, axis=0, equal_var=False).pvalue
     p = np.where(valid & np.isfinite(p), p, np.nan)
     p_sorted = np.sort(p[np.isfinite(p)])
     passed = p_sorted <= ALPHA_FDR * np.arange(1, p_sorted.size + 1) / max(p_sorted.size, 1)
@@ -129,8 +140,20 @@ def fdr_significant(a, b, valid):
     return (p <= p_sorted[passed].max()).astype(np.int8)
 
 
-def test_maps(a, b, nonzero=True):
-    """Significance mask (season, y, x) of the difference a - b between two (season, year, y, x) fields."""
+def lag1_autocorrelation(d):
+    """Lag-1 autocorrelation of the yearly series d (year, points) at each point (NaN where d is constant)."""
+    d = d - d.mean(0)
+    with np.errstate(invalid='ignore', divide='ignore'):
+        return (d[1:] * d[:-1]).sum(0) / (d ** 2).sum(0)
+
+
+def test_maps(a, b, nonzero=True, paired=False):
+    """Significance mask (season, y, x) of the difference a - b between two (season, year, y, x) fields, with a
+    paired t-test on the yearly differences (same years in a and b) or Welch's t-test."""
+    if paired:
+        assert np.array_equal(a['year'].values, b['year'].values), 'paired test: the years do not match'
+        print(f'    paired t-test, years {int(a["year"][0])}-{int(a["year"][-1])} matched ({a["year"].size})',
+              flush=True)
     masks = []
     for season in a['season'].values:
         xa, xb = a.sel(season=season).values, b.sel(season=season).values
@@ -139,9 +162,14 @@ def test_maps(a, b, nonzero=True):
         if nonzero:
             # Points where neither dataset has cyclone-related extremes are not plotted
             valid &= (np.abs(xa.sum(0)) > 0) | (np.abs(xb.sum(0)) > 0)
-        masks.append(fdr_significant(xa, xb, valid))
-        print(f'    {season}: {100 * masks[-1].sum() / max(valid.sum(), 1):5.1f}% of {valid.sum()} points significant',
-              flush=True)
+        masks.append(fdr_significant(xa, xb, valid, paired))
+        info = ''
+        if paired:
+            r1 = lag1_autocorrelation((xa - xb)[:, valid])
+            info = (f'; lag-1 autocorrelation of the yearly differences: median {np.nanmedian(r1):+.2f} '
+                    f'(quartiles {np.nanpercentile(r1, 25):+.2f}, {np.nanpercentile(r1, 75):+.2f})')
+        print(f'    {season}: {100 * masks[-1].sum() / max(valid.sum(), 1):5.1f}% of {valid.sum()} points '
+              f'significant{info}', flush=True)
     coords = {k: v for k, v in a.coords.items() if 'year' not in v.dims}
     return xr.DataArray(np.stack(masks), dims=a.dims[:1] + a.dims[2:], coords=coords)
 
@@ -161,7 +189,7 @@ def yearly_density(sim, tag):
     return xr.concat([annual.expand_dims(season=['ALL']), dens.transpose('season', 'year', ...)], dim='season')
 
 
-def save(masks, sims, path, grid_note):
+def save(masks, sims, path, grid_note, test):
     arrays = {name: xr.concat([m[sim] for sim in sims], dim=xr.DataArray(sims, dims='sim', name='sim'))
               for name, m in masks.items() if m}
     # All variables take the grid coordinates of the first one (same grid, read from different files)
@@ -171,7 +199,7 @@ def save(masks, sims, path, grid_note):
                      for name, da in arrays.items()})
     ds = ds.assign_coords({c: ref[c] for c in ref.coords if c not in ref.dims})
     ds.attrs = {'description': '1 where the difference is significant with respect to interannual variability',
-                'test': "two-sided Welch's t-test on the yearly (or seasonal) values",
+                'test': test,
                 'multiple_testing': f'false discovery rate controlled at {ALPHA_FDR} over each map (Wilks, 2016)',
                 'grid': grid_note}
     # Written next to the target and then renamed, as a notebook may hold the previous file open
@@ -207,7 +235,7 @@ def main(tc_filter):
                 sim_r = with_annual(total_r - percentile(sim, var, regridded=True).values * count_r)
                 sim_r = sim_r.assign_coords(latitude=era5['latitude'], longitude=era5['longitude'])
                 print(f'  bias {sim}', flush=True)
-                bias[f'EEcum_{var}'][sim] = test_maps(sim_r, era5)
+                bias[f'EEcum_{var}'][sim] = test_maps(sim_r, era5, paired=sim in PAIRED)
         for hist, fut in PAIRS.items():
             print(f'  change {fut} - {hist}', flush=True)
             change[f'EEcum_{var}'][hist] = test_maps(native[fut], native[hist])
@@ -238,13 +266,16 @@ def main(tc_filter):
             sim_r = bilinear(dens[sim]).drop_vars(['lat', 'lon'], errors='ignore')
             bias['density'][sim] = test_maps(sim_r.assign_coords(latitude=dens['ERA5']['latitude'],
                                                                  longitude=dens['ERA5']['longitude']),
-                                             dens['ERA5'], nonzero=False)
+                                             dens['ERA5'], nonzero=False, paired=sim in PAIRED)
         for hist, fut in PAIRS.items():
             print(f'  change {fut} - {hist}', flush=True)
             change['density'][hist] = test_maps(dens[fut], dens[hist], nonzero=False)
 
-    save(bias, HIST_SIMS, f'{OUT_DIR}/significance_bias{tag}.nc', 'ERA5 grid (CRCM6 regridded as in the figures)')
-    save(change, list(PAIRS), f'{OUT_DIR}/significance_change{tag}.nc', 'CRCM6 grid')
+    welch = "two-sided Welch's t-test on the yearly (or seasonal) values"
+    save(bias, HIST_SIMS, f'{OUT_DIR}/significance_bias{tag}.nc', 'ERA5 grid (CRCM6 regridded as in the figures)',
+         f'two-sided paired t-test on the yearly (or seasonal) differences for {", ".join(sorted(PAIRED))} '
+         f'(driven by ERA5, same years); {welch} for the other simulations')
+    save(change, list(PAIRS), f'{OUT_DIR}/significance_change{tag}.nc', 'CRCM6 grid', welch)
 
 
 if __name__ == '__main__':
