@@ -9,7 +9,7 @@
 #   5. concatenation of the contributions                   (concat_contribution_ETCs_calc.sh)
 #   6. cyclone track density without TCs                     (calculate_kde.sh)
 #   7. figures                                              (plot_ERA5_TC_exclusion.sh)
-# Requires the ERA5 geopotential (PREPROCESSING/download_ERA5_geopotential.py).
+# Requires the ERA5 geopotential on pressure levels in ERA5/ZG (see README).
 # The array indices below select ERA5 in the task lists of the job scripts.
 #
 # Usage: bash /home/vdemeyer/TRACKING/KATJA/JOBS/run_ERA5_tc_exclusion.sh [all|labels|heavy]

@@ -17,7 +17,7 @@ else
 fi
 
 main_file="/home/vdemeyer/projects/rrg-gachon/vdemeyer/${sim}/PSL/SMOOTHED/${sim}_psl_smoothed_400km_${year}_pres.nc"
-output_file="/home/vdemeyer/projects/rrg-gachon/vdemeyer/${sim}/STORM_RELATED/TRACK/${sim}_psl_smoothed_400km_12h_1000hPa_${year}_1month.txt"
+output_file="/home/vdemeyer/projects/rrg-gachon/vdemeyer/${sim}/STORM_RELATED/TRACK/${sim}_psl_smoothed_400km_24h_1000hPa_${year}_1month.txt"
 
 if [ -f "$output_file" ]; then
     rm "$output_file"

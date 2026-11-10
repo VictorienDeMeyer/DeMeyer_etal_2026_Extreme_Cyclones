@@ -44,12 +44,12 @@ for sim in UBG UBH UBI; do
 done
 
 # Optional PERIOD env var (e.g. 2001-2014): precipitation only, with the percentiles of that period, for the
-# sims of SIMS (default ERA5 UBB UBD UBE UBF IMERG) and the years of the period; outputs suffixed with the period
+# sims of SIMS (default ERA5 UBB IMERG) and the years of the period; outputs suffixed with the period
 period_arg=()
 if [[ -n "${PERIOD:-}" ]]; then
   period_arg=(--period "$PERIOD")
   tasks=()
-  for sim in ${SIMS:-ERA5 UBB UBD UBE UBF IMERG}; do
+  for sim in ${SIMS:-ERA5 UBB IMERG}; do
     for year in $(seq ${PERIOD%-*} ${PERIOD#*-}); do
       tasks+=("$sim pr $year")
     done
@@ -65,4 +65,4 @@ python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/contribution_ETCs.py "$year"
 # Submit: sbatch /home/vdemeyer/TRACKING/KATJA/JOBS/submit_jobs_contribution_ETCs.sh
 # Submit without tropical cyclones: sbatch --export=ALL,TC_FILTER=phase /home/vdemeyer/TRACKING/KATJA/JOBS/submit_jobs_contribution_ETCs.sh
 # Resubmit a subset: sbatch --array=12,45,67 /home/vdemeyer/TRACKING/KATJA/JOBS/submit_jobs_contribution_ETCs.sh
-# 2001-2014 (section 8 of SUIVI): sbatch --array=0-83 --export=ALL,TC_FILTER=phase,PERIOD=2001-2014 /home/vdemeyer/TRACKING/KATJA/JOBS/submit_jobs_contribution_ETCs.sh
+# Comparison with IMERG over 2001-2014 (ERA5, UBB, IMERG): sbatch --array=0-41 --export=ALL,TC_FILTER=phase,PERIOD=2001-2014 /home/vdemeyer/TRACKING/KATJA/JOBS/submit_jobs_contribution_ETCs.sh

@@ -7,7 +7,7 @@ from ETC_tools import tc_filter_tag
 
 # With --period (e.g. 2001-2014): precipitation only, years of the period, sims of PERIOD_SIMS (IMERG included),
 # outputs of contribution_ETCs.py --period, and the period in the names of the pickle files.
-PERIOD_SIMS = ['ERA5', 'UBB', 'UBD', 'UBE', 'UBF', 'IMERG']
+PERIOD_SIMS = ['ERA5', 'UBB', 'IMERG']   # comparison with IMERG over 2001-2014 (Sect. 3.1.2)
 
 def build_add_file(sim, wetdays, future, period=None):
     s = ''

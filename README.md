@@ -8,7 +8,7 @@ The project aims to track extratropical cyclones from regional simulations and E
 The project steps are divided as follows:
 
 ### Pre-processing
-- Transfer of precipitation data, surface meridional wind, surface zonal wind, 850hPa relative vorticity, and mean sea level pressure to the Calcul Canada servers (`/PREPROCESSING/transfert_files_globus.sh`).
+The input data (precipitation, surface meridional and zonal wind, 850 hPa relative vorticity, mean sea level pressure, geopotential height on pressure levels, and the IMERG precipitation) are assumed to be available on the Alliance Canada servers; the scripts used to download or transfer them are not part of the repository.
 - Creation of a mask to restrict ERA5 data to the CRCM6 grid and create a buffer of 200km around the domain for the storm tracking algorithm (`/PREPROCESSING/create_mask_CRCM6_for_ERA5.ipynb`).
 - Smoothing of relative vorticity and/or mean sea level pressure fields (`/PREPROCESSING/preprocess_year.py` or `create_storm_fields.sh` (not on GitHub) depending on whether the file is NetCDF or RPN, respectively).
 - Calculation of surface wind magnitude (`/PREPROCESSING/Calculate_Wind_Magnitude.py` or `/PREPROCESSING/Calculate_Wind_Magnitude.sh` depending on whether Python or cdo works better, respectively).
@@ -47,6 +47,14 @@ Example: `sbatch --export=ALL,TC_FILTER=phase /home/vdemeyer/TRACKING/KATJA/JOBS
 - Calculation of the contribution of precipitation and surface wind associated with extratropical cyclones year by year (`/POSTPROCESSING/contribution_ETCs.py`).
 - Calculation of extratropical cyclones contribution over the entire period and concatenation in a single pickle file (`/POSTPROCESSING/concat_contributions_ETCs.py`).
 - Regridding of each DataArray within the single pickle file over the ERA5 grid (`/POSTPROCESSING/regrid_over_ERA5_grid.ipynb`).
+
+### Comparison with IMERG satellite precipitation (2001-2014)
+ERA5, CRCM6-ERA5 (UBB) and the IMERG Final Run V07 half-hourly precipitation (`IMERG/PR/{YYYY}/{MM}/*.nc4`, December 2000 to December 2014) are compared over 2001-2014. Each dataset is processed on its native grid; IMERG uses the ERA5 tracks and their tropical cyclone exclusion.
+- Domain mask on the IMERG grid, hourly IMERG files restricted to the domain and map of the missing data (`/PREPROCESSING/preprocess_IMERG.py`, `/JOBS/preprocess_IMERG.sh`).
+- Precipitation percentiles over 2001-2014 of ERA5, UBB and IMERG (`/PREPROCESSING/Calculate_Percentile.py --period 2001-2014`, with `--sim IMERG` for IMERG).
+- Storm IDs within 1000 km of the ERA5 cyclones on the IMERG grid (`/POSTPROCESSING/ETCs_1000km.py --sim IMERG --tc_filter phase`); those of ERA5 and UBB are the ones above.
+- Contributions with the 2001-2014 percentiles, concatenation and merge (`/POSTPROCESSING/contribution_ETCs.py` and `/POSTPROCESSING/concat_contribution_ETCs.py` with `--period 2001-2014`; `PERIOD=2001-2014` in their job scripts).
+- Regridding onto the ERA5 grid and significance of the differences with IMERG (`/POSTPROCESSING/regrid_IMERG_evaluation.ipynb`), then the main and supplementary figures (`/PLOT/plot_map_IMERG_evaluation.ipynb`); both notebooks are run by `/JOBS/run_IMERG_evaluation.sh`.
 
 ### Supplementary: Selection of storms for the ARRIME project
 - Calculation of metrics for each extratropical cyclone year by year (`/POSTPROCESSING/ARRIME/EETCs_stat.py`).
