@@ -11,7 +11,7 @@ Script to calculate the contribution of (E)ETCs to total (extreme) precipitation
 It can be run in parallel for different years and simulations (see submit_contribution_ETCs.sh).
 It requires the concat_contribution_ETCs.py script to calculate the total contribution from all the yearly simulation files into a single file for the full period and all simulation.
 
-With --tc_filter ('phase' or 'storm'), the storm ID files without tropical cyclones are used
+With --tc_filter phase, the storm ID files without tropical cyclones are used
 (see ETCs_1000km.py) and the storm-related outputs ('1000km_storm' and '1000km_extreme_storm')
 carry the filter tag. The outputs that do not depend on the storms are only written if they
 do not exist yet, so that the files of the original analysis are never overwritten.
@@ -263,9 +263,9 @@ if __name__ == "__main__":
     parser.add_argument('--wetdays', action='store_true', help='Computation done with percentile calculated on wet days only for precipitation')
     parser.add_argument('--future', action='store_true', help='Computation done with percentile calculated on future period for future simulations')
     parser.add_argument('--original_selection', action='store_true', help='Use original selection criteria, with percentiles calculated on the full historical period')
-    parser.add_argument('--tc_filter', type=str, default=None, choices=['phase', 'storm'],
+    parser.add_argument('--tc_filter', type=str, default=None, choices=['phase'],
                         help="Use the storm ID files without tropical cyclones: 'phase' = only the "
-                             "extratropical time steps, 'storm' = only the cyclones without any tropical phase")
+                             "extratropical time steps")
     parser.add_argument('--period', type=str, default=None,
                         help='Period of the percentiles, e.g. 2001-2014 (precipitation only); added to the output names')
 

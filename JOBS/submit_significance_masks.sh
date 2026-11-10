@@ -10,10 +10,10 @@
 #   pairs_str="ERA5,YEARLY UBB,YEARLY UBD,YEARLY UBE,YEARLY UBF,YEARLY UBG,YEARLY UBH,YEARLY UBI,YEARLY" \
 #     sbatch --array=0-7 --export=ALL,TC_FILTER=phase --time=06:00:00 --mem=12G /home/vdemeyer/TRACKING/KATJA/JOBS/calculate_kde.sh
 
-# Optional TC_FILTER env var ('phase' or 'storm'): use the outputs without tropical cyclones
+# Optional TC_FILTER env var ('phase'): use the outputs without tropical cyclones
 TC_FILTER="${TC_FILTER:-}"
-if [[ -n "$TC_FILTER" && "$TC_FILTER" != "phase" && "$TC_FILTER" != "storm" ]]; then
-  echo "ERROR: TC_FILTER must be empty or 'phase' or 'storm' (got '$TC_FILTER')" >&2
+if [[ -n "$TC_FILTER" && "$TC_FILTER" != "phase" ]]; then
+  echo "ERROR: TC_FILTER must be empty or 'phase' (got '$TC_FILTER')" >&2
   exit 1
 fi
 tc_arg=()

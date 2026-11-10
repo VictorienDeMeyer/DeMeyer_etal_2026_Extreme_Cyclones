@@ -280,8 +280,7 @@ def main(tc_filter):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Significance masks of the biases and projected changes')
-    parser.add_argument('--tc_filter', type=str, default=None, choices=['phase', 'storm'],
-                        help="Use the outputs without tropical cyclones: 'phase' = only the extratropical time steps, "
-                             "'storm' = only the cyclones without any tropical phase")
+    parser.add_argument('--tc_filter', type=str, default=None, choices=['phase'],
+                        help="Use the outputs without tropical cyclones: 'phase' = only the extratropical time steps")
     args = parser.parse_args()
     main(args.tc_filter)

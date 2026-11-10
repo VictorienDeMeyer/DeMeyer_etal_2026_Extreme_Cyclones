@@ -13,7 +13,7 @@ This script calculates the density of extratropical cyclone (ETC) centers per km
 It processes cyclone track data, projects coordinates to a Lambert Azimuthal Equal Area projection, computes KDE on a grid,
 normalizes the density by the number of months, and saves the resulting density fields in NetCDF format.
 The script supports seasonal filtering and can handle different simulation datasets (e.g., ERA5, UBF).
-With --tc_filter ('phase' or 'storm'), the tropical cyclones are excluded (see ETC_tools.open_df) and the
+With --tc_filter phase, the tropical cyclones are excluded (see ETC_tools.open_df) and the
 output filename carries the filter tag.
 With season 'YEARLY', the density of each season of each year is computed with the same kernel and saved in a
 single file (density_ETCs_center_{sim}_yearly.nc), for the significance tests (significance_masks.py). As the
@@ -172,9 +172,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('sim', type=str, default='ERA5')
     parser.add_argument('season', type=str, default='ALL')
-    parser.add_argument('--tc_filter', type=str, default=None, choices=['phase', 'storm'],
-                        help="Exclude tropical cyclones: 'phase' = only the extratropical time steps, "
-                             "'storm' = only the cyclones without any tropical phase")
+    parser.add_argument('--tc_filter', type=str, default=None, choices=['phase'],
+                        help="Exclude tropical cyclones: 'phase' = only the extratropical time steps")
     args = parser.parse_args()
     main(args.sim, args.season, args.tc_filter)
 

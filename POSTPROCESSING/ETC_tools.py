@@ -7,15 +7,15 @@ _FILE_PREFIX = '/home/vdemeyer/projects/rrg-gachon/vdemeyer/'
 
 # Filename tags of the outputs produced with a tropical-cyclone filter (see open_df).
 # The empty tag (no filter) keeps every legacy filename unchanged.
-TC_FILTER_TAGS = {None: '', 'phase': '_noTC', 'storm': '_noTCstorm'}
+TC_FILTER_TAGS = {None: '', 'phase': '_noTC'}
 
 
 def tc_filter_tag(tc_filter):
     """
     Return the filename tag associated with a tropical-cyclone filter.
 
-    :param tc_filter: None, 'phase' or 'storm' (see open_df).
-    :return: '' for None, '_noTC' for 'phase', '_noTCstorm' for 'storm'.
+    :param tc_filter: None or 'phase' (see open_df).
+    :return: '' for None, '_noTC' for 'phase'.
     """
     if tc_filter not in TC_FILTER_TAGS:
         raise ValueError(f"tc_filter must be one of {list(TC_FILTER_TAGS)}, got {tc_filter!r}")
@@ -51,7 +51,6 @@ def open_df(sim, period_filtering=True, tc_filter=None, keep_non_etc=False):
           - 'phase' : keep only the time steps labelled 'ETC'. Tropical ('TC') and
                       transition ('TRANSITION') time steps are removed, but the
                       extratropical stage of a former tropical cyclone is kept.
-          - 'storm' : remove every cyclone that has a tropical phase at any time.
         Period filtering is applied on the full tracks, before the phase filter.
     :param keep_non_etc: Only used with tc_filter. If True, no time step is removed and a
         boolean column 'is_etc' flags the time steps kept by the filter.
@@ -75,10 +74,7 @@ def open_df(sim, period_filtering=True, tc_filter=None, keep_non_etc=False):
         df = df[df['storm'].isin(_valid_storms(df, sim))]
 
     if tc_filter is not None:
-        if tc_filter == 'phase':
-            is_etc = df['phase'] == 'ETC'
-        else:
-            is_etc = ~df['tc_storm'].astype(bool)
+        is_etc = df['phase'] == 'ETC'
         if keep_non_etc:
             df = df.assign(is_etc=is_etc.values)
         else:

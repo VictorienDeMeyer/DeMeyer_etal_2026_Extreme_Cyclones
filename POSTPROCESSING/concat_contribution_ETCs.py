@@ -178,9 +178,9 @@ if __name__ == "__main__":
     parser.add_argument('--only-merge', action='store_true', help='Run only load_and_merge_all_pkl (skip calculations)')
     parser.add_argument('--period', type=str, default=None,
                         help='Outputs of contribution_ETCs.py --period, e.g. 2001-2014 (precipitation only, IMERG included)')
-    parser.add_argument('--tc_filter', type=str, default=None, choices=['phase', 'storm'],
+    parser.add_argument('--tc_filter', type=str, default=None, choices=['phase'],
                         help="Use the outputs of contribution_ETCs.py without tropical cyclones: 'phase' = only the "
-                             "extratropical time steps, 'storm' = only the cyclones without any tropical phase")
+                             "extratropical time steps")
 
     # simulations = ['ERA5', 'UBB', 'UBD', 'UBE', 'UBF', 'UBG', 'UBH', 'UBI']
     variables = ['pr', 'ws']

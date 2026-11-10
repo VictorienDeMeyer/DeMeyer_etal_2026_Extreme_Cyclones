@@ -40,7 +40,7 @@ tropical / subtropical cyclones in the extratropical-storm statistics.
 This latitude filter is only applied when no --region is selected; when
 a region is given, its lat/lon bounding box supersedes it.
 
-An optional --tc_filter argument ('phase' or 'storm') reads the storm ID files produced by
+An optional --tc_filter argument ('phase') reads the storm ID files produced by
 ETCs_1000km.py with the same filter, i.e. without the tropical cyclones (see
 ETC_tools.open_df). The output filename then carries the filter tag.
 
@@ -383,9 +383,9 @@ if __name__ == "__main__":
                              "restrict the spatial mask. When set, supersedes the "
                              f"LAT_MIN_NORTH={LAT_MIN_NORTH} filter. Currently: "
                              f"{list(REGION_BOXES.keys())}.")
-    parser.add_argument('--tc_filter', type=str, default=None, choices=['phase', 'storm'],
+    parser.add_argument('--tc_filter', type=str, default=None, choices=['phase'],
                         help="Use the storm ID files without tropical cyclones: 'phase' = only the "
-                             "extratropical time steps, 'storm' = only the cyclones without any tropical phase")
+                             "extratropical time steps")
 
     args = parser.parse_args()
     main(args.iyear, args.sim, args.wetdays, args.future, args.quantile, args.mask, args.region, args.tc_filter)

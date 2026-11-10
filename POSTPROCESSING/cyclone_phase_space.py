@@ -30,9 +30,6 @@ warm-seclusion extratropical cyclones only have a shallow warm core (-VTL > 0,
 extratropical is done afterwards by classify_cyclone_phase.py, after the 24-h
 running mean of the parameters.
 
-When the files have the 400 hPa level (ERA5), two control values of -VTU are added
-(see LEVELS_UPPER_CHECK): with the real 400 hPa level and with an interpolated one.
-
 References:
   Hart (2003), MWR 131, 585-616.
   Evans and Hart (2003), MWR 131, 909-925.
@@ -63,13 +60,6 @@ RADIUS_KM = 500.
 # diagnostics are comparable.
 LEVELS_LOWER = [900, 850, 800, 700, 600]
 LEVELS_UPPER = [600, 500, 300]
-# Control of the missing 400 hPa level, only when the files have it (ERA5):
-#   minus_VTU_400       : -VTU fitted on 600, 500, 400 and 300 hPa
-#   minus_VTU_interp400 : same, with Z400 interpolated linearly in ln(p) between 500 and 300 hPa
-# classify_cyclone_phase.py reports how the labels change when -VTU is replaced by these values.
-LEVEL_CHECK = 400
-LEVELS_UPPER_CHECK = [600, 500, 400, 300]
-CHECK_COLUMNS = ['minus_VTU_400', 'minus_VTU_interp400']
 # Bottom and top of the layer used for the thickness asymmetry B
 B_BOTTOM, B_TOP = 900, 600
 
@@ -229,13 +219,6 @@ def cps_parameters(z, levels, lat0, lon0, heading, geom,
     return B, slope(levels_lower), slope(levels_upper), coverage
 
 
-def interpolate_level(z, levels, p, p_below, p_above):
-    """Geopotential height at p, interpolated linearly in ln(p) between p_below and p_above."""
-    w = np.log(p / p_below) / np.log(p_above / p_below)
-    z_below, z_above = z[levels.index(p_below)], z[levels.index(p_above)]
-    return z_below + w * (z_above - z_below)
-
-
 # ----------------------------------------------------------------------------------------
 # Geopotential files
 # ----------------------------------------------------------------------------------------
@@ -247,12 +230,11 @@ def zg_files(sim, year, month):
     return sorted(glob(f'{BASE}/{sim}/ZG/zg_{sim.lower()}_{year}{month:02d}_se.nc'))
 
 
-def open_zg(files, levels, stride=1, optional_levels=()):
+def open_zg(files, levels, stride=1):
     """
     Open the geopotential height files of one month and standardize them.
 
     :param levels: required pressure levels [hPa].
-    :param optional_levels: pressure levels [hPa] also selected when the files have them.
     :return: (zg DataArray (time, plev, y, x) in m with plev in hPa, lat2d, lon2d)
     """
     ds = xr.open_mfdataset(files, combine='by_coords') if len(files) > 1 else xr.open_dataset(files[0])
@@ -286,7 +268,6 @@ def open_zg(files, levels, stride=1, optional_levels=()):
     missing = [p for p in levels if not np.any(np.isclose(plev, p))]
     if missing:
         raise ValueError(f'Missing pressure levels {missing} hPa in {files[0]} (available: {sorted(plev)})')
-    levels = list(levels) + [p for p in optional_levels if p not in levels and np.any(np.isclose(plev, p))]
     levels = sorted(levels, reverse=True)
     zg = zg.sel(plev=levels, method='nearest').assign_coords(plev=np.array(levels, dtype=float))
 
@@ -343,9 +324,8 @@ def main(year, sim, stride):
         if not files:
             raise FileNotFoundError(f'No geopotential file for {sim} {year}-{month:02d}')
 
-        zg, lat2d, lon2d = open_zg(files, levels, stride=stride, optional_levels=[LEVEL_CHECK])
+        zg, lat2d, lon2d = open_zg(files, levels, stride=stride)
         zg_levels = [float(p) for p in zg['plev'].values]
-        check = LEVEL_CHECK in zg_levels
 
         if geom is None:
             geom = GridGeometry(lat2d, lon2d)
@@ -370,23 +350,14 @@ def main(year, sim, stride):
 
         for t in times:
             z = zg.sel(time=t).values.reshape(len(zg_levels), -1).astype(np.float64)
-            if check:
-                z_interp = z.copy()
-                z_interp[zg_levels.index(LEVEL_CHECK)] = interpolate_level(z, zg_levels, LEVEL_CHECK, 500, 300)
             for _, row in df_month[df_month['date'] == t].iterrows():
                 center = (row['lat'], row['lon'], row['heading'], geom)
                 B, vtl, vtu, cov = cps_parameters(z, zg_levels, *center)
-                record = {
+                records.append({
                     'storm': row['storm'], 'date': t, 'lat': row['lat'], 'lon': row['lon'],
                     'heading': row['heading'], 'B': B, 'minus_VTL': vtl, 'minus_VTU': vtu,
                     'coverage': cov,
-                }
-                if check:
-                    record['minus_VTU_400'] = cps_parameters(
-                        z, zg_levels, *center, levels_upper=LEVELS_UPPER_CHECK)[2]
-                    record['minus_VTU_interp400'] = cps_parameters(
-                        z_interp, zg_levels, *center, levels_upper=LEVELS_UPPER_CHECK)[2]
-                records.append(record)
+                })
 
         zg.close()
 
@@ -394,8 +365,6 @@ def main(year, sim, stride):
         print(f'WARNING: {n_missing_time} track times missing in the geopotential files')
 
     columns = ['storm', 'date', 'lat', 'lon', 'heading', 'B', 'minus_VTL', 'minus_VTU', 'coverage']
-    if any(CHECK_COLUMNS[0] in r for r in records):
-        columns += CHECK_COLUMNS
     out = pd.DataFrame(records, columns=columns)
     output_dir = f'{BASE}/{sim}/STORM_RELATED/CPS'
     os.makedirs(output_dir, exist_ok=True)

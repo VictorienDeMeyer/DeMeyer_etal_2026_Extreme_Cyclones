@@ -1,41 +1,93 @@
-import xarray as xr
-import numpy as np
+import argparse
 import os
+import numpy as np
+import pandas as pd
+import xarray as xr
 
 
 """
-Je dois rajouter une coordonnée à la variable surf_wind pour le 2030-04-01T00:00:00.000000000 qui est manquante pour le vent et la psl
+Adds a time step missing from the hourly CRCM6 outputs, by default 2030-04-01T00 of UBI (MIROC6, SSP3-7.0),
+which was missing for the surface wind and the mean sea level pressure.
+
+Same method as interpolate_missing_data_2015.py: the missing hour is filled by linear interpolation in time
+between the last hour before it (end of the previous monthly file) and the first hour after it, and the monthly
+file is rewritten with this hour added. Each variable is first checked: nothing is written when the time step is
+already there (checked on 2026-11-10: 2030-04-01T00 is present in the wind, pressure and precipitation of UBI, the
+gap has been filled upstream).
+
+Usage: python interpolate_missing_data_UBI_2030.py [--sim UBI] [--time 2030-04-01T00]
+
+Author: Dr Victorien De Meyer
+Year: 2026
 """
 
-sim = ['UBI']     
-filenames_wind = [f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/WIND/wind10_{sim.lower()}_203003_se.nc', f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/WIND/wind10_{sim.lower()}_203004_se.nc']
-filenames_psl = [f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/PSL/psl_{sim.lower()}_203003_se.nc', f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/PSL/psl_{sim.lower()}_203004_se.nc']
+BASE = '/home/vdemeyer/projects/rrg-gachon/vdemeyer'
+# Hourly variables used by the chain: folder, file stem and variable name
+VARIABLES = [('WIND', 'wind10', 'surf_wind'), ('PSL/RAW', 'psl', 'psl'), ('PR', 'pr', 'pr')]
 
-for var, filenames in zip(['surf_wind', 'psl'], [filenames_wind, filenames_psl]):
-    for files in filenames:
-        ds = xr.open_mfdataset(filenames)
-        ds = ds.sel(time=slice(f'2014-12-31', None))
 
-    missing_time = np.datetime64('2015-01-01T00:00:00.000000')
+def month_file(sim, folder, stem, t):
+    return f'{BASE}/{sim}/{folder}/{stem}_{sim.lower()}_{t:%Y%m}_se.nc'
 
-    if ds_wind['time'].dt.round('h')[24] != missing_time:
-        print(f"Timestamp 2015-01-01T00:00:00.000000 not found in wind data for {sim}. Inserting NaN values.")
-        # Insert missing_time with NaN values
-        new_times = np.sort(np.append(ds_wind['time'].values, missing_time))
-        ds_wind = ds_wind.reindex({'time': new_times})
-        # Interpolate only if there is a NaN at this timestamp
-        surf_wind_at_missing = ds_wind['surf_wind'].sel(time=missing_time)
-        if np.isnan(surf_wind_at_missing).any():
-            ds_wind = ds_wind.chunk({'time': -1})
-            ds_wind['surf_wind'] = ds_wind['surf_wind'].interpolate_na(dim='time', method='linear')
-            print(f"Interpolation complete for {missing_time} in wind data.")
 
-            ds_wind = ds_wind.sel(time=slice('2015-01-01', '2015-12-31'))
-            ds_wind.to_netcdf(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/WIND/wind10_{sim.lower()}_201501_int_se.nc', mode='w')
-            ds_wind.close()
-            os.remove(f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/WIND/wind10_{sim.lower()}_201501_se.nc')
-            os.rename(
-                f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/WIND/wind10_{sim.lower()}_201501_int_se.nc',
-                f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/WIND/wind10_{sim.lower()}_201501_se.nc'
-            )
-            print(f"Processed and saved wind data for {sim} with interpolation for {missing_time}.")
+def hours(ds):
+    # The CRCM6 times carry float noise: compare them rounded to the hour
+    return pd.DatetimeIndex(ds['time'].values).round('h')
+
+
+def fill_missing_hour(sim, folder, stem, var, missing):
+    path = month_file(sim, folder, stem, missing)
+    with xr.open_dataset(path) as ds:
+        if missing in hours(ds):
+            print(f'{sim} {var}: {missing} is present in {os.path.basename(path)}, nothing to do')
+            return False
+        ds = ds.load()
+
+    # Neighbouring hours: the last one before the missing hour (end of the previous monthly file when the missing
+    # hour is the first of the month) and the first one after it
+    previous = month_file(sim, folder, stem, missing - pd.Timedelta('1h'))
+    if previous != path:
+        with xr.open_dataset(previous) as ds_prev:
+            before = ds_prev.isel(time=np.flatnonzero(hours(ds_prev) < missing)[-1]).load()
+    else:
+        before = ds.isel(time=np.flatnonzero(hours(ds) < missing)[-1])
+    k_after = np.flatnonzero(hours(ds) > missing)[0]
+    after = ds.isel(time=k_after)
+    t_before, t_after = hours(before.expand_dims('time'))[0], hours(after.expand_dims('time'))[0]
+    if t_after - t_before != pd.Timedelta('2h'):
+        raise ValueError(f'{sim} {var}: more than one hour missing around {missing} ({t_before} -> {t_after})')
+
+    # Linear interpolation in time between the two neighbouring hours, for every variable with a time dimension
+    # (the field and, for the precipitation, the time bounds)
+    w = (missing - t_before) / (t_after - t_before)
+    piece = ds.isel(time=[k_after]).copy(deep=True).assign_coords(time=[np.datetime64(missing, 'ns')])
+    for name, da in ds.data_vars.items():
+        if 'time' not in da.dims:
+            continue
+        b, a = before[name].values, after[name].values
+        if np.issubdtype(da.dtype, np.datetime64):
+            b, a = b.astype('int64'), a.astype('int64')
+            piece[name].values[0] = np.round(b + w * (a - b)).astype('int64').astype(da.dtype)
+        else:
+            piece[name].values[0] = (b + w * (a - b)).astype(da.dtype)
+    out = xr.concat([ds, piece], dim='time', data_vars='minimal', coords='minimal', compat='override').sortby('time')
+
+    # Rewritten next to the original and then renamed, with the encoding of the original file
+    keys = ('zlib', 'complevel', 'dtype', '_FillValue', 'units', 'calendar')
+    encoding = {name: {k: v for k, v in ds[name].encoding.items() if k in keys}
+                for name in list(ds.data_vars) + ['time']}
+    tmp = f'{path}.tmp'
+    out.to_netcdf(tmp, encoding=encoding)
+    os.replace(tmp, path)
+    print(f'{sim} {var}: {missing} added to {os.path.basename(path)} by linear interpolation '
+          f'between {t_before} and {t_after}')
+    return True
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Add a missing hourly time step by linear interpolation in time')
+    parser.add_argument('--sim', type=str, default='UBI', help='Simulation (default UBI)')
+    parser.add_argument('--time', type=str, default='2030-04-01T00', help='Missing time step (default 2030-04-01T00)')
+    args = parser.parse_args()
+    for folder, stem, var in VARIABLES:
+        fill_missing_hour(args.sim, folder, stem, var, pd.Timestamp(args.time))
