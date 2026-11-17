@@ -196,6 +196,4 @@ Without `TC_FILTER`, or with `tc_filter = None` in the notebooks, the scripts ke
 ## Citation, license and authors
 Please cite the article and the archived code (`CITATION.cff`; Zenodo DOI above). The code is distributed under the MIT license (`LICENSE`).
 
-- Victorien De Meyer: Centre ESCER, Université du Québec à Montréal, Canada (code)
-- Alejandro Di Luca: Centre ESCER, Université du Québec à Montréal, Canada
-- Ting-Chen Chen: Moody's, London, United Kingdom
+Code author: Victorien De Meyer, Centre ESCER, Université du Québec à Montréal, Canada.

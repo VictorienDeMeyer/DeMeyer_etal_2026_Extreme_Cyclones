@@ -27,14 +27,6 @@ authors:
     affiliation: >-
       Centre pour l'Étude et la Simulation du Climat à l'Échelle Régionale
       (ESCER), Université du Québec à Montréal, Montréal, Québec, Canada
-  - family-names: "Di Luca"
-    given-names: "Alejandro"
-    affiliation: >-
-      Centre pour l'Étude et la Simulation du Climat à l'Échelle Régionale
-      (ESCER), Université du Québec à Montréal, Montréal, Québec, Canada
-  - family-names: "Chen"
-    given-names: "Ting-Chen"
-    affiliation: "Moody's, London, United Kingdom"
 
 version: "2.0.0-revised"
 date-released: "2026-11-17"
