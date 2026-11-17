@@ -38,7 +38,7 @@ The repository contains everything needed to reproduce the results of the articl
 
 The CRCM6-GEM5 simulations cover the CORDEX North American domain (NAM-12, 0.11° rotated-pole grid).
 
-**Inputs.** The input data are not part of the repository. They are assumed to be available on the cluster of the Digital Research Alliance of Canada used for the study.
+**Inputs.** The input data are not distributed with this repository. They come from:
 - **CRCM6-GEM5 (ESCER, UQAM):**
   - hourly precipitation, near-surface wind components and mean sea level pressure;
   - geopotential height at 900–300 hPa at 00, 06, 12 and 18 UTC;
@@ -48,26 +48,15 @@ The CRCM6-GEM5 simulations cover the CORDEX North American domain (NAM-12, 0.11�
   - geopotential on pressure levels;
   - land-sea mask and surface geopotential.
 - **IMERG V07B Final Run:** NASA GES DISC, https://doi.org/10.5067/GPM/IMERG/3B-HH/07.
-- **IBTrACS v04r01:** North Atlantic and eastern North Pacific csv files, saved in `ALL/IBTRACS/`.
+- **IBTrACS v04r01:** North Atlantic and eastern North Pacific csv files.
 - **Urban areas:** GHS-SMOD R2023A (E2025 epoch, 1 km) of the Global Human Settlement Layer.
 - **Orography and land fraction of the driving AOGCMs:** CMIP6 `orog` and `sftlf` (table `fx`, historical), for the panels of the domain figure.
 - **Map background:** Natural Earth 1:50m shaded relief (`NE1_50M_SR_W.tif`).
 
-**Paths.** All paths are written for that cluster. The data are under `/home/vdemeyer/projects/rrg-gachon/vdemeyer/`, called `BASE` below, and the code is under `/home/vdemeyer/TRACKING/KATJA/`. Adapt these two prefixes to run the code elsewhere.
-- **Inputs:** `BASE/{sim}/PR/`, `UAS/`, `VAS/`, `WIND/`, `PSL/RAW/` and `ZG/` (monthly files `*_{sim}_{YYYYMM}_se.nc` for CRCM6-GEM5); `BASE/ERA5/{variable}/{YYYY}/{MM}/`; `BASE/IMERG/PR/{YYYY}/{MM}/`.
-- **Static fields:** `BASE/ALL/MASK/` (domain masks, land-sea masks, urban mask) and `BASE/ALL/OROG/`.
-- **Outputs:**
-  - `BASE/{sim}/PSL/SMOOTHED/` and `BASE/{sim}/STORM_RELATED/` (tracks, cyclone phase space, storm IDs within 1000 km, densities, storm metrics);
-  - `BASE/{sim}/PR/1000km_storm/` and `BASE/{sim}/WIND/1000km_storm/` (yearly accumulations), `BASE/{sim}/PR_Percentile/` and `BASE/{sim}/WIND_Percentile/`;
-  - `BASE/ALL/CONTRIB/`, `BASE/ALL/SIGNIFICANCE/` and `BASE/ALL/PLOT/` (merged contributions, significance masks and figures).
+**Paths.** The locations of the input data and of the outputs are written at the top of each script and notebook. Adapt them to your own data before running the code.
 
 ## Software environment
-The jobs are SLURM scripts. Python environment used for the article, from the Alliance modules and a virtual environment:
-
-```bash
-module load python/3.11 mpi4py/4.0.3 esmf scipy-stack/2024a geos proj
-source ~/py3/bin/activate
-```
+The analysis was run on a SLURM cluster: the scripts in `JOBS/` are SLURM job scripts. Main Python packages and the versions used for the article:
 
 | Package | Version | Package | Version |
 |---|---|---|---|
@@ -81,10 +70,9 @@ source ~/py3/bin/activate
 
 `POSTPROCESSING/degurba_regrid_to_crcm6.py` also needs `rioxarray` and `rasterio`. The ERA5 wind magnitude is computed with `cdo`.
 
-The tracking algorithm is a Fortran program, compiled with:
+The tracking algorithm is a Fortran program. It needs `gfortran` and the netCDF-Fortran library, and is compiled with:
 
 ```bash
-module load gcc netcdf-fortran
 make tracks        # builds storm_tracks.Abs from storm_tracks.f90 and its modules
 ```
 
@@ -99,7 +87,6 @@ PLOT/             figure notebooks and scripts
 JOBS/             SLURM job scripts (JOBS/GLOST/ for the tracking)
 ```
 
-Folders named `USELESS` and the job logs (`JOBS/OUTPUTS`) are ignored by Git.
 
 ## Workflow
 The steps below are run in this order. Unless stated otherwise, each Python script has a SLURM job script in `JOBS/` that loops over the simulations and years.
@@ -131,7 +118,7 @@ With the filter `phase`, only the time steps labelled `ETC` are kept, including 
 ### 4. Accumulated exceedances and track density (`POSTPROCESSING/`)
 - **Storm IDs** within 1000 km of each ETC, every hour (`ETCs_1000km.py`, `JOBS/submit_jobs_ETCs_1000km.sh`).
 - **Yearly and seasonal sums and counts of the exceedances** within 1000 km of an ETC (`contribution_ETCs.py`, `JOBS/submit_jobs_contribution_ETCs.sh`).
-- **Merge over the periods** into `ALL/CONTRIB/contribution_ETCs_1000hPa_noTC.pkl` (`concat_contribution_ETCs.py`, `JOBS/submit_jobs_concat_contribution_ETCs.sh`).
+- **Merge over the periods,** one file for all the simulations (`concat_contribution_ETCs.py`, `JOBS/submit_jobs_concat_contribution_ETCs.sh`).
 - **Track density** with a 200 km Gaussian kernel (`calculate_kde.py`, `JOBS/submit_jobs_calculate_kde.sh`), merged by `merge_density_all_sims_seasons.ipynb`. The yearly densities needed for the significance come from the mode `YEARLY` (see `JOBS/submit_significance_masks.sh`).
 - **Regridding onto the ERA5 grid** (`regrid_over_ERA5_grid.ipynb`): conservative for the accumulations, nearest neighbour for the counts, bilinear for the percentiles and densities.
 
@@ -157,13 +144,13 @@ Each dataset is processed on its native grid. IMERG uses the ERA5 tracks and the
 - **Urban mask** of the supplementary figure: `degurba_regrid_to_crcm6.py`.
 
 ### 8. Figures (`PLOT/`)
-The notebooks are run in JupyterLab (Python 3 kernel of the environment above), with `tc_filter = 'phase'`, and save the figures in `BASE/ALL/PLOT/`. `PLOT/plot_map_ETCs_RCM_vs_driving.py` is run by `JOBS/plot_map_ETCs_RCM_vs_driving.sh`.
+The notebooks are run in JupyterLab, with `tc_filter = 'phase'`. `PLOT/plot_map_ETCs_RCM_vs_driving.py` is run by `JOBS/plot_map_ETCs_RCM_vs_driving.sh`.
 
 ## Figures and tables of the article
 
 **Main text**, in the order of the article:
 
-| Content | Code | Output in `BASE/ALL/PLOT/` |
+| Content | Code | Figure file |
 |---|---|---|
 | Domain, orography of CRCM6-GEM5, ERA5 and the AOGCMs, NNA region | `plot_map_orography.ipynb` | `orography_domain.png` |
 | ETC track density, ERA5 and biases | `plot_map_ETCs_diff_w_ERA5.ipynb` | `ETC_density_hist_noTC.png` |
@@ -179,11 +166,11 @@ The notebooks are run in JupyterLab (Python 3 kernel of the environment above), 
 | Top-10 seasonal ETCs over NNA: occurrence and intensity | `plot_storm_percentile_metrics_land_NNA2_seasonal.ipynb` | `scatter_top10_seasonal_storms_cumul_PR_NNA2_noTC.png` |
 | Top-10 seasonal ETCs over NNA: ranked intensity | `plot_storm_percentile_metrics_land_NNA2_seasonal.ipynb` | `rankshaded_top10_seasonal_storms_intensity_PR_NNA2_noTC.png` |
 
-The validation of the tropical cyclone labels against IBTrACS, given in the article, is written by `validate_phase_ibtracs.py` in `BASE/{sim}/STORM_RELATED/CPS/`.
+The validation of the tropical cyclone labels against IBTrACS, given in the article, comes from `validate_phase_ibtracs.py`.
 
 **Supplement:**
 
-| Content | Code | Output in `BASE/ALL/PLOT/` |
+| Content | Code | Figure file |
 |---|---|---|
 | Urban areas and NNA region | `plot_degurba_thresholds.ipynb` | `supp_urban_mask_NNA2.png` |
 | 99th and 99.9th percentiles of precipitation and wind | `plot_percentiles.ipynb` | `supp_p99_*_hist.png`, `supp_p999_*_hist.png` |
