@@ -3,7 +3,7 @@
 # Orchestrator: submits two job arrays to calculate_kde.sh.
 #   - ALL season:    8 tasks (sims),                 4h
 #   - Per-season:    8 x 4 = 32 tasks (sim,season),  1h
-# Optional: export TC_FILTER=phase (or storm) before sourcing to exclude the tropical cyclones.
+# Optional: export TC_FILTER=phase before sourcing to exclude the tropical cyclones.
 
 sims=(ERA5 UBB UBD UBE UBF UBG UBH UBI)
 seasons=(DJF MAM JJA SON)

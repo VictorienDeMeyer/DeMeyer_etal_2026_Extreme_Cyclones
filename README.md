@@ -1,75 +1,214 @@
 # DeMeyer_etal_2026_Extreme_Cyclones
-Study of North American Extreme Extratropical Cyclones.
 
-## Description
-The project aims to track extratropical cyclones from regional simulations and ERA5 reanalysis over North America, to identify the most intense extratropical cyclones based on objective metrics related to the associated precipitation and surface winds, and further study the performance of models to replicate ERA5 as well as future changes.
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21922110.svg)](https://doi.org/10.5281/zenodo.21922110)
 
-## Usage
-The project steps are divided as follows:
+Analysis code of:
 
-### Pre-processing
-The input data (precipitation, surface meridional and zonal wind, 850 hPa relative vorticity, mean sea level pressure, geopotential height on pressure levels, and the IMERG precipitation) are assumed to be available on the Alliance Canada servers; the scripts used to download or transfer them are not part of the repository.
-- Creation of a mask to restrict ERA5 data to the CRCM6 grid and create a buffer of 200km around the domain for the storm tracking algorithm (`/PREPROCESSING/create_mask_CRCM6_for_ERA5.ipynb`).
-- Smoothing of relative vorticity and/or mean sea level pressure fields (`/PREPROCESSING/preprocess_year.py` or `create_storm_fields.sh` (not on GitHub) depending on whether the file is NetCDF or RPN, respectively).
-- Calculation of surface wind magnitude (`/PREPROCESSING/Calculate_Wind_Magnitude.py` with `/JOBS/submit_Calculate_Wind_Magnitude.sh` for the CRCM6 simulations, cdo with `/JOBS/Calculate_Wind_Magnitude_cdo.sh` for ERA5).
-- Calculation of wind and precipitation percentiles (`/PREPROCESSING/Calculate_Percentile.py`).
-- Adding the missing timestep on 2015-01-01:T00:00:00.00000 on surface wind for the future simulations (UBG, UBH and UBI) (`/PREPROCESSING/interpolate_missing_data_2015.py`), and on 2030-04-01T00 for UBI (surface wind and mean sea level pressure), added by linear interpolation in time only if it is missing (`/PREPROCESSING/interpolate_missing_data_UBI_2030.py`).
-<!-- - For CRCM6 only: combine the smoothed mean sea level pressure yearly NetCDF files into decadal files (`slice_decade_preprocess.py`). -->
+> De Meyer, V., Di Luca, A., and Chen, T.-C.: Future Projections of Extreme Wind and Precipitation Associated With Extratropical Cyclones Over North America using Regional Climate Simulations, EGUsphere [preprint], https://doi.org/10.5194/egusphere-2026-4825, 2026.
 
-### Tracking
-- Running the tracking of extratropical cyclones year by year (`/JOBS/GLOST/make_tracks.sh`).
+Extratropical cyclones (ETCs) are tracked in hourly ERA5 and CRCM6-GEM5 data over North America. The precipitation and near-surface wind exceedances above the 99th percentile of all hours, within 1000 km of an ETC centre, are then accumulated (`EE_cum|ETC`). This accumulation is decomposed into an intensity term, a threshold term and an occurrence term. With these diagnostics, the code:
+- evaluates the historical simulations against ERA5, and against the IMERG satellite precipitation;
+- separates the contributions of the regional model and of the driving data to the biases;
+- tests the significance of the differences;
+- attributes the projected changes, first over the whole domain and then for the most extreme individual ETCs over northeastern North America (NNA).
 
-### Cyclone phase classification (tropical / transition / extratropical)
-The tracking algorithm detects every low-pressure system, including tropical cyclones. Each time step of each tracked cyclone is therefore labelled `TC`, `TRANSITION` or `ETC` with the cyclone phase space (CPS) of Hart (2003), i.e. from its thermal structure (warm or cold core, thermal symmetry):
-- Calculation of the CPS parameters B (900-600 hPa thickness asymmetry), -VTL (fitted on 900, 850, 800, 700 and 600 hPa) and -VTU (fitted on 600, 500 and 300 hPa, as the CRCM6 files have no 400 hPa level) within 500 km of each 6-hourly track point (`/POSTPROCESSING/cyclone_phase_space.py`, `/JOBS/submit_jobs_cyclone_phase_space.sh`). Run it after `connect_ETCs.py`.
-- 24-h running mean of the parameters and labelling of every hourly track point (`/POSTPROCESSING/classify_cyclone_phase.py`, `/JOBS/submit_classify_cyclone_phase.sh`). A tropical phase is a deep (-VTL > 0 and -VTU > 0), symmetric (B < 10 m) warm core lasting at least 24 h equatorward of 40°N, a limit that removes the deep warm cores of mature high-latitude cyclones; the shallow warm core of warm-seclusion extratropical cyclones (-VTL > 0, -VTU < 0) is not tropical. Extratropical transition starts when the cyclone becomes asymmetric (B >= 10 m) or cold core (-VTL < 0) and is complete when both conditions are met (Evans and Hart 2003; Bieli et al. 2019; Garin et al. 2025). The output `{sim}_psl_smooth_400km_24h_1000hPa_phase.txt` contains the track, the smoothed parameters, the `phase` label and a `tc_storm` flag (storm with a tropical phase at any time).
-- Evaluation of the labels of ERA5 and UBB (driven by ERA5) against the IBTrACS best tracks (`/POSTPROCESSING/validate_phase_ibtracs.py`; the North Atlantic and eastern North Pacific IBTrACS csv files must be downloaded into `ALL/IBTRACS`).
+The repository contains everything needed to reproduce the results of the article. Releases are archived on Zenodo; the DOI above always points to the latest version:
+- `v1.0.0-submitted`: code of the submitted (discussion) version;
+- `v2.0.0-revised`: code of the revised version.
 
-Required input: geopotential height at 900, 850, 800, 700, 600, 500 and 300 hPa, at 00, 06, 12 and 18 UTC, over 1980-2014 (ERA5, UBB, UBD, UBE, UBF) and 2063-2097 (UBG, UBH, UBI), stored as `{sim}/ZG/zg_{sim}_{YYYYMM}_se.nc` (variable `zg(time, plev, rlat, rlon)`, CRCM6 grid) and `ERA5/ZG/{YYYY}/{MM}/*.nc4` (variable `z`).
+## Contents
+- [Simulations and data](#simulations-and-data)
+- [Software environment](#software-environment)
+- [Repository structure](#repository-structure)
+- [Workflow](#workflow)
+- [Figures and tables of the article](#figures-and-tables-of-the-article)
+- [Submitted and revised versions](#submitted-and-revised-versions)
+- [Citation, license and authors](#citation-license-and-authors)
 
-The tropical cyclones are then excluded from the post-processing below with the `--tc_filter` option of `ETCs_1000km.py`, `storm_percentile_metrics.py`, `contribution_ETCs.py`, `concat_contribution_ETCs.py` and `calculate_kde.py` (`TC_FILTER=phase` in the job scripts, `tc_filter = 'phase'` in the notebooks, `ETC_tools.open_df(sim, tc_filter='phase')` in Python): only the time steps labelled `ETC` are kept, including the extratropical stage of a former tropical cyclone, and the outputs get the tag `_noTC`.
+## Simulations and data
 
-In `ETCs_1000km.py`, each grid point is still attributed to the closest cyclone among all tracked cyclones, and is discarded if that cyclone is not extratropical, so that the precipitation and wind of a tropical cyclone are never attributed to a more distant extratropical cyclone. Without `--tc_filter`, all scripts behave and name their outputs exactly as before.
+| Name in the code | Dataset | Periods |
+|---|---|---|
+| `ERA5` | ERA5 reanalysis | 1980–2014 |
+| `UBB` | CRCM6-GEM5 driven by ERA5 | 1980–2014 |
+| `UBD` / `UBG` | CRCM6-GEM5 driven by EC-Earth3-Veg | 1980–2014 / 2063–2097 (SSP3-7.0) |
+| `UBE` / `UBH` | CRCM6-GEM5 driven by MPI-ESM1-2-HR | 1980–2014 / 2063–2097 (SSP3-7.0) |
+| `UBF` / `UBI` | CRCM6-GEM5 driven by MIROC6 | 1980–2014 / 2063–2097 (SSP3-7.0) |
+| `IMERG` | IMERG Final Run V07, half-hourly, 0.1° | 2001–2014 |
 
-Example: `sbatch --export=ALL,TC_FILTER=phase /home/vdemeyer/TRACKING/KATJA/JOBS/submit_jobs_ETCs_1000km.sh`, then the same `TC_FILTER` for the metrics, contribution and density jobs.
+The CRCM6-GEM5 simulations cover the CORDEX North American domain (NAM-12, 0.11° rotated-pole grid).
 
-### Post-processing
-- Connecting extratropical cyclones from each file into a single text file covering the entire period (`/POSTPROCESSING/connect_ETCs.py`).
-- Calculation of extratropical cyclones track density (`/POSTPROCESSING/calculate_kde.py`).
-- Merging all track density files into a single NetCDF file (`/POSTPROCESSING/merge_density_all_sims_seasons.ipynb`).
-- Creation of NetCDF masks within a 1000 km radius around each extratropical cyclone (`/POSTPROCESSING/ETCs_1000km.py`).
-- Regridding of the GHS-SMOD DEGURBA raster onto the CRCM6 rotated-pole grid to produce per-class fraction-of-coverage fields used as the urban mask (`/POSTPROCESSING/degurba_regrid_to_crcm6.py`).
-- Calculation of extreme metrics associated to individual extratropical cyclones over urban areas (`/POSTPROCESSING/storm_percentile_metrics.py`).
-- Merging all individual files of extreme metrics of individual extratropical cyclones over urban areas in a single pickle file (`/POSTPROCESSING/aggregate_storm_percentile_metrics.ipynb`).
-- Calculation of the contribution of precipitation and surface wind associated with extratropical cyclones year by year (`/POSTPROCESSING/contribution_ETCs.py`).
-- Calculation of extratropical cyclones contribution over the entire period and concatenation in a single pickle file (`/POSTPROCESSING/concat_contribution_ETCs.py`).
-- Regridding of each DataArray within the single pickle file over the ERA5 grid (`/POSTPROCESSING/regrid_over_ERA5_grid.ipynb`).
-- Significance of the biases and of the projected changes with respect to interannual variability, hatched on the maps (`/POSTPROCESSING/significance_masks.py`, `/JOBS/submit_significance_masks.sh`): paired t-test on the yearly differences for CRCM6-ERA5 (UBB) against ERA5, Welch's t-test for the AOGCM-driven simulations and the projected changes, false discovery rate of 0.10 over each map. It needs the yearly densities (`calculate_kde.py <sim> YEARLY`).
+**Inputs.** The input data are not part of the repository. They are assumed to be available on the cluster of the Digital Research Alliance of Canada used for the study.
+- **CRCM6-GEM5 (ESCER, UQAM):**
+  - hourly precipitation, near-surface wind components and mean sea level pressure;
+  - geopotential height at 900–300 hPa at 00, 06, 12 and 18 UTC;
+  - land fraction and orography.
+- **ERA5 (Copernicus Climate Data Store):**
+  - hourly total precipitation, 10 m wind components and mean sea level pressure;
+  - geopotential on pressure levels;
+  - land-sea mask and surface geopotential.
+- **IMERG V07B Final Run:** NASA GES DISC, https://doi.org/10.5067/GPM/IMERG/3B-HH/07.
+- **IBTrACS v04r01:** North Atlantic and eastern North Pacific csv files, saved in `ALL/IBTRACS/`.
+- **Urban areas:** GHS-SMOD R2023A (E2025 epoch, 1 km) of the Global Human Settlement Layer.
+- **Orography and land fraction of the driving AOGCMs:** CMIP6 `orog` and `sftlf` (table `fx`, historical), for the panels of the domain figure.
+- **Map background:** Natural Earth 1:50m shaded relief (`NE1_50M_SR_W.tif`).
 
-### Comparison with IMERG satellite precipitation (2001-2014)
-ERA5, CRCM6-ERA5 (UBB) and the IMERG Final Run V07 half-hourly precipitation (`IMERG/PR/{YYYY}/{MM}/*.nc4`, December 2000 to December 2014) are compared over 2001-2014. Each dataset is processed on its native grid; IMERG uses the ERA5 tracks and their tropical cyclone exclusion.
-- Domain mask on the IMERG grid, hourly IMERG files restricted to the domain and map of the missing data (`/PREPROCESSING/preprocess_IMERG.py`, `/JOBS/preprocess_IMERG.sh`).
-- Precipitation percentiles over 2001-2014 of ERA5, UBB and IMERG (`/PREPROCESSING/Calculate_Percentile.py --period 2001-2014`, with `--sim IMERG` for IMERG).
-- Storm IDs within 1000 km of the ERA5 cyclones on the IMERG grid (`/POSTPROCESSING/ETCs_1000km.py --sim IMERG --tc_filter phase`); those of ERA5 and UBB are the ones above.
-- Contributions with the 2001-2014 percentiles, concatenation and merge (`/POSTPROCESSING/contribution_ETCs.py` and `/POSTPROCESSING/concat_contribution_ETCs.py` with `--period 2001-2014`; `PERIOD=2001-2014` in their job scripts).
-- Regridding onto the ERA5 grid and significance of the differences with IMERG (`/POSTPROCESSING/regrid_IMERG_evaluation.ipynb`), then the main and supplementary figures (`/PLOT/plot_map_IMERG_evaluation.ipynb`); both notebooks are run by `/JOBS/run_IMERG_evaluation.sh`.
+**Paths.** All paths are written for that cluster. The data are under `/home/vdemeyer/projects/rrg-gachon/vdemeyer/`, called `BASE` below, and the code is under `/home/vdemeyer/TRACKING/KATJA/`. Adapt these two prefixes to run the code elsewhere.
+- **Inputs:** `BASE/{sim}/PR/`, `UAS/`, `VAS/`, `WIND/`, `PSL/RAW/` and `ZG/` (monthly files `*_{sim}_{YYYYMM}_se.nc` for CRCM6-GEM5); `BASE/ERA5/{variable}/{YYYY}/{MM}/`; `BASE/IMERG/PR/{YYYY}/{MM}/`.
+- **Static fields:** `BASE/ALL/MASK/` (domain masks, land-sea masks, urban mask) and `BASE/ALL/OROG/`.
+- **Outputs:**
+  - `BASE/{sim}/PSL/SMOOTHED/` and `BASE/{sim}/STORM_RELATED/` (tracks, cyclone phase space, storm IDs within 1000 km, densities, storm metrics);
+  - `BASE/{sim}/PR/1000km_storm/` and `BASE/{sim}/WIND/1000km_storm/` (yearly accumulations), `BASE/{sim}/PR_Percentile/` and `BASE/{sim}/WIND_Percentile/`;
+  - `BASE/ALL/CONTRIB/`, `BASE/ALL/SIGNIFICANCE/` and `BASE/ALL/PLOT/` (merged contributions, significance masks and figures).
 
-### Supplementary: Selection of storms for the ARRIME project
-- Calculation of metrics for each extratropical cyclone year by year (`/POSTPROCESSING/ARRIME/EETCs_stat.py`).
-- Merging all yearly pickle files into a single pickle file covering the entire period (`/POSTPROCESSING/ARRIME/append_pickle_EETCs_stat.ipynb`).
-- Selection of the extratropical cyclones in order to run 2.5km simulations from CRCM6-GEM5 (`/POSTPROCESSING/ARRIME/EETCs_selection_for_2p5_sim.py`).
+## Software environment
+The jobs are SLURM scripts. Python environment used for the article, from the Alliance modules and a virtual environment:
 
-### Plotting
-The figure notebooks are run in JupyterLab, with `tc_filter = 'phase'` at the top for the revised version (`None` gives the submitted version). Figures are saved in `ALL/PLOT/`.
-- Domain and orography of CRCM6-GEM5, ERA5 and the driving AOGCMs, with the NNA region (`/PLOT/plot_map_orography.ipynb`).
-- Historical period: ETC track density, accumulated extreme exceedances of ERA5, biases of the CRCM6 simulations and their decomposition, with their seasonal and supplementary versions (`/PLOT/plot_map_ETCs_diff_w_ERA5.ipynb`).
-- Contribution of the regional model and of the driving data to the biases: table and supplementary maps (`/PLOT/plot_map_ETCs_RCM_vs_driving.py`, `/JOBS/plot_map_ETCs_RCM_vs_driving.sh`).
-- Comparison with IMERG (`/PLOT/plot_map_IMERG_evaluation.ipynb`, see above).
-- Projected changes of the track density and of the accumulated extreme exceedances and their decomposition, with their seasonal and supplementary versions (`/PLOT/plot_map_ETCs_diff_hist_w_future.ipynb`).
-- Seasonal top-10 extratropical cyclones over the NNA region and their tracks (`/PLOT/plot_storm_percentile_metrics_land_NNA2_seasonal.ipynb`).
-- Supplement: 99th and 99.9th percentiles of precipitation and wind (`/PLOT/plot_percentiles.ipynb`), urban areas and NNA region (`/PLOT/plot_degurba_thresholds.ipynb`).
+```bash
+module load python/3.11 mpi4py/4.0.3 esmf scipy-stack/2024a geos proj
+source ~/py3/bin/activate
+```
 
-## Authors
-Dr. Victorien De Meyer  
-Postdoc  
-UQAM
+| Package | Version | Package | Version |
+|---|---|---|---|
+| Python | 3.11.5 | xesmf / esmpy | 0.8.8 / 8.8.0 |
+| numpy | 1.26.4 | cartopy | 0.22.0 |
+| pandas | 2.2.2 | matplotlib | 3.8.4 |
+| xarray | 2025.1.2 | cmocean / cmcrameri | 3.0.3 / 1.8 |
+| scipy | 1.12.0 | scikit-learn | 1.5.2 |
+| dask / dask-image | 2025.1.0 / 2021.12.0 | netCDF4 / zarr | 1.7.2 / 2.18.3 |
+| jupyterlab / nbconvert | 4.3.5 / 7.16.4 | tqdm / braceexpand | 4.66.4 / 0.1.7 |
+
+`POSTPROCESSING/degurba_regrid_to_crcm6.py` also needs `rioxarray` and `rasterio`. The ERA5 wind magnitude is computed with `cdo`.
+
+The tracking algorithm is a Fortran program, compiled with:
+
+```bash
+module load gcc netcdf-fortran
+make tracks        # builds storm_tracks.Abs from storm_tracks.f90 and its modules
+```
+
+## Repository structure
+
+```
+storm_tracks.f90, *_mod.f90, input_args.cdk, Makefile   Fortran tracking algorithm
+PREPROCESSING/    masks, smoothing of the pressure, wind magnitude, percentiles, IMERG files
+POSTPROCESSING/   track connection, cyclone phase space, 1000 km attribution, accumulations,
+                  densities, regridding, significance, storm metrics
+PLOT/             figure notebooks and scripts
+JOBS/             SLURM job scripts (JOBS/GLOST/ for the tracking)
+```
+
+Folders named `USELESS` and the job logs (`JOBS/OUTPUTS`) are ignored by Git.
+
+## Workflow
+The steps below are run in this order. Unless stated otherwise, each Python script has a SLURM job script in `JOBS/` that loops over the simulations and years.
+
+**The tropical cyclone filter.** The revised article excludes the tropical cyclones. Every job of the chain is therefore submitted with `TC_FILTER=phase` (option `--tc_filter phase`; `tc_filter = 'phase'` at the top of the notebooks). The outputs then carry the tag `_noTC`.
+
+### 1. Pre-processing (`PREPROCESSING/`)
+- **ERA5 domain mask:** restricts ERA5 to the CRCM6-GEM5 domain, with a 200 km buffer for the tracking (`create_mask_CRCM6_for_ERA5.ipynb`).
+- **Pressure smoothing:** the mean sea level pressure is smoothed with a 400 km filter (`preprocess_year.py`, `JOBS/submit_jobs_preprocess_year.sh`).
+- **Wind magnitude:**
+  - CRCM6-GEM5: `Calculate_Wind_Magnitude.py`, `JOBS/submit_Calculate_Wind_Magnitude.sh`;
+  - ERA5: `JOBS/Calculate_Wind_Magnitude_cdo.sh` (cdo).
+- **Missing time steps of the future simulations,** filled by linear interpolation in time:
+  - 2015-01-01T00 of the surface wind (`interpolate_missing_data_2015.py`);
+  - 2030-04-01T00 of UBI, only if it is missing (`interpolate_missing_data_UBI_2030.py`).
+- **99th (and 98th, 99.5th, 99.9th) percentiles** of all hours of precipitation and wind, 1980–2014 (`Calculate_Percentile.py`, `JOBS/submit_Calculate_Percentile.sh`). The future periods use the percentile of their historical simulation.
+
+### 2. Tracking (root folder, `JOBS/GLOST/`)
+The algorithm tracks the minima of the smoothed pressure, year by year: `make_tracks.sh`, run through GLOST with `generate_tasks_glost_make_tracks.sh` then `submit_glost_job_make_tracks.sh`. The yearly track files are then connected into one file per simulation (`POSTPROCESSING/connect_ETCs.py`).
+
+### 3. Exclusion of the tropical cyclones (`POSTPROCESSING/`)
+Each time step of each tracked cyclone is labelled tropical (`TC`), transition (`TRANSITION`) or extratropical (`ETC`) with the cyclone phase space of Hart (2003):
+- **CPS parameters:** thermal asymmetry B (900–600 hPa), −V<sub>T</sub><sup>L</sup> (900–600 hPa) and −V<sub>T</sub><sup>U</sup> (600–300 hPa; 400 hPa is not available in the CRCM6-GEM5 output), within 500 km of each 6-hourly track point (`cyclone_phase_space.py`, `JOBS/submit_jobs_cyclone_phase_space.sh`).
+- **Labels:** 24 h running mean of the parameters and labelling of every hourly track point (`classify_cyclone_phase.py`). A tropical phase is a deep, symmetric warm core (−V<sub>T</sub><sup>L</sup> > 0, −V<sub>T</sub><sup>U</sup> > 0, B < 10 m) lasting at least 24 h equatorward of 40°N. The output `{sim}_psl_smooth_400km_24h_1000hPa_phase.txt` adds the `phase` label and a `tc_storm` flag (storm with a tropical phase at any time) to the tracks.
+- **Validation of ERA5 and UBB against IBTrACS:** `validate_phase_ibtracs.py`. It is run with the labelling by `JOBS/submit_classify_cyclone_phase.sh`.
+
+With the filter `phase`, only the time steps labelled `ETC` are kept, including the extratropical stage of former tropical cyclones. Grid points whose closest cyclone is tropical or in transition are discarded, so that the precipitation and wind of a tropical cyclone are never attributed to a more distant ETC.
+
+### 4. Accumulated exceedances and track density (`POSTPROCESSING/`)
+- **Storm IDs** within 1000 km of each ETC, every hour (`ETCs_1000km.py`, `JOBS/submit_jobs_ETCs_1000km.sh`).
+- **Yearly and seasonal sums and counts of the exceedances** within 1000 km of an ETC (`contribution_ETCs.py`, `JOBS/submit_jobs_contribution_ETCs.sh`).
+- **Merge over the periods** into `ALL/CONTRIB/contribution_ETCs_1000hPa_noTC.pkl` (`concat_contribution_ETCs.py`, `JOBS/submit_jobs_concat_contribution_ETCs.sh`).
+- **Track density** with a 200 km Gaussian kernel (`calculate_kde.py`, `JOBS/submit_jobs_calculate_kde.sh`), merged by `merge_density_all_sims_seasons.ipynb`. The yearly densities needed for the significance come from the mode `YEARLY` (see `JOBS/submit_significance_masks.sh`).
+- **Regridding onto the ERA5 grid** (`regrid_over_ERA5_grid.ipynb`): conservative for the accumulations, nearest neighbour for the counts, bilinear for the percentiles and densities.
+
+### 5. Significance (`POSTPROCESSING/significance_masks.py`, `JOBS/submit_significance_masks.sh`)
+Each map is tested against interannual variability on the yearly values:
+- **CRCM6-GEM5 driven by ERA5 against ERA5:** paired t-test on the yearly differences (same years);
+- **AOGCM-driven simulations against ERA5, and projected changes:** Welch's t-test.
+
+The false discovery rate is controlled at 0.10 over each map. The non-significant points are hatched on the maps.
+
+### 6. Comparison with IMERG, 2001–2014
+Each dataset is processed on its native grid. IMERG uses the ERA5 tracks and their tropical cyclone labels.
+- **IMERG hourly files and domain mask:** `PREPROCESSING/preprocess_IMERG.py`, `JOBS/preprocess_IMERG.sh`.
+- **Percentiles over 2001–2014:** `Calculate_Percentile.py --period 2001-2014`, with `--sim IMERG` for IMERG.
+- **Storm IDs within 1000 km for IMERG:** `ETCs_1000km.py --sim IMERG --tc_filter phase`.
+- **Accumulations over 2001–2014:** `PERIOD=2001-2014` in the contribution and merge jobs.
+- **Regridding and significance:** paired t-test on the 14 yearly differences (`POSTPROCESSING/regrid_IMERG_evaluation.ipynb`).
+- **Figures:** `PLOT/plot_map_IMERG_evaluation.ipynb`. Both notebooks are run by `JOBS/run_IMERG_evaluation.sh`.
+
+### 7. Individual ETCs over northeastern North America (`POSTPROCESSING/`)
+- **Exceedance metrics of each ETC** over the land grid cells of the NNA region (40–50°N, 90–60°W), for the 99th and 99.9th percentiles (`storm_percentile_metrics.py`). Submit with `sbatch --export=ALL,MASK=land,REGION=NNA2,TC_FILTER=phase JOBS/submit_jobs_storm_percentile_metrics.sh`.
+- **Aggregation:** `aggregate_storm_percentile_metrics.ipynb`.
+- **Urban mask** of the supplementary figure: `degurba_regrid_to_crcm6.py`.
+
+### 8. Figures (`PLOT/`)
+The notebooks are run in JupyterLab (Python 3 kernel of the environment above), with `tc_filter = 'phase'`, and save the figures in `BASE/ALL/PLOT/`. `PLOT/plot_map_ETCs_RCM_vs_driving.py` is run by `JOBS/plot_map_ETCs_RCM_vs_driving.sh`.
+
+## Figures and tables of the article
+
+**Main text**, in the order of the article:
+
+| Content | Code | Output in `BASE/ALL/PLOT/` |
+|---|---|---|
+| Domain, orography of CRCM6-GEM5, ERA5 and the AOGCMs, NNA region | `plot_map_orography.ipynb` | `orography_domain.png` |
+| ETC track density, ERA5 and biases | `plot_map_ETCs_diff_w_ERA5.ipynb` | `ETC_density_hist_noTC.png` |
+| Accumulated precipitation exceedance of ERA5 | `plot_map_ETCs_diff_w_ERA5.ipynb` | `PR_hist_ERA5_noTC.png` |
+| Precipitation biases and their decomposition | `plot_map_ETCs_diff_w_ERA5.ipynb` | `PR_hist_vs_ERA5_noTC.png` |
+| Accumulated wind exceedance of ERA5 | `plot_map_ETCs_diff_w_ERA5.ipynb` | `WS_hist_ERA5_noTC.png` |
+| Wind biases and their decomposition | `plot_map_ETCs_diff_w_ERA5.ipynb` | `WS_hist_vs_ERA5_noTC.png` |
+| Contributions of the regional model and of the driving data (table) | `plot_map_ETCs_RCM_vs_driving.py` | `RCM_VS_DRIVING/rcm_vs_driving_bias_noTC.md` |
+| ERA5 and CRCM6-GEM5 driven by ERA5 against IMERG | `plot_map_IMERG_evaluation.ipynb` | `IMERG/fig_PR_vs_IMERG_2001-2014.png` |
+| Projected change of the track density | `plot_map_ETCs_diff_hist_w_future.ipynb` | `ETC_density_fut_vs_hist_noTC.png` |
+| Projected change of the precipitation exceedance | `plot_map_ETCs_diff_hist_w_future.ipynb` | `PR_fut_vs_hist_noTC.png` |
+| Projected change of the wind exceedance | `plot_map_ETCs_diff_hist_w_future.ipynb` | `WS_fut_vs_hist_noTC.png` |
+| Top-10 seasonal ETCs over NNA: occurrence and intensity | `plot_storm_percentile_metrics_land_NNA2_seasonal.ipynb` | `scatter_top10_seasonal_storms_cumul_PR_NNA2_noTC.png` |
+| Top-10 seasonal ETCs over NNA: ranked intensity | `plot_storm_percentile_metrics_land_NNA2_seasonal.ipynb` | `rankshaded_top10_seasonal_storms_intensity_PR_NNA2_noTC.png` |
+
+The validation of the tropical cyclone labels against IBTrACS, given in the article, is written by `validate_phase_ibtracs.py` in `BASE/{sim}/STORM_RELATED/CPS/`.
+
+**Supplement:**
+
+| Content | Code | Output in `BASE/ALL/PLOT/` |
+|---|---|---|
+| Urban areas and NNA region | `plot_degurba_thresholds.ipynb` | `supp_urban_mask_NNA2.png` |
+| 99th and 99.9th percentiles of precipitation and wind | `plot_percentiles.ipynb` | `supp_p99_*_hist.png`, `supp_p999_*_hist.png` |
+| Seasonal density and exceedance biases | `plot_map_ETCs_diff_w_ERA5.ipynb` | `supp_seasonal_*_hist*.png` |
+| Decomposition terms of the biases | `plot_map_ETCs_diff_w_ERA5.ipynb` | `supp_terms_*_hist_noTC.png`, `supp_term1&2_*_hist_noTC.png` |
+| Contributions of the regional model and of the driving data (maps) | `plot_map_ETCs_RCM_vs_driving.py` | `RCM_VS_DRIVING/{PR,WS}_bias_RCM_vs_driving_noTC.png` |
+| Decomposition of the differences with IMERG | `plot_map_IMERG_evaluation.ipynb` | `IMERG/figS_terms_PR_vs_IMERG_2001-2014.png` |
+| Seasonal projected changes and their terms | `plot_map_ETCs_diff_hist_w_future.ipynb` | `supp_seasonal_*_fut_vs_hist_noTC.png`, `supp_terms_*_fut_vs_hist_noTC.png` |
+| Tracks of the top-10 ETCs and wind results over NNA | `plot_storm_percentile_metrics_land_NNA2_seasonal.ipynb` | `supp_tracks_top10_*_NNA2_noTC.png`, `*_WS_NNA2_noTC.png` |
+
+## Submitted and revised versions
+The revision added the following:
+- the exclusion of the tropical cyclones (cyclone phase space, `TC_FILTER=phase`);
+- the significance masks;
+- the separation of the contributions of the regional model and of the driving data;
+- the comparison with IMERG;
+- the domain and orography figure.
+
+Without `TC_FILTER`, or with `tc_filter = None` in the notebooks, the scripts keep all tracked cyclones and name their outputs as in the submitted version. The code of the submitted version is archived as `v1.0.0-submitted`.
+
+**Not part of the article.** `POSTPROCESSING/ARRIME/` and the jobs `EETCs_stat.sh` and `EETCs_selection_for_2p5_sim.sh` select ETCs for 2.5 km simulations with CRCM6-GEM5 (ARRIME project).
+
+## Citation, license and authors
+Please cite the article and the archived code (`CITATION.cff`; Zenodo DOI above). The code is distributed under the MIT license (`LICENSE`).
+
+- Victorien De Meyer: Centre ESCER, Université du Québec à Montréal, Canada (code)
+- Alejandro Di Luca: Centre ESCER, Université du Québec à Montréal, Canada
+- Ting-Chen Chen: Moody's, London, United Kingdom

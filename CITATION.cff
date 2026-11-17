@@ -5,57 +5,72 @@ title: >-
   wind extremes over North America
 message: >-
   If you use this software, please cite both the software itself
-  and the associated journal article.
+  and the associated article.
 type: software
 abstract: >-
-  Python analysis code accumulating precipitation and near-surface
-  wind exceedances above the 99th all-hour percentile within 1000 km
-  of extratropical cyclone centres over North America, decomposed
-  into exceedance frequency and mean intensity. Applied to hourly
-  ERA5 and CRCM6-GEM5 output over a 35-year period.
+  Analysis code of De Meyer et al. (2026). Extratropical cyclones (ETCs)
+  are tracked in hourly ERA5 and CRCM6-GEM5 output over North America,
+  tropical cyclones and transition phases are removed with the cyclone
+  phase space, and the precipitation and near-surface wind exceedances
+  above the 99th all-hour percentile within 1000 km of ETC centres are
+  accumulated and decomposed into intensity, threshold and occurrence
+  terms. The code evaluates the historical simulations (1980-2014)
+  against ERA5 and, for precipitation, against IMERG (2001-2014),
+  separates the contributions of the regional model and of the driving
+  data, tests the significance of the differences, and attributes the
+  projected changes (2063-2097, SSP3-7.0) of the individual ETCs.
 
 authors:
-  # TODO: verify the spelling of your family name ("De Meyer" vs "DeMeyer")
-  #       and add your ORCID; add every co-author, in manuscript order.
   - family-names: "De Meyer"
     given-names: "Victorien"
     orcid: "https://orcid.org/0000-0001-6566-2716"
     affiliation: >-
       Centre pour l'Étude et la Simulation du Climat à l'Échelle Régionale
       (ESCER), Université du Québec à Montréal, Montréal, Québec, Canada
-  # - family-names: "COAUTHOR-FAMILY-NAME"
-  #   given-names: "COAUTHOR-GIVEN-NAME"
-  #   orcid: "https://orcid.org/0000-0000-0000-0000"
-  #   affiliation: "AFFILIATION"
+  - family-names: "Di Luca"
+    given-names: "Alejandro"
+    affiliation: >-
+      Centre pour l'Étude et la Simulation du Climat à l'Échelle Régionale
+      (ESCER), Université du Québec à Montréal, Montréal, Québec, Canada
+  - family-names: "Chen"
+    given-names: "Ting-Chen"
+    affiliation: "Moody's, London, United Kingdom"
 
-version: "1.0.0"
-date-released: "2026-08-13"
+version: "2.0.0-revised"
+date-released: "2026-11-17"
 license: MIT
 repository-code: "https://github.com/VictorienDeMeyer/DeMeyer_etal_2026_Extreme_Cyclones"
-# Add the Zenodo version DOI here after the first GitHub release:
-# doi: "10.5281/zenodo.XXXXXXX"
+# Concept DOI of the Zenodo archive: it always resolves to the latest version.
+# Each release also gets its own version DOI (v1.0.0-submitted: 10.5281/zenodo.21922111).
+doi: "10.5281/zenodo.21922110"
 
 keywords:
   - extratropical cyclones
   - extreme precipitation
   - wind extremes
   - regional climate modelling
+  - cyclone phase space
   - CRCM6-GEM5
   - ERA5
+  - IMERG
   - North America
 
 # GitHub displays this article citation in the "Cite this repository" box.
-# Fill in the journal, volume, pages and DOI once accepted; delete this
-# whole block if you would rather have readers cite the software directly.
+# Update it (journal, volume, pages, DOI) once the article is published in Weather and Climate Dynamics.
 preferred-citation:
   type: article
-  title: "FUTURE PROJECTIONS OF EXTREME WIND AND PRECIPITATION ASSOCIATED WITH EXTRATROPICAL CYCLONES OVER NORTH AMERICA USING REGIONAL CLIMATE SIMULATIONS"
+  title: >-
+    Future Projections of Extreme Wind and Precipitation Associated With
+    Extratropical Cyclones Over North America using Regional Climate
+    Simulations
   authors:
     - family-names: "De Meyer"
       given-names: "Victorien"
       orcid: "https://orcid.org/0000-0001-6566-2716"
-    # - family-names: "COAUTHOR-FAMILY-NAME"
-    #   given-names: "COAUTHOR-GIVEN-NAME"
-  journal: "WEATHER AND CLIMATE DYNAMICS"
+    - family-names: "Di Luca"
+      given-names: "Alejandro"
+    - family-names: "Chen"
+      given-names: "Ting-Chen"
+  journal: "EGUsphere [preprint]"
   year: 2026
-  doi: "10.XXXX/XXXXXX"
+  doi: "10.5194/egusphere-2026-4825"

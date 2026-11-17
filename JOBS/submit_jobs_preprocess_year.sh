@@ -22,7 +22,7 @@ for sim in "${sims[@]}"; do
     # Loop over the range of years and submit a job for each year
     for year in $(seq $start_year $end_year); do
 
-        output_dir="/home/vdemeyer/projects/rrg-gachon/vdemeyer/TRACKING/KATJA/INPUTS/${sim}"
+        output_dir="/home/vdemeyer/projects/rrg-gachon/vdemeyer/${sim}/PSL/SMOOTHED"
         output_file="${output_dir}/dummy.pkl"
       
         if [ ! -f "$output_file" ]; then

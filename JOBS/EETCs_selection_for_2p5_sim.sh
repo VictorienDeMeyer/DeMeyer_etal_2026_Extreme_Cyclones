@@ -6,4 +6,4 @@
 
 module load python/3.11 mpi4py/4.0.3 scipy-stack/2024a geos proj; source /home/vdemeyer/py3/bin/activate
 
-python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/EETCs_selection_for_2p5_sim.py --sim $sim
+python /home/vdemeyer/TRACKING/KATJA/POSTPROCESSING/ARRIME/EETCs_selection_for_2p5_sim.py --sim $sim

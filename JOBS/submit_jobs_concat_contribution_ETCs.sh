@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Orchestrator: submits the per-sim calc array, then the merge job (afterok).
-# Optional: export TC_FILTER=phase (or storm) before sourcing to use the outputs without tropical cyclones.
+# Optional: export TC_FILTER=phase before sourcing to use the outputs without tropical cyclones.
 
 sims=("ERA5" "UBB" "UBD" "UBE" "UBF" "UBG" "UBH" "UBI")
 sims_str="${sims[*]}"

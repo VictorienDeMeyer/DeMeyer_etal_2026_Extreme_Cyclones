@@ -15,3 +15,7 @@ USELESS
 .ipynb_checkpoints/
 __pycache__/
 .DS_Store
+# Compiled tracker (built with "make tracks")
+*.o
+*.mod
+*.Abs

@@ -123,7 +123,7 @@ def get_sim_context(sim, year, base_dir='/home/vdemeyer/projects/rrg-gachon/vdem
     fut2hist = {v: k for k, v in hist2fut.items()}
 
     for y, m in file_strategy:
-        t_dir = f"{base_dir}/{sim}/PSL"
+        t_dir = f"{base_dir}/{sim}/PSL/RAW"
         if sim == 'ERA5':
             pattern = f"{t_dir}/{y}/*/*.nc4" if m == 'all' else f"{t_dir}/{y}/{m:02d}/*.nc4"
             found_files = sorted(glob(pattern))
@@ -134,7 +134,7 @@ def get_sim_context(sim, year, base_dir='/home/vdemeyer/projects/rrg-gachon/vdem
         # Si sim est UBG/UBH/UBI et année==2015 et mois==12, aller chercher décembre 2014 du pendant historique
         if sim in fut2hist and year == 2015 and y == 2014 and m == 12:
             hist_sim = fut2hist[sim]
-            t_dir_hist = f"{base_dir}/{hist_sim}/PSL"
+            t_dir_hist = f"{base_dir}/{hist_sim}/PSL/RAW"
             pattern = f"{t_dir_hist}/psl_{hist_sim.lower()}_{y}{m:02d}_se.nc"
             found_files = sorted(glob(pattern))
             input_files.extend(found_files)
@@ -142,7 +142,7 @@ def get_sim_context(sim, year, base_dir='/home/vdemeyer/projects/rrg-gachon/vdem
         # Si sim est UBD/UBE/UBF et année==2014 et mois==1, aller chercher janvier 2015 du pendant future
         if sim in hist2fut and year == 2014 and y == 2015 and m == 1:
             fut_sim = hist2fut[sim]
-            t_dir_fut = f"{base_dir}/{fut_sim}/PSL"
+            t_dir_fut = f"{base_dir}/{fut_sim}/PSL/RAW"
             pattern = f"{t_dir_fut}/psl_{fut_sim.lower()}_{y}{m:02d}_se.nc"
             found_files = sorted(glob(pattern))
             input_files.extend(found_files)
@@ -370,7 +370,7 @@ def main(year, sim):
 
     input_files, start, end = get_sim_context(sim, year)
 
-    output_dir = f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/TRACKING/KATJA/INPUTS/{sim}'
+    output_dir = f'/home/vdemeyer/projects/rrg-gachon/vdemeyer/{sim}/PSL/SMOOTHED'   # read by JOBS/GLOST/make_tracks.sh
     os.makedirs(output_dir, exist_ok=True)
 
     output_file = f'{output_dir}/{sim}_psl_smoothed_400km_{year}_pres.nc'
@@ -398,7 +398,7 @@ def main(year, sim):
       
     if sim=='ERA5':
         ds = convert_lon_lat(ds, var_lon, var_lat, to_180=False)
-        mask = xr.open_dataarray('/home/vdemeyer/projects/rrg-gachon/vdemeyer/MASK/mask_CRCM6_grid_for_ERA5_0_360.nc')
+        mask = xr.open_dataarray('/home/vdemeyer/projects/rrg-gachon/vdemeyer/ALL/MASK/mask_CRCM6_grid_for_ERA5_0_360.nc')
         ds = ds.where(mask, drop=True)
         # ds = get_mask(ds, var_lon, var_lat, west_longitude=-171+360, east_longitude=-23+360, north_latitude=76, south_latitude=12, plot=False)
     else:
